@@ -61,6 +61,9 @@
                     <button class="btn-secondary btn-skins" id="btn-skins">
                         <span>🚀 스킨 보관함</span>
                     </button>
+                    <button class="btn-secondary btn-themes" id="btn-themes">
+                        <span>🎨 테마 선택</span>
+                    </button>
                     <button class="btn-secondary btn-stats" id="btn-stats">
                         <span>📊 통계</span>
                     </button>
@@ -143,6 +146,15 @@
             <div class="skins-grid" id="skins-grid"></div>
         </div>
 
+        <!-- === THEMES SCREEN === -->
+        <div class="screen themes-screen hidden" id="themes-screen">
+            <div class="themes-header">
+                <button class="btn-back" id="btn-themes-back">← 뒤로</button>
+                <h2>테마 선택</h2>
+            </div>
+            <div class="themes-grid" id="themes-grid"></div>
+        </div>
+
         <!-- === STATS SCREEN === -->
         <div class="screen stats-screen hidden" id="stats-screen">
             <div class="stats-header">
@@ -165,6 +177,10 @@
         </div>
     </div>
 
+    <script src="js/skins-data.js"></script>
+    <script src="js/titles-data.js"></script>
+    <script src="js/obstacles-data.js"></script>
+    <script src="js/themes-data.js"></script>
     <script src="js/game.js"></script>
 </body>
 </html>

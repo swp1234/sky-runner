@@ -1251,6 +1251,7 @@
         });
         screen.classList.remove('hidden');
         screen.classList.add('active');
+        i18n.updateUI();
     }
 
     function startGame() {
@@ -1304,6 +1305,9 @@
         goBest.textContent = highScore;
         const rank = getRank(score);
         goRank.innerHTML = `<span class="rank-icon">${rank.emoji}</span><span class="rank-title">${rank.name}</span>`;
+        if (isNewRecord) {
+            goNewRecord.textContent = i18n.t('gameover.newRecord');
+        }
         goNewRecord.classList.toggle('hidden', !isNewRecord);
         document.getElementById('btn-revive').classList.toggle('hidden', hasRevived);
         if (playCount >= 3 && playCount % 3 === 0) showInterstitialAd();
@@ -1328,6 +1332,7 @@
         state = 'paused';
         cancelAnimationFrame(animFrameId);
         pauseOverlay.classList.remove('hidden');
+        i18n.updateUI();
     }
 
     function resumeGame() {
@@ -1467,6 +1472,7 @@
                 <div class="stat-row"><span>해금 스킨</span><strong>${unlockedSkins.length}/${SKINS.length}</strong></div>
                 <div class="stat-row"><span>칭호</span><strong>${rank.icon} ${rank.title}</strong></div>
             </div>`;
+        i18n.updateUI();
     }
 
     // === SHARE ===
@@ -1562,16 +1568,16 @@
     function renderThemes() {
         const grid = document.getElementById('themes-grid');
         if (!grid) return;
-        
+
         grid.innerHTML = '';
-        
+
         THEMES_DATA.forEach(theme => {
             const isUnlocked = unlockedThemes.includes(theme.id);
             const isSelected = currentTheme === theme.id;
-            
+
             const card = document.createElement('div');
             card.className = `theme-card ${isSelected ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
-            
+
             // 테마 미리보기 (간단한 그라디언트)
             const preview = document.createElement('div');
             preview.className = 'theme-preview';
@@ -1580,30 +1586,33 @@
             } else {
                 preview.style.background = theme.background.color || '#000000';
             }
-            
+
             const info = document.createElement('div');
             info.className = 'theme-info';
+            const selectedText = isSelected ? `<div class="theme-selected-badge">✓ ${i18n.t('themes.selected') || '선택됨'}</div>` : '';
             info.innerHTML = `
                 <div class="theme-name">${theme.name}</div>
                 <div class="theme-description">${theme.description}</div>
                 ${!isUnlocked ? `<div class="theme-unlock">${theme.unlockCondition}</div>` : ''}
-                ${isSelected ? '<div class="theme-selected-badge">✓ 선택됨</div>' : ''}
+                ${selectedText}
             `;
-            
+
             if (isUnlocked) {
                 card.addEventListener('click', () => {
                     currentTheme = theme.id;
                     saveData();
                     renderThemes();
+                    i18n.updateUI();
                 });
             } else {
                 card.style.opacity = '0.6';
             }
-            
+
             card.appendChild(preview);
             card.appendChild(info);
             grid.appendChild(card);
         });
+        i18n.updateUI();
     }
 
     // === BUTTON EVENTS ===

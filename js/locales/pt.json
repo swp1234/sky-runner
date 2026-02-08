@@ -4,6 +4,7 @@
     "description": "Pilote sua nave espacial e desvie de obstáculos! Um jogo de arcade casual viciante."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "Melhor Pontuação",
     "startGame": "Começar Jogo",
     "skins": "🚀 Skins",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Novo Recorde!"
   },
   "recommendations": {
-    "title": "Experimente também"
+    "title": "Experimente também",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Empilhe blocos com o timing perfeito!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Jogo de arcade com mudança de direção!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Funda emojis para evoluir!"
   },
   "ad": {
     "label": "Anúncio",
-    "placeholder": "Área de Anúncio (Intersticial)",
-    "countdown": "s até fechar"
+    "placeholder": "Área de Anúncio",
+    "placeholder_interstitial": "Área de Anúncio (Intersticial)",
+    "countdown": "s até fechar",
+    "close": "✕ Fechar"
   },
   "screens": {
     "skins": "Skins",
     "themes": "Temas",
     "stats": "Estatísticas",
     "back": "← Voltar"
+  },
+  "themes": {
+    "selected": "Selecionado"
   }
 }

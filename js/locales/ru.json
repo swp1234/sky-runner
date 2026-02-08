@@ -4,6 +4,7 @@
     "description": "Управляйте своим космическим кораблем и избегайте препятствий! Увлекательная одноклассовая казуальная аркадная игра."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "Высокий счет",
     "startGame": "Начать игру",
     "skins": "🚀 Скины",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Новый рекорд!"
   },
   "recommendations": {
-    "title": "Попробуйте это тоже"
+    "title": "Попробуйте это тоже",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Складывайте блоки с идеальным временем!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Аркадная игра со сменой направления!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Объединяйте эмодзи для эволюции!"
   },
   "ad": {
     "label": "Объявление",
-    "placeholder": "Область объявления (Полноэкранное)",
-    "countdown": "s до закрытия"
+    "placeholder": "Область объявления",
+    "placeholder_interstitial": "Область объявления (Полноэкранное)",
+    "countdown": "s до закрытия",
+    "close": "✕ Закрыть"
   },
   "screens": {
     "skins": "Скины",
     "themes": "Темы",
     "stats": "Статистика",
     "back": "← Назад"
+  },
+  "themes": {
+    "selected": "Выбран"
   }
 }

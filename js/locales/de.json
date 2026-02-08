@@ -4,6 +4,7 @@
     "description": "Pilotiere dein Raumschiff und weiche Hindernissen aus! Ein süchtig machendes Ein-Tap-Casual-Arcade-Spiel."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "Höchste Punktzahl",
     "startGame": "Spiel starten",
     "skins": "🚀 Designs",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Neuer Rekord!"
   },
   "recommendations": {
-    "title": "Probiere auch diese"
+    "title": "Probiere auch diese",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Stapel Blöcke mit perfektem Timing!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Richtungswechsel-Arcade-Spiel!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Verschmelze Emojis und lass sie sich weiterentwickeln!"
   },
   "ad": {
     "label": "Anzeige",
-    "placeholder": "Anzeigenbereich (Zwischenanzeige)",
-    "countdown": "Sekunden bis Schließen"
+    "placeholder": "Anzeigenbereich",
+    "placeholder_interstitial": "Anzeigenbereich (Zwischenanzeige)",
+    "countdown": "Sekunden bis Schließen",
+    "close": "✕ Schließen"
   },
   "screens": {
     "skins": "Designs",
     "themes": "Designs",
     "stats": "Statistik",
     "back": "← Zurück"
+  },
+  "themes": {
+    "selected": "Ausgewählt"
   }
 }

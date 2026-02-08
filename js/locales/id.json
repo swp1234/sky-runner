@@ -4,6 +4,7 @@
     "description": "Terbang pesawat ruang angkasa Anda dan hindari rintangan! Permainan arcade kasual satu ketukan yang adiktif."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "Skor Tertinggi",
     "startGame": "Mulai Game",
     "skins": "🚀 Kulit",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Rekor Baru!"
   },
   "recommendations": {
-    "title": "Coba Juga"
+    "title": "Coba Juga",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Tumpuk blok dengan timing sempurna!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Permainan arcade perubahan arah!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Gabungkan emoji untuk berkembang!"
   },
   "ad": {
     "label": "Iklan",
-    "placeholder": "Area Iklan (Interstitial)",
-    "countdown": "s hingga ditutup"
+    "placeholder": "Area Iklan",
+    "placeholder_interstitial": "Area Iklan (Interstitial)",
+    "countdown": "s hingga ditutup",
+    "close": "✕ Tutup"
   },
   "screens": {
     "skins": "Kulit",
     "themes": "Tema",
     "stats": "Statistik",
     "back": "← Kembali"
+  },
+  "themes": {
+    "selected": "Dipilih"
   }
 }

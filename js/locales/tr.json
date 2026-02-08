@@ -4,6 +4,7 @@
     "description": "Uzay gemini pilot et ve engelleri aş! Bağımlayıcı tek-dokunuş casual arcade oyunu."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "En Yüksek Puan",
     "startGame": "Oyunu Başlat",
     "skins": "🚀 Kozmetik",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Yeni Rekor!"
   },
   "recommendations": {
-    "title": "Bunları da Dene"
+    "title": "Bunları da Dene",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Mükemmel zamanlama ile blokları yığın!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Yön değiştirme arcade oyunu!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Emojileri birleştirerek evrim ver!"
   },
   "ad": {
     "label": "Reklam",
-    "placeholder": "Reklam Alanı (Tam Ekran)",
-    "countdown": "kapatılmaya saniye"
+    "placeholder": "Reklam Alanı",
+    "placeholder_interstitial": "Reklam Alanı (Tam Ekran)",
+    "countdown": "kapatılmaya saniye",
+    "close": "✕ Kapat"
   },
   "screens": {
     "skins": "Kozmetik",
     "themes": "Temalar",
     "stats": "İstatistikler",
     "back": "← Geri"
+  },
+  "themes": {
+    "selected": "Seçilmiş"
   }
 }

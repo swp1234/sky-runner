@@ -4,6 +4,7 @@
     "description": "宇宙船を操縦して障害物を回避！中毒性のあるワンタップカジュアルアーケードゲーム。"
   },
   "menu": {
+    "subtitle": "スカイランナー",
     "highScore": "ハイスコア",
     "startGame": "ゲーム開始",
     "skins": "🚀 スキン",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 新記録！"
   },
   "recommendations": {
-    "title": "こちらも試してみてください"
+    "title": "こちらも試してみてください",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "完璧なタイミングでブロックを積み上げましょう!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "方向変更アーケードゲーム!",
+    "emojiMerge": "絵文字マージ",
+    "emojiMergeDesc": "絵文字をマージして進化させましょう!"
   },
   "ad": {
     "label": "広告",
-    "placeholder": "広告エリア（インタースティシャル）",
-    "countdown": "秒で閉じる"
+    "placeholder": "広告エリア",
+    "placeholder_interstitial": "広告エリア（インタースティシャル）",
+    "countdown": "秒で閉じる",
+    "close": "✕ 閉じる"
   },
   "screens": {
     "skins": "スキン",
     "themes": "テーマ",
     "stats": "統計",
     "back": "← 戻る"
+  },
+  "themes": {
+    "selected": "選択済み"
   }
 }

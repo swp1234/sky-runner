@@ -4,6 +4,7 @@
     "description": "Pilot your spaceship and dodge obstacles! An addictive one-tap casual arcade game."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "High Score",
     "startGame": "Start Game",
     "skins": "🚀 Skins",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 New Record!"
   },
   "recommendations": {
-    "title": "Try These Too"
+    "title": "Try These Too",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Stack blocks with perfect timing!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Direction-changing arcade game!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Merge emojis to evolve!"
   },
   "ad": {
     "label": "Ad",
-    "placeholder": "Ad Area (Interstitial)",
-    "countdown": "s until close"
+    "placeholder": "Ad Area",
+    "placeholder_interstitial": "Ad Area (Interstitial)",
+    "countdown": "s until close",
+    "close": "✕ Close"
   },
   "screens": {
     "skins": "Skins",
     "themes": "Themes",
     "stats": "Stats",
     "back": "← Back"
+  },
+  "themes": {
+    "selected": "Selected"
   }
 }

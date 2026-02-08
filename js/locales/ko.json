@@ -4,6 +4,7 @@
     "description": "우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 강한 캐주얼 아케이드 게임."
   },
   "menu": {
+    "subtitle": "하늘 달리기",
     "highScore": "최고 점수",
     "startGame": "게임 시작",
     "skins": "🚀 스킨 보관함",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 새 기록!"
   },
   "recommendations": {
-    "title": "이것도 해보세요"
+    "title": "이것도 해보세요",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "타이밍에 맞춰 블록을 쌓아라!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "방향 전환 아케이드 게임!",
+    "emojiMerge": "이모지 머지",
+    "emojiMergeDesc": "이모지 합쳐 진화시키기!"
   },
   "ad": {
     "label": "광고",
-    "placeholder": "광고 영역 (전면)",
-    "countdown": "초 후 닫기"
+    "placeholder": "광고 영역",
+    "placeholder_interstitial": "광고 영역 (전면)",
+    "countdown": "초 후 닫기",
+    "close": "✕ 닫기"
   },
   "screens": {
     "skins": "스킨 보관함",
     "themes": "테마 선택",
     "stats": "통계",
     "back": "← 뒤로"
+  },
+  "themes": {
+    "selected": "선택됨"
   }
 }

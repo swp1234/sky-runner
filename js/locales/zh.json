@@ -4,6 +4,7 @@
     "description": "驾驶飞船躲避障碍物！一个令人上瘾的单点击休闲街机游戏。"
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "最高分数",
     "startGame": "开始游戏",
     "skins": "🚀 皮肤库",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 新记录！"
   },
   "recommendations": {
-    "title": "也试试这些"
+    "title": "也试试这些",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "完美的时机堆积方块!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "方向变换街机游戏!",
+    "emojiMerge": "表情符号合并",
+    "emojiMergeDesc": "合并表情符号进化!"
   },
   "ad": {
     "label": "广告",
-    "placeholder": "广告区域（全屏）",
-    "countdown": "秒后关闭"
+    "placeholder": "广告区域",
+    "placeholder_interstitial": "广告区域（全屏）",
+    "countdown": "秒后关闭",
+    "close": "✕ 关闭"
   },
   "screens": {
     "skins": "皮肤库",
     "themes": "主题选择",
     "stats": "统计",
     "back": "← 返回"
+  },
+  "themes": {
+    "selected": "已选择"
   }
 }

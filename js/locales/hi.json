@@ -4,6 +4,7 @@
     "description": "अपने अंतरिक्ष यान को चलाएं और बाधाओं से बचें! एक व्यसनी वन-टैप कैजुअल आर्केड गेम।"
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "उच्च स्कोर",
     "startGame": "गेम शुरू करें",
     "skins": "🚀 स्किन्स",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 नया रिकॉर्ड!"
   },
   "recommendations": {
-    "title": "ये भी आजमाएं"
+    "title": "ये भी आजमाएं",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "सही समय के साथ ब्लॉक को स्टैक करें!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "दिशा बदलने वाली आर्केड गेम!",
+    "emojiMerge": "इमोजी मर्ज",
+    "emojiMergeDesc": "इमोजी को विकसित करने के लिए मर्ज करें!"
   },
   "ad": {
     "label": "विज्ञापन",
-    "placeholder": "विज्ञापन क्षेत्र (पूर्णपृष्ठ)",
-    "countdown": "सेकंड में बंद करें"
+    "placeholder": "विज्ञापन क्षेत्र",
+    "placeholder_interstitial": "विज्ञापन क्षेत्र (पूर्णपृष्ठ)",
+    "countdown": "सेकंड में बंद करें",
+    "close": "✕ बंद करें"
   },
   "screens": {
     "skins": "स्किन्स",
     "themes": "थीम्स",
     "stats": "आंकड़े",
     "back": "← वापस"
+  },
+  "themes": {
+    "selected": "चयनित"
   }
 }

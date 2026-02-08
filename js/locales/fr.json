@@ -4,6 +4,7 @@
     "description": "Pilote ton vaisseau spatial et évite les obstacles! Un jeu d'arcade casual addictif à un seul geste."
   },
   "menu": {
+    "subtitle": "Sky Runner",
     "highScore": "Meilleur Score",
     "startGame": "Commencer le Jeu",
     "skins": "🚀 Skins",
@@ -31,17 +32,28 @@
     "newRecord": "🎉 Nouveau Record!"
   },
   "recommendations": {
-    "title": "Essaie aussi"
+    "title": "Essaie aussi",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Empile des blocs avec un timing parfait!",
+    "zigzagRunner": "Zigzag Runner",
+    "zigzagRunnerDesc": "Jeu d'arcade avec changement de direction!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Fusionne les emojis pour les faire évoluer!"
   },
   "ad": {
     "label": "Annonce",
-    "placeholder": "Zone d'Annonce (Plein Écran)",
-    "countdown": "s jusqu'à fermeture"
+    "placeholder": "Zone d'Annonce",
+    "placeholder_interstitial": "Zone d'Annonce (Plein Écran)",
+    "countdown": "s jusqu'à fermeture",
+    "close": "✕ Fermer"
   },
   "screens": {
     "skins": "Skins",
     "themes": "Thèmes",
     "stats": "Statistiques",
     "back": "← Retour"
+  },
+  "themes": {
+    "selected": "Sélectionné"
   }
 }

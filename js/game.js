@@ -232,6 +232,7 @@
             player.motionTrail = [];
         }
         initStars();
+        nebulaClouds = []; // Reset nebulae on resize
     }
 
     // === POLYFILL roundRect ===
@@ -374,6 +375,7 @@
                     passedCount++;
                     score += obs.scoreReward || 10;
                     currentStreak++;
+                    if (sfx) sfx.coin();
                     if (currentStreak > bestStreak) bestStreak = currentStreak;
                     if (currentStreak >= 3 && currentStreak % 3 === 0) {
                         score += 5;
@@ -556,12 +558,26 @@
         }
     }
 
+    // Pre-computed nebula cloud positions (stable across frames)
+    let nebulaClouds = [];
+    function initNebulae() {
+        nebulaClouds = [];
+        for (let i = 0; i < 4; i++) {
+            nebulaClouds.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: 60 + Math.random() * 100,
+                hue: 220 + Math.random() * 80, // blue-purple range
+                speed: 0.08 + Math.random() * 0.12
+            });
+        }
+    }
+
     function renderBackground() {
         const theme = getCurrentThemeData();
         const bg = theme.background;
 
         if (bg.type === 'gradient') {
-            // 그라디언트 배경
             const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
             bg.colors.forEach((color, index) => {
                 gradient.addColorStop(index / (bg.colors.length - 1), color);
@@ -569,12 +585,31 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else if (bg.type === 'solid') {
-            // 단색 배경
             ctx.fillStyle = bg.color || '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // 그리드 효과 (네온/레트로 테마)
+        // Nebula clouds (space theme only, subtle)
+        if (!bg.grid && !bg.scanlines) {
+            if (nebulaClouds.length === 0) initNebulae();
+            for (let i = 0; i < nebulaClouds.length; i++) {
+                const n = nebulaClouds[i];
+                n.x -= n.speed;
+                if (n.x + n.r < 0) { n.x = canvas.width + n.r; n.y = Math.random() * canvas.height; }
+                ctx.globalAlpha = 0.04;
+                const ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+                ng.addColorStop(0, `hsla(${n.hue},60%,50%,0.3)`);
+                ng.addColorStop(0.5, `hsla(${n.hue},50%,40%,0.1)`);
+                ng.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = ng;
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        // Grid effect (neon/retro themes)
         if (bg.grid) {
             ctx.strokeStyle = bg.gridColor || '#00d2d3';
             ctx.lineWidth = 1;
@@ -595,7 +630,7 @@
             ctx.globalAlpha = 1;
         }
 
-        // 스캔라인 효과 (레트로 테마)
+        // Scanline effect (retro theme)
         if (bg.scanlines) {
             ctx.strokeStyle = '#00ff00';
             ctx.lineWidth = 1;
@@ -626,210 +661,577 @@
         return defaults[obstacleType] || '#ffffff';
     }
 
+    // === RENDER HELPERS ===
+    // Draw detailed spaceship body (used for player)
+    function drawSpaceship(cx, cy, size, color, rotation, skinId) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rotation * Math.PI / 180);
+        const s = size;
+        const half = s / 2;
+
+        // Engine exhaust flame (animated)
+        const flameFlicker = Math.sin(Date.now() * 0.02) * 3;
+        const flameLen = half * 0.7 + flameFlicker;
+        ctx.globalAlpha = 0.7;
+        const flameGrad = ctx.createLinearGradient(-half, 0, -half - flameLen, 0);
+        flameGrad.addColorStop(0, '#ffffff');
+        flameGrad.addColorStop(0.2, '#ffdd57');
+        flameGrad.addColorStop(0.5, '#ff8c00');
+        flameGrad.addColorStop(1, 'rgba(255,60,0,0)');
+        ctx.fillStyle = flameGrad;
+        ctx.beginPath();
+        ctx.moveTo(-half * 0.6, -s * 0.12);
+        ctx.quadraticCurveTo(-half - flameLen * 0.6, 0, -half * 0.6, s * 0.12);
+        ctx.lineTo(-half - flameLen, 0);
+        ctx.closePath();
+        ctx.fill();
+        // Inner flame (white-hot core)
+        ctx.globalAlpha = 0.5;
+        const innerGrad = ctx.createLinearGradient(-half * 0.6, 0, -half - flameLen * 0.4, 0);
+        innerGrad.addColorStop(0, '#ffffff');
+        innerGrad.addColorStop(1, 'rgba(255,255,200,0)');
+        ctx.fillStyle = innerGrad;
+        ctx.beginPath();
+        ctx.moveTo(-half * 0.55, -s * 0.05);
+        ctx.quadraticCurveTo(-half - flameLen * 0.3, 0, -half * 0.55, s * 0.05);
+        ctx.lineTo(-half - flameLen * 0.4, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Ship body gradient
+        const bodyGrad = ctx.createLinearGradient(0, -half, 0, half);
+        if (color === 'rainbow') {
+            bodyGrad.addColorStop(0, '#ff0000');
+            bodyGrad.addColorStop(0.2, '#ff7f00');
+            bodyGrad.addColorStop(0.4, '#ffff00');
+            bodyGrad.addColorStop(0.6, '#00ff00');
+            bodyGrad.addColorStop(0.8, '#0000ff');
+            bodyGrad.addColorStop(1, '#9400d3');
+        } else {
+            bodyGrad.addColorStop(0, lightenColor(color, 40));
+            bodyGrad.addColorStop(0.5, color);
+            bodyGrad.addColorStop(1, darkenColor(color, 40));
+        }
+
+        // Main fuselage (streamlined shape)
+        ctx.fillStyle = bodyGrad;
+        ctx.beginPath();
+        ctx.moveTo(half, 0);                               // Nose tip
+        ctx.quadraticCurveTo(half * 0.6, -s * 0.2, 0, -s * 0.22); // Upper nose curve
+        ctx.lineTo(-half * 0.6, -s * 0.18);               // Upper body
+        ctx.lineTo(-half * 0.6, s * 0.18);                // Lower body
+        ctx.lineTo(0, s * 0.22);                           // Lower nose curve
+        ctx.quadraticCurveTo(half * 0.6, s * 0.2, half, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        // Top wing
+        ctx.fillStyle = darkenColor(color === 'rainbow' ? '#3498db' : color, 20);
+        ctx.beginPath();
+        ctx.moveTo(-half * 0.1, -s * 0.18);
+        ctx.lineTo(-half * 0.55, -half * 0.95);
+        ctx.lineTo(-half * 0.7, -half * 0.9);
+        ctx.lineTo(-half * 0.6, -s * 0.16);
+        ctx.closePath();
+        ctx.fill();
+
+        // Bottom wing
+        ctx.beginPath();
+        ctx.moveTo(-half * 0.1, s * 0.18);
+        ctx.lineTo(-half * 0.55, half * 0.95);
+        ctx.lineTo(-half * 0.7, half * 0.9);
+        ctx.lineTo(-half * 0.6, s * 0.16);
+        ctx.closePath();
+        ctx.fill();
+
+        // Cockpit window (glossy)
+        const cockpitGrad = ctx.createRadialGradient(half * 0.25, -s * 0.02, 0, half * 0.25, -s * 0.02, s * 0.12);
+        cockpitGrad.addColorStop(0, 'rgba(180,230,255,0.9)');
+        cockpitGrad.addColorStop(0.5, 'rgba(100,180,255,0.7)');
+        cockpitGrad.addColorStop(1, 'rgba(40,80,160,0.5)');
+        ctx.fillStyle = cockpitGrad;
+        ctx.beginPath();
+        ctx.ellipse(half * 0.25, 0, s * 0.09, s * 0.06, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Cockpit highlight
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.beginPath();
+        ctx.ellipse(half * 0.3, -s * 0.02, s * 0.03, s * 0.02, -0.3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Hull highlight (specular)
+        ctx.globalAlpha = 0.2;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.moveTo(half * 0.8, -s * 0.03);
+        ctx.quadraticCurveTo(half * 0.2, -s * 0.15, -half * 0.3, -s * 0.12);
+        ctx.lineTo(-half * 0.3, -s * 0.08);
+        ctx.quadraticCurveTo(half * 0.2, -s * 0.1, half * 0.8, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        ctx.restore();
+    }
+
+    // Draw enemy fighter (detailed)
+    function drawEnemyShip(cx, cy, size, color) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        const s = size;
+        const half = s / 2;
+
+        // Enemy faces LEFT (approaching player)
+        // Engine glow
+        ctx.globalAlpha = 0.5;
+        const eGrad = ctx.createRadialGradient(half * 0.4, 0, 0, half * 0.4, 0, s * 0.3);
+        eGrad.addColorStop(0, '#ff4444');
+        eGrad.addColorStop(1, 'rgba(255,0,0,0)');
+        ctx.fillStyle = eGrad;
+        ctx.beginPath();
+        ctx.arc(half * 0.4, 0, s * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Body
+        const bGrad = ctx.createLinearGradient(0, -half, 0, half);
+        bGrad.addColorStop(0, lightenColor(color, 30));
+        bGrad.addColorStop(0.5, color);
+        bGrad.addColorStop(1, darkenColor(color, 30));
+        ctx.fillStyle = bGrad;
+        ctx.beginPath();
+        ctx.moveTo(-half, 0);                              // Nose (pointed left)
+        ctx.lineTo(-half * 0.2, -s * 0.15);
+        ctx.lineTo(half * 0.5, -s * 0.12);
+        ctx.lineTo(half * 0.5, s * 0.12);
+        ctx.lineTo(-half * 0.2, s * 0.15);
+        ctx.closePath();
+        ctx.fill();
+
+        // Top wing (angled aggressively)
+        ctx.fillStyle = darkenColor(color, 30);
+        ctx.beginPath();
+        ctx.moveTo(0, -s * 0.13);
+        ctx.lineTo(half * 0.5, -half);
+        ctx.lineTo(half * 0.6, -half * 0.85);
+        ctx.lineTo(half * 0.4, -s * 0.1);
+        ctx.closePath();
+        ctx.fill();
+
+        // Bottom wing
+        ctx.beginPath();
+        ctx.moveTo(0, s * 0.13);
+        ctx.lineTo(half * 0.5, half);
+        ctx.lineTo(half * 0.6, half * 0.85);
+        ctx.lineTo(half * 0.4, s * 0.1);
+        ctx.closePath();
+        ctx.fill();
+
+        // Red cockpit (menacing)
+        ctx.fillStyle = 'rgba(255,50,50,0.8)';
+        ctx.beginPath();
+        ctx.ellipse(-half * 0.35, 0, s * 0.06, s * 0.04, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Draw meteor with surface detail
+    function drawMeteor(cx, cy, size, color, rotation) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rotation * Math.PI / 180);
+        const r = size / 2;
+
+        // Fire trail (behind meteor)
+        const trailGrad = ctx.createLinearGradient(r, 0, r + size, 0);
+        trailGrad.addColorStop(0, 'rgba(255,120,0,0.6)');
+        trailGrad.addColorStop(0.3, 'rgba(255,80,0,0.3)');
+        trailGrad.addColorStop(1, 'rgba(255,40,0,0)');
+        ctx.fillStyle = trailGrad;
+        ctx.beginPath();
+        ctx.moveTo(r * 0.5, -r * 0.4);
+        ctx.quadraticCurveTo(r + size * 0.6, -r * 0.1, r + size, 0);
+        ctx.quadraticCurveTo(r + size * 0.6, r * 0.1, r * 0.5, r * 0.4);
+        ctx.closePath();
+        ctx.fill();
+
+        // Outer glow
+        ctx.globalAlpha = 0.3;
+        const glowGrad = ctx.createRadialGradient(0, 0, r * 0.6, 0, 0, r * 1.4);
+        glowGrad.addColorStop(0, color);
+        glowGrad.addColorStop(1, 'rgba(255,100,0,0)');
+        ctx.fillStyle = glowGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 1.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Main body (irregular)
+        const bodyGrad = ctx.createRadialGradient(-r * 0.2, -r * 0.2, 0, 0, 0, r);
+        bodyGrad.addColorStop(0, lightenColor(color, 40));
+        bodyGrad.addColorStop(0.5, color);
+        bodyGrad.addColorStop(1, darkenColor(color, 50));
+        ctx.fillStyle = bodyGrad;
+        ctx.beginPath();
+        // Irregular rocky shape
+        const points = 10;
+        for (let i = 0; i <= points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            const wobble = 1 + Math.sin(angle * 3 + 1) * 0.12 + Math.cos(angle * 5 + 2) * 0.08;
+            const px = Math.cos(angle) * r * wobble;
+            const py = Math.sin(angle) * r * wobble;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        // Craters
+        ctx.fillStyle = darkenColor(color, 60);
+        ctx.globalAlpha = 0.5;
+        ctx.beginPath();
+        ctx.arc(-r * 0.2, r * 0.1, r * 0.18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(r * 0.25, -r * 0.25, r * 0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(-r * 0.05, -r * 0.35, r * 0.08, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Highlight
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.beginPath();
+        ctx.ellipse(-r * 0.3, -r * 0.3, r * 0.3, r * 0.15, -0.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Draw black hole with accretion disk
+    function drawBlackHole(cx, cy, size, rotation) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        const r = size / 2;
+
+        // Outer accretion disk (rotating)
+        for (let ring = 3; ring >= 1; ring--) {
+            ctx.save();
+            ctx.rotate(rotation + ring * 0.5);
+            const ringR = r + ring * 8;
+            const ringGrad = ctx.createLinearGradient(-ringR, 0, ringR, 0);
+            const hue = 270 + ring * 20;
+            ringGrad.addColorStop(0, `hsla(${hue},80%,60%,0)`);
+            ringGrad.addColorStop(0.3, `hsla(${hue},80%,60%,${0.15 + ring * 0.05})`);
+            ringGrad.addColorStop(0.5, `hsla(${hue},90%,70%,${0.3 + ring * 0.05})`);
+            ringGrad.addColorStop(0.7, `hsla(${hue},80%,60%,${0.15 + ring * 0.05})`);
+            ringGrad.addColorStop(1, `hsla(${hue},80%,60%,0)`);
+            ctx.strokeStyle = ringGrad;
+            ctx.lineWidth = 3 - ring * 0.5;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, ringR, ringR * 0.35, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // Gravitational lensing glow
+        const lensGrad = ctx.createRadialGradient(0, 0, r * 0.8, 0, 0, r * 1.6);
+        lensGrad.addColorStop(0, 'rgba(120,50,200,0)');
+        lensGrad.addColorStop(0.5, 'rgba(140,70,220,0.15)');
+        lensGrad.addColorStop(0.8, 'rgba(160,80,240,0.08)');
+        lensGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = lensGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Event horizon (pure black center)
+        const bhGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+        bhGrad.addColorStop(0, '#000000');
+        bhGrad.addColorStop(0.7, '#050510');
+        bhGrad.addColorStop(1, '#1a0a30');
+        ctx.fillStyle = bhGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner ring highlight
+        ctx.strokeStyle = 'rgba(180,100,255,0.4)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, r + 2, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    // Draw laser with energy glow
+    function drawLaser(cx, cy, angle, color, w, h, count, patternAngle) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle * Math.PI / 180);
+
+        for (let j = 0; j < count; j++) {
+            ctx.save();
+            ctx.rotate((j * 360 / count + patternAngle) * Math.PI / 180);
+
+            // Outer glow
+            ctx.globalAlpha = 0.15;
+            ctx.fillStyle = color;
+            ctx.fillRect(-w, -h / 2, w * 2, h);
+            ctx.globalAlpha = 0.3;
+            ctx.fillRect(-w * 0.7, -h / 2, w * 1.4, h);
+
+            // Core beam
+            ctx.globalAlpha = 0.9;
+            const beamGrad = ctx.createLinearGradient(0, -h / 2, 0, h / 2);
+            beamGrad.addColorStop(0, color + '88');
+            beamGrad.addColorStop(0.5, '#ffffff');
+            beamGrad.addColorStop(1, color + '88');
+            ctx.fillStyle = beamGrad;
+            ctx.fillRect(-w / 2, -h / 2, w, h);
+
+            // Bright center line
+            ctx.globalAlpha = 0.8;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(-1, -h / 2, 2, h);
+
+            ctx.restore();
+        }
+        ctx.globalAlpha = 1;
+
+        // Central emitter orb
+        const orbGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, 12);
+        orbGrad.addColorStop(0, '#ffffff');
+        orbGrad.addColorStop(0.4, color);
+        orbGrad.addColorStop(1, color + '00');
+        ctx.fillStyle = orbGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Draw pipe as space station column
+    function drawPipe(obs) {
+        const x = obs.x, w = obs.width, gapY = obs.gapY, gap = obs.gap, color = obs.color;
+
+        // --- Top pipe ---
+        const topGrad = ctx.createLinearGradient(x, 0, x + w, 0);
+        topGrad.addColorStop(0, darkenColor(color, 50));
+        topGrad.addColorStop(0.2, darkenColor(color, 20));
+        topGrad.addColorStop(0.5, color);
+        topGrad.addColorStop(0.8, darkenColor(color, 20));
+        topGrad.addColorStop(1, darkenColor(color, 50));
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(x, 0, w, gapY);
+
+        // Panel lines (horizontal segments)
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 1;
+        for (let py = 30; py < gapY; py += 30) {
+            ctx.beginPath();
+            ctx.moveTo(x + 2, py);
+            ctx.lineTo(x + w - 2, py);
+            ctx.stroke();
+        }
+
+        // Top connector (wider, with detail)
+        const connGrad = ctx.createLinearGradient(x - 5, gapY - 22, x + w + 5, gapY - 22);
+        connGrad.addColorStop(0, darkenColor(color, 30));
+        connGrad.addColorStop(0.5, lightenColor(color, 10));
+        connGrad.addColorStop(1, darkenColor(color, 30));
+        ctx.fillStyle = connGrad;
+        ctx.fillRect(x - 5, gapY - 22, w + 10, 22);
+        // Warning stripe on connector
+        ctx.fillStyle = 'rgba(255,200,0,0.15)';
+        ctx.fillRect(x - 5, gapY - 22, w + 10, 4);
+
+        // Gap indicators (danger lights)
+        ctx.fillStyle = 'rgba(255,80,80,0.6)';
+        const lightFlicker = Math.sin(Date.now() * 0.005) * 0.3 + 0.7;
+        ctx.globalAlpha = lightFlicker;
+        ctx.beginPath();
+        ctx.arc(x + w / 2, gapY - 6, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Left specular highlight
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.fillRect(x + 2, 0, 3, gapY);
+
+        // --- Bottom pipe ---
+        const btmY = gapY + gap;
+        const btmH = canvas.height - btmY;
+        ctx.fillStyle = topGrad; // reuse gradient
+        ctx.fillRect(x, btmY, w, btmH);
+
+        // Panel lines
+        for (let py = btmY + 30; py < canvas.height; py += 30) {
+            ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+            ctx.beginPath();
+            ctx.moveTo(x + 2, py);
+            ctx.lineTo(x + w - 2, py);
+            ctx.stroke();
+        }
+
+        // Bottom connector
+        ctx.fillStyle = connGrad;
+        ctx.fillRect(x - 5, btmY, w + 10, 22);
+        ctx.fillStyle = 'rgba(255,200,0,0.15)';
+        ctx.fillRect(x - 5, btmY + 18, w + 10, 4);
+
+        // Bottom danger light
+        ctx.fillStyle = 'rgba(255,80,80,0.6)';
+        ctx.globalAlpha = lightFlicker;
+        ctx.beginPath();
+        ctx.arc(x + w / 2, btmY + 6, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Left specular
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.fillRect(x + 2, btmY, 3, btmH);
+    }
+
+    // Color utility helpers
+    function lightenColor(hex, amount) {
+        if (hex === 'rainbow') return '#ffffff';
+        const num = parseInt(hex.replace('#', ''), 16);
+        const r = Math.min(255, (num >> 16) + amount);
+        const g = Math.min(255, ((num >> 8) & 0xff) + amount);
+        const b = Math.min(255, (num & 0xff) + amount);
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+    function darkenColor(hex, amount) {
+        if (hex === 'rainbow') return '#333333';
+        const num = parseInt(hex.replace('#', ''), 16);
+        const r = Math.max(0, (num >> 16) - amount);
+        const g = Math.max(0, ((num >> 8) & 0xff) - amount);
+        const b = Math.max(0, (num & 0xff) - amount);
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
     // === RENDER (Optimized) ===
     function render() {
-        // 테마별 배경 렌더링
+        // Background
         renderBackground();
 
-        // Stars - varied sizes with twinkling and shooting star effects
+        // Stars - round, varied sizes, twinkling
         const theme = getCurrentThemeData();
         const starColor = theme.particles && theme.particles.color ? theme.particles.color : '#ffffff';
-        ctx.fillStyle = starColor;
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
             ctx.globalAlpha = s.alpha;
-            ctx.fillRect(s.x, s.y, s.size, s.size);
+            ctx.fillStyle = starColor;
+            ctx.beginPath();
+            ctx.arc(s.x + s.size / 2, s.y + s.size / 2, s.size / 2, 0, Math.PI * 2);
+            ctx.fill();
 
-            // Render shooting star effect
+            // Shooting star with gradient trail
             if (s.isShootingStar && s.shootingLife > 0) {
-                const endX = s.shootingStartX + 40;
-                const endY = s.shootingStartY + 30;
-                ctx.globalAlpha = s.shootingLife * 0.6;
-                ctx.strokeStyle = starColor;
-                ctx.lineWidth = 1;
+                const len = 50;
+                const endX = s.shootingStartX + len;
+                const endY = s.shootingStartY + len * 0.6;
+                const trailGrad = ctx.createLinearGradient(s.shootingStartX, s.shootingStartY, endX, endY);
+                trailGrad.addColorStop(0, starColor);
+                trailGrad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.globalAlpha = s.shootingLife * 0.8;
+                ctx.strokeStyle = trailGrad;
+                ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(s.shootingStartX, s.shootingStartY);
                 ctx.lineTo(endX, endY);
                 ctx.stroke();
                 s.shootingLife -= 0.03;
-                if (s.shootingLife <= 0) {
-                    s.isShootingStar = false;
-                }
+                if (s.shootingLife <= 0) s.isShootingStar = false;
             }
         }
         ctx.globalAlpha = 1;
 
-        // Obstacles - 타입별 렌더링
+        // Obstacles
         for (let i = 0; i < obstacles.length; i++) {
             const obs = obstacles[i];
-            ctx.save();
 
             if (obs.type === 'pipe' || !obs.type) {
-                // 파이프 장애물 with gradient and effects
-                // Top pipe with vertical gradient
-                const topGradient = ctx.createLinearGradient(obs.x, 0, obs.x + obs.width, 0);
-                topGradient.addColorStop(0, obs.color + '44');
-                topGradient.addColorStop(0.5, obs.color + 'bb');
-                topGradient.addColorStop(1, obs.color + '44');
-                ctx.fillStyle = topGradient;
-                ctx.fillRect(obs.x, 0, obs.width, obs.gapY);
-
-                // Top pipe connector
-                ctx.fillStyle = obs.color;
-                ctx.fillRect(obs.x - 3, obs.gapY - 18, obs.width + 6, 18);
-
-                // Bottom pipe with vertical gradient
-                const bottomGradient = ctx.createLinearGradient(obs.x, obs.gapY + obs.gap, obs.x + obs.width, obs.gapY + obs.gap + (canvas.height - obs.gapY - obs.gap));
-                bottomGradient.addColorStop(0, obs.color + '44');
-                bottomGradient.addColorStop(0.5, obs.color + 'bb');
-                bottomGradient.addColorStop(1, obs.color + '44');
-                ctx.fillStyle = bottomGradient;
-                ctx.fillRect(obs.x, obs.gapY + obs.gap, obs.width, canvas.height - obs.gapY - obs.gap);
-
-                // Bottom pipe connector
-                ctx.fillStyle = obs.color;
-                ctx.fillRect(obs.x - 3, obs.gapY + obs.gap, obs.width + 6, 18);
-
-                // Pipe borders (darker stroke)
-                ctx.strokeStyle = obs.color;
-                ctx.globalAlpha = 0.6;
-                ctx.lineWidth = 1;
-                ctx.strokeRect(obs.x, 0, obs.width, obs.gapY);
-                ctx.strokeRect(obs.x, obs.gapY + obs.gap, obs.width, canvas.height - obs.gapY - obs.gap);
-                ctx.globalAlpha = 1;
-
-                // Left edge highlight (white glow)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-                ctx.fillRect(obs.x, 0, 1, obs.gapY);
-                ctx.fillRect(obs.x, obs.gapY + obs.gap, 1, canvas.height - obs.gapY - obs.gap);
-
-                // Gap lines
-                ctx.fillStyle = obs.color;
-                ctx.globalAlpha = 0.4;
-                ctx.fillRect(obs.x, obs.gapY - 2, obs.width, 2);
-                ctx.fillRect(obs.x, obs.gapY + obs.gap, obs.width, 2);
-                ctx.globalAlpha = 1;
+                drawPipe(obs);
             } else if (obs.type === 'meteor') {
-                // 운석
-                ctx.translate(obs.x, obs.y);
-                ctx.rotate(obs.rotation * Math.PI / 180);
-                ctx.fillStyle = obs.color;
-                ctx.beginPath();
-                ctx.arc(0, 0, obs.size / 2, 0, Math.PI * 2);
-                ctx.fill();
-                // 불타는 효과
-                ctx.fillStyle = '#ff8800';
-                ctx.globalAlpha = 0.6;
-                ctx.beginPath();
-                ctx.arc(-obs.size / 4, -obs.size / 4, obs.size / 4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
+                drawMeteor(obs.x, obs.y, obs.size, obs.color, obs.rotation);
             } else if (obs.type === 'enemy') {
-                // 적 우주선 (삼각형)
-                ctx.translate(obs.x, obs.y);
-                ctx.fillStyle = obs.color;
-                ctx.beginPath();
-                ctx.moveTo(0, -obs.size / 2);
-                ctx.lineTo(-obs.size / 2, obs.size / 2);
-                ctx.lineTo(obs.size / 2, obs.size / 2);
-                ctx.closePath();
-                ctx.fill();
+                drawEnemyShip(obs.x, obs.y, obs.size, obs.color);
             } else if (obs.type === 'laser') {
-                // 레이저 벽
-                ctx.translate(obs.x, obs.y);
-                ctx.rotate(obs.angle * Math.PI / 180);
-                ctx.fillStyle = obs.color;
-                ctx.globalAlpha = 0.8;
-                for (let j = 0; j < obs.count; j++) {
-                    ctx.save();
-                    ctx.rotate((j * 360 / obs.count + obs.patternAngle) * Math.PI / 180);
-                    ctx.fillRect(-obs.width / 2, -obs.height / 2, obs.width, obs.height);
-                    ctx.restore();
-                }
-                ctx.globalAlpha = 1;
+                drawLaser(obs.x, obs.y, obs.angle, obs.color, obs.width, obs.height, obs.count, obs.patternAngle);
             } else if (obs.type === 'blackhole') {
-                // 블랙홀
-                ctx.translate(obs.x, obs.y);
-                ctx.rotate(obs.rotation);
-                ctx.fillStyle = obs.color;
-                ctx.beginPath();
-                ctx.arc(0, 0, obs.size / 2, 0, Math.PI * 2);
-                ctx.fill();
-                // 보라색 테두리
-                ctx.strokeStyle = '#8e44ad';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.arc(0, 0, obs.size / 2 + 5, 0, Math.PI * 2);
-                ctx.stroke();
+                drawBlackHole(obs.x, obs.y, obs.size, obs.rotation);
             }
-
-            ctx.restore();
         }
 
-        // Particles
+        // Particles (round, glowing)
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             ctx.globalAlpha = p.life;
+            // Soft glow
+            const pr = p.size * p.life;
+            const pGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, pr * 1.5);
+            pGrad.addColorStop(0, p.color);
+            pGrad.addColorStop(1, p.color + '00');
+            ctx.fillStyle = pGrad;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, pr * 1.5, 0, Math.PI * 2);
+            ctx.fill();
+            // Bright center
             ctx.fillStyle = p.color;
-            ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size * p.life, p.size * p.life);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, pr * 0.5, 0, Math.PI * 2);
+            ctx.fill();
         }
         ctx.globalAlpha = 1;
 
-        // Player with glow and motion trail
+        // Player
         const skin = SKINS.find(s => s.id === selectedSkin) || SKINS[0];
         if (skin) {
-            // Draw motion trail (3-4 semi-transparent circles behind player)
-            ctx.globalAlpha = 0.15;
+            // Engine trail (motion trail as exhaust)
             const trailCount = player.motionTrail.length;
+            const trailColor = skin.color === 'rainbow' ? '#ff8c00' : skin.color;
             for (let i = 0; i < trailCount; i++) {
-                const trailAlpha = (i + 1) / (trailCount + 1);
-                ctx.globalAlpha = 0.15 * trailAlpha;
-                ctx.fillStyle = skin.color === 'rainbow' ? '#ffffff' : skin.color;
+                const t = (i + 1) / (trailCount + 1);
+                const trailR = player.size * 0.3 * t;
+                ctx.globalAlpha = 0.1 * t;
+                const tGrad = ctx.createRadialGradient(
+                    player.x + player.size / 2, player.motionTrail[i] + player.size / 2, 0,
+                    player.x + player.size / 2, player.motionTrail[i] + player.size / 2, trailR
+                );
+                tGrad.addColorStop(0, trailColor);
+                tGrad.addColorStop(1, trailColor + '00');
+                ctx.fillStyle = tGrad;
                 ctx.beginPath();
-                ctx.arc(player.x + player.size / 2, player.motionTrail[i] + player.size / 2, player.size / 2, 0, Math.PI * 2);
+                ctx.arc(player.x + player.size / 2, player.motionTrail[i] + player.size / 2, trailR, 0, Math.PI * 2);
                 ctx.fill();
             }
             ctx.globalAlpha = 1;
 
+            // Ship glow halo
             ctx.save();
-            ctx.translate(player.x + player.size / 2, player.y + player.size / 2);
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = skin.color === 'rainbow' ? '#ff7f00' : (skin.color || '#ffffff');
 
-            // Soft glow effect (15px blur)
-            ctx.shadowBlur = 15;
-            if (skin.color === 'rainbow') {
-                ctx.shadowColor = '#ff7f00'; // Rainbow orange-ish glow
-            } else if (typeof skin.color === 'string' && skin.color !== 'rainbow') {
-                ctx.shadowColor = skin.color;
-            } else {
-                ctx.shadowColor = '#ffffff';
-            }
+            // Draw detailed spaceship
+            drawSpaceship(
+                player.x + player.size / 2,
+                player.y + player.size / 2,
+                player.size,
+                skin.color,
+                player.rotation,
+                skin.id
+            );
 
-            ctx.rotate(player.rotation * Math.PI / 180);
-
-            // Rainbow 스킨 처리
-            if (skin.color === 'rainbow') {
-                const gradient = ctx.createLinearGradient(-player.size/2, -player.size/2, player.size/2, player.size/2);
-                gradient.addColorStop(0, '#ff0000');
-                gradient.addColorStop(0.17, '#ff7f00');
-                gradient.addColorStop(0.33, '#ffff00');
-                gradient.addColorStop(0.5, '#00ff00');
-                gradient.addColorStop(0.67, '#0000ff');
-                gradient.addColorStop(0.83, '#4b0082');
-                gradient.addColorStop(1, '#9400d3');
-                ctx.fillStyle = gradient;
-            } else {
-                ctx.fillStyle = skin.color;
-            }
-
-            ctx.font = `${player.size}px serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(skin.emoji, 0, 0);
-
-            // Reset shadow
             ctx.shadowBlur = 0;
             ctx.shadowColor = 'transparent';
-
             ctx.restore();
         }
     }
@@ -876,6 +1278,7 @@
         state = 'gameover';
         cancelAnimationFrame(animFrameId);
 
+        if (sfx) sfx.gameOver();
         spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
 
         playCount++;
@@ -1127,7 +1530,10 @@
     function handleInput(e) {
         if (e) e.preventDefault();
         if (state === 'ready') beginPlaying();
-        else if (state === 'playing') player.jump();
+        else if (state === 'playing') {
+            player.jump();
+            if (sfx) sfx.jump();
+        }
     }
 
     canvas.addEventListener('touchstart', handleInput, { passive: false });

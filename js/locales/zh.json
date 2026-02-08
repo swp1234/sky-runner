@@ -10,7 +10,8 @@
     "skins": "🚀 皮肤库",
     "themes": "🎨 主题选择",
     "stats": "📊 统计",
-    "hint": "点击或按空格键玩游戏"
+    "hint": "点击或按空格键玩游戏",
+    "home": "DopaBrain 首页"
   },
   "game": {
     "tapToStart": "点击开始！",

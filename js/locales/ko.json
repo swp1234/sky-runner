@@ -10,7 +10,8 @@
     "skins": "🚀 스킨 보관함",
     "themes": "🎨 테마 선택",
     "stats": "📊 통계",
-    "hint": "터치 또는 스페이스바로 조작"
+    "hint": "터치 또는 스페이스바로 조작",
+    "home": "DopaBrain 홈"
   },
   "game": {
     "tapToStart": "탭하여 시작!",

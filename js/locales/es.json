@@ -10,7 +10,8 @@
     "skins": "🚀 Apariencias",
     "themes": "🎨 Temas",
     "stats": "📊 Estadísticas",
-    "hint": "Toca o presiona Espacio para jugar"
+    "hint": "Toca o presiona Espacio para jugar",
+    "home": "DopaBrain Inicio"
   },
   "game": {
     "tapToStart": "¡Toca para comenzar!",

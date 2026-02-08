@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "選択済み"
+  },
+  "stats": {
+    "totalPlays": "総プレイ回数",
+    "highScore": "ハイスコア",
+    "avgScore": "平均スコア",
+    "totalScore": "累計スコア",
+    "bestStreak": "最高連続",
+    "tokens": "所持トークン",
+    "unlockedSkins": "解放済みスキン",
+    "rank": "称号",
+    "timesUnit": "回"
+  },
+  "skins": {
+    "scoreRequired": "スコア{0}点が必要",
+    "playRequired": "{0}回プレイが必要",
+    "watchAdUnlock": "広告を見てアンロック",
+    "inUse": "使用中",
+    "select": "選択"
+  },
+  "share": {
+    "points": "点！",
+    "challenge": "挑戦してみてください！",
+    "copied": "コピーしました！"
   }
 }

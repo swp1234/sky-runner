@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "चयनित"
+  },
+  "stats": {
+    "totalPlays": "कुल खेल",
+    "highScore": "उच्चतम स्कोर",
+    "avgScore": "औसत स्कोर",
+    "totalScore": "कुल स्कोर",
+    "bestStreak": "सर्वश्रेष्ठ लगातार",
+    "tokens": "टोकन",
+    "unlockedSkins": "अनलॉक स्किन्स",
+    "rank": "रैंक",
+    "timesUnit": " बार"
+  },
+  "skins": {
+    "scoreRequired": "{0} स्कोर आवश्यक",
+    "playRequired": "{0} बार खेलना आवश्यक",
+    "watchAdUnlock": "अनलॉक करने के लिए विज्ञापन देखें",
+    "inUse": "उपयोग में",
+    "select": "चुनें"
+  },
+  "share": {
+    "points": " अंक!",
+    "challenge": "इसे आज़माएं!",
+    "copied": "कॉपी हो गया!"
   }
 }

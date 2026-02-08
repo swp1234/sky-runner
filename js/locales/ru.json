@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "Выбран"
+  },
+  "stats": {
+    "totalPlays": "Всего игр",
+    "highScore": "Лучший счёт",
+    "avgScore": "Средний счёт",
+    "totalScore": "Общий счёт",
+    "bestStreak": "Лучшая серия",
+    "tokens": "Токены",
+    "unlockedSkins": "Открытые скины",
+    "rank": "Звание",
+    "timesUnit": ""
+  },
+  "skins": {
+    "scoreRequired": "Необходимо {0} очков",
+    "playRequired": "Необходимо {0} игр",
+    "watchAdUnlock": "Посмотреть рекламу и разблокировать",
+    "inUse": "Используется",
+    "select": "Выбрать"
+  },
+  "share": {
+    "points": " очков!",
+    "challenge": "Попробуйте!",
+    "copied": "Скопировано!"
   }
 }

@@ -7,8 +7,8 @@
     "subtitle": "Sky Runner",
     "highScore": "Höchste Punktzahl",
     "startGame": "Spiel starten",
-    "skins": "🚀 Designs",
-    "themes": "🎨 Designs",
+    "skins": "🚀 Skins",
+    "themes": "🎨 Themen",
     "stats": "📊 Statistik",
     "hint": "Tippe oder drücke Leertaste zum Spielen",
     "home": "DopaBrain Startseite"
@@ -49,12 +49,35 @@
     "close": "✕ Schließen"
   },
   "screens": {
-    "skins": "Designs",
-    "themes": "Designs",
+    "skins": "Skins",
+    "themes": "Themen",
     "stats": "Statistik",
     "back": "← Zurück"
   },
   "themes": {
     "selected": "Ausgewählt"
+  },
+  "stats": {
+    "totalPlays": "Gesamt gespielt",
+    "highScore": "Höchste Punktzahl",
+    "avgScore": "Durchschnitt",
+    "totalScore": "Gesamtpunktzahl",
+    "bestStreak": "Beste Serie",
+    "tokens": "Token",
+    "unlockedSkins": "Freigeschaltete Designs",
+    "rank": "Rang",
+    "timesUnit": " Mal"
+  },
+  "skins": {
+    "scoreRequired": "{0} Punkte benötigt",
+    "playRequired": "{0} Mal spielen benötigt",
+    "watchAdUnlock": "Anzeige ansehen zum Freischalten",
+    "inUse": "In Verwendung",
+    "select": "Auswählen"
+  },
+  "share": {
+    "points": " Punkte!",
+    "challenge": "Versuch es auch!",
+    "copied": "Kopiert!"
   }
 }

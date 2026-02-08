@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "선택됨"
+  },
+  "stats": {
+    "totalPlays": "총 플레이",
+    "highScore": "최고 점수",
+    "avgScore": "평균 점수",
+    "totalScore": "누적 점수",
+    "bestStreak": "최고 연속",
+    "tokens": "보유 토큰",
+    "unlockedSkins": "해금 스킨",
+    "rank": "칭호",
+    "timesUnit": "회"
+  },
+  "skins": {
+    "scoreRequired": "점수 {0}점 달성 필요",
+    "playRequired": "{0}회 플레이 필요",
+    "watchAdUnlock": "광고 시청하여 언락",
+    "inUse": "사용 중",
+    "select": "선택"
+  },
+  "share": {
+    "points": "점!",
+    "challenge": "도전해보세요!",
+    "copied": "복사되었습니다!"
   }
 }

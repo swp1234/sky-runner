@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "Seçilmiş"
+  },
+  "stats": {
+    "totalPlays": "Toplam Oyun",
+    "highScore": "En Yüksek Puan",
+    "avgScore": "Ortalama Puan",
+    "totalScore": "Toplam Puan",
+    "bestStreak": "En İyi Seri",
+    "tokens": "Jeton",
+    "unlockedSkins": "Açılan Kozmetikler",
+    "rank": "Rütbe",
+    "timesUnit": " kere"
+  },
+  "skins": {
+    "scoreRequired": "{0} puan gerekli",
+    "playRequired": "{0} kez oynamanız gerekli",
+    "watchAdUnlock": "Reklam izleyerek aç",
+    "inUse": "Kullanımda",
+    "select": "Seç"
+  },
+  "share": {
+    "points": " puan!",
+    "challenge": "Sen de dene!",
+    "copied": "Kopyalandı!"
   }
 }

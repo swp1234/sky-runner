@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "Selected"
+  },
+  "stats": {
+    "totalPlays": "Total Plays",
+    "highScore": "High Score",
+    "avgScore": "Average Score",
+    "totalScore": "Total Score",
+    "bestStreak": "Best Streak",
+    "tokens": "Tokens",
+    "unlockedSkins": "Unlocked Skins",
+    "rank": "Rank",
+    "timesUnit": ""
+  },
+  "skins": {
+    "scoreRequired": "Score {0} required",
+    "playRequired": "{0} plays required",
+    "watchAdUnlock": "Watch Ad to Unlock",
+    "inUse": "In Use",
+    "select": "Select"
+  },
+  "share": {
+    "points": " pts!",
+    "challenge": "Try it out!",
+    "copied": "Copied!"
   }
 }

@@ -1,5 +1,31 @@
-const CACHE_NAME = 'sky-runner-v1';
-const ASSETS = ['./', './index.html', './css/style.css', './js/game.js', './manifest.json', './icon-192.svg', './icon-512.svg'];
+const CACHE_NAME = 'sky-runner-v2';
+const ASSETS = [
+    './',
+    './index.html',
+    './css/style.css',
+    './js/game.js',
+    './js/i18n.js',
+    './js/sound-engine.js',
+    './js/skins-data.js',
+    './js/titles-data.js',
+    './js/obstacles-data.js',
+    './js/themes-data.js',
+    './js/locales/ko.json',
+    './js/locales/en.json',
+    './js/locales/ja.json',
+    './js/locales/zh.json',
+    './js/locales/hi.json',
+    './js/locales/ru.json',
+    './js/locales/es.json',
+    './js/locales/pt.json',
+    './js/locales/id.json',
+    './js/locales/tr.json',
+    './js/locales/de.json',
+    './js/locales/fr.json',
+    './manifest.json',
+    './icon-192.svg',
+    './icon-512.svg'
+];
 
 self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())));
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))).then(() => self.clients.claim())));

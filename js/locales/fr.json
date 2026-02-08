@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "Sélectionné"
+  },
+  "stats": {
+    "totalPlays": "Total de parties",
+    "highScore": "Meilleur score",
+    "avgScore": "Score moyen",
+    "totalScore": "Score total",
+    "bestStreak": "Meilleure série",
+    "tokens": "Jetons",
+    "unlockedSkins": "Skins débloqués",
+    "rank": "Rang",
+    "timesUnit": " fois"
+  },
+  "skins": {
+    "scoreRequired": "{0} points requis",
+    "playRequired": "{0} parties requises",
+    "watchAdUnlock": "Regarder une annonce pour débloquer",
+    "inUse": "En cours d'utilisation",
+    "select": "Sélectionner"
+  },
+  "share": {
+    "points": " pts !",
+    "challenge": "Essayez aussi !",
+    "copied": "Copié !"
   }
 }

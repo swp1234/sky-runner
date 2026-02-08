@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "Dipilih"
+  },
+  "stats": {
+    "totalPlays": "Total Main",
+    "highScore": "Skor Tertinggi",
+    "avgScore": "Skor Rata-rata",
+    "totalScore": "Skor Total",
+    "bestStreak": "Seri Terbaik",
+    "tokens": "Token",
+    "unlockedSkins": "Kulit Terbuka",
+    "rank": "Peringkat",
+    "timesUnit": " kali"
+  },
+  "skins": {
+    "scoreRequired": "Diperlukan skor {0}",
+    "playRequired": "Diperlukan {0} kali bermain",
+    "watchAdUnlock": "Tonton iklan untuk membuka",
+    "inUse": "Digunakan",
+    "select": "Pilih"
+  },
+  "share": {
+    "points": " poin!",
+    "challenge": "Coba juga!",
+    "copied": "Disalin!"
   }
 }

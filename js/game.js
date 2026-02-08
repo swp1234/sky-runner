@@ -27,6 +27,11 @@
     // SKINS_DATA is loaded from skins-data.js
     const SKINS = SKINS_DATA; // Use new data
 
+    // Helper: get localized name from data objects (uses nameEn for non-Korean)
+    function localName(obj) {
+        return (i18n.currentLang === 'ko' ? obj.name : (obj.nameEn || obj.name));
+    }
+
     // === DOM ===
     const canvas = document.getElementById('game-canvas');
     const ctx = canvas.getContext('2d');
@@ -309,12 +314,12 @@
                 const gapY = Math.random() * (maxY - minY) + minY;
                 obstacles.push({
                     type: 'pipe',
-                    x: canvas.width + 10, 
-                    gapY, 
-                    gap, 
-                    width: PIPE_WIDTH, 
+                    x: canvas.width + 10,
+                    gapY,
+                    gap,
+                    width: PIPE_WIDTH,
                     passed: false,
-                    color: pipeData.visual.color,
+                    color: getObstacleColor('pipe'),
                     scoreReward: pipeData.scoreReward
                 });
             }
@@ -430,8 +435,10 @@
         // Score display update with pop effect
         if (hudScore.textContent !== score.toString()) {
             hudScore.textContent = score;
+            hudScore.classList.remove('score-pop');
+            // Force reflow to restart animation
+            void hudScore.offsetWidth;
             hudScore.classList.add('score-pop');
-            setTimeout(() => hudScore.classList.remove('score-pop'), 300);
         }
     }
 
@@ -1280,10 +1287,10 @@
     }
 
     function triggerGameOver() {
-        // 게임 오버 시 테마 언락 체크
-        checkThemeUnlock();
         if (state !== 'playing') return;
         state = 'gameover';
+        // 게임 오버 시 테마 언락 체크
+        checkThemeUnlock();
         cancelAnimationFrame(animFrameId);
 
         if (sfx) sfx.gameOver();
@@ -1304,7 +1311,7 @@
         goScore.textContent = score;
         goBest.textContent = highScore;
         const rank = getRank(score);
-        goRank.innerHTML = `<span class="rank-icon">${rank.emoji}</span><span class="rank-title">${rank.name}</span>`;
+        goRank.innerHTML = `<span class="rank-icon">${rank.emoji}</span><span class="rank-title">${localName(rank)}</span>`;
         if (isNewRecord) {
             goNewRecord.textContent = i18n.t('gameover.newRecord');
         }
@@ -1351,6 +1358,7 @@
     }
 
     // === INTERSTITIAL AD ===
+    let adInterval = null;
     function showInterstitialAd(callback) {
         interstitialOverlay.classList.remove('hidden');
         const countdownEl = document.getElementById('ad-countdown');
@@ -1358,12 +1366,14 @@
         let count = 5;
         closeBtn.classList.add('hidden');
         countdownEl.textContent = count;
-        const interval = setInterval(() => {
+        if (adInterval) clearInterval(adInterval);
+        adInterval = setInterval(() => {
             count--;
             countdownEl.textContent = count;
-            if (count <= 0) { clearInterval(interval); closeBtn.classList.remove('hidden'); }
+            if (count <= 0) { clearInterval(adInterval); adInterval = null; closeBtn.classList.remove('hidden'); }
         }, 1000);
         closeBtn.onclick = () => {
+            if (adInterval) { clearInterval(adInterval); adInterval = null; }
             interstitialOverlay.classList.add('hidden');
             if (callback) callback();
         };
@@ -1418,22 +1428,22 @@
             let unlockText = '';
             if (!owned) {
                 if (skin.unlockType === 'score') {
-                    unlockText = `<div class="skin-unlock">점수 ${skin.unlockValue}점 달성 필요</div>`;
+                    unlockText = `<div class="skin-unlock">${i18n.t('skins.scoreRequired').replace('{0}', skin.unlockValue)}</div>`;
                 } else if (skin.unlockType === 'play_count') {
-                    unlockText = `<div class="skin-unlock">${skin.unlockValue}회 플레이 필요</div>`;
+                    unlockText = `<div class="skin-unlock">${i18n.t('skins.playRequired').replace('{0}', skin.unlockValue)}</div>`;
                 } else if (skin.unlockType === 'rewarded_ad') {
-                    unlockText = `<button class="skin-unlock-btn" data-skin="${skin.id}">광고 시청하여 언락</button>`;
+                    unlockText = `<button class="skin-unlock-btn" data-skin="${skin.id}">${i18n.t('skins.watchAdUnlock')}</button>`;
                 }
             }
-            
+
             return `
                 <div class="skin-card ${active ? 'active' : ''} ${owned ? 'owned' : 'locked'}" data-skin="${skin.id}" style="border-color: ${rarityColor}">
                     <div class="skin-emoji">${skin.emoji}</div>
-                    <div class="skin-name">${skin.name}</div>
+                    <div class="skin-name">${localName(skin)}</div>
                     <div class="skin-rarity" style="color: ${rarityColor}">${rarityName}</div>
                     <div class="skin-description">${skin.description}</div>
                     ${owned
-                        ? (active ? '<div class="skin-status">사용 중</div>' : '<button class="skin-select-btn" data-skin="' + skin.id + '">선택</button>')
+                        ? (active ? `<div class="skin-status">${i18n.t('skins.inUse')}</div>` : `<button class="skin-select-btn" data-skin="${skin.id}">${i18n.t('skins.select')}</button>`)
                         : unlockText
                     }
                 </div>`;
@@ -1463,14 +1473,14 @@
         const rank = getRank(highScore);
         document.getElementById('stats-content').innerHTML = `
             <div class="stat-card">
-                <div class="stat-row"><span>총 플레이</span><strong>${playCount}회</strong></div>
-                <div class="stat-row"><span>최고 점수</span><strong>${highScore}</strong></div>
-                <div class="stat-row"><span>평균 점수</span><strong>${avg}</strong></div>
-                <div class="stat-row"><span>누적 점수</span><strong>${totalScore.toLocaleString()}</strong></div>
-                <div class="stat-row"><span>최고 연속</span><strong>${bestStreak}회</strong></div>
-                <div class="stat-row"><span>보유 토큰</span><strong>🎫 ${skinTokens}</strong></div>
-                <div class="stat-row"><span>해금 스킨</span><strong>${unlockedSkins.length}/${SKINS.length}</strong></div>
-                <div class="stat-row"><span>칭호</span><strong>${rank.icon} ${rank.title}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.totalPlays">${i18n.t('stats.totalPlays')}</span><strong>${playCount}${i18n.t('stats.timesUnit')}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.highScore">${i18n.t('stats.highScore')}</span><strong>${highScore}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.avgScore">${i18n.t('stats.avgScore')}</span><strong>${avg}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.totalScore">${i18n.t('stats.totalScore')}</span><strong>${totalScore.toLocaleString()}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.bestStreak">${i18n.t('stats.bestStreak')}</span><strong>${bestStreak}${i18n.t('stats.timesUnit')}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.tokens">${i18n.t('stats.tokens')}</span><strong>🎫 ${skinTokens}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.unlockedSkins">${i18n.t('stats.unlockedSkins')}</span><strong>${unlockedSkins.length}/${SKINS.length}</strong></div>
+                <div class="stat-row"><span data-i18n="stats.rank">${i18n.t('stats.rank')}</span><strong>${rank.emoji} ${localName(rank)}</strong></div>
             </div>`;
         i18n.updateUI();
     }
@@ -1478,10 +1488,10 @@
     // === SHARE ===
     function shareResult() {
         const rank = getRank(score);
-        const text = `🚀 Sky Runner ${score}점!\n${rank.icon} ${rank.title}\n도전해보세요!`;
+        const text = `🚀 Sky Runner ${score}${i18n.t('share.points')}\n${rank.emoji} ${localName(rank)}\n${i18n.t('share.challenge')}`;
         const url = 'https://dopabrain.com/sky-runner/';
         if (navigator.share) { navigator.share({ title: 'Sky Runner', text, url }).catch(() => {}); }
-        else { navigator.clipboard.writeText(text + '\n' + url).then(() => alert('복사되었습니다!')).catch(() => {}); }
+        else { navigator.clipboard.writeText(text + '\n' + url).then(() => alert(i18n.t('share.copied'))).catch(() => {}); }
     }
 
     // === STORAGE ===
@@ -1591,8 +1601,8 @@
             info.className = 'theme-info';
             const selectedText = isSelected ? `<div class="theme-selected-badge">✓ ${i18n.t('themes.selected') || '선택됨'}</div>` : '';
             info.innerHTML = `
-                <div class="theme-name">${theme.name}</div>
-                <div class="theme-description">${theme.description}</div>
+                <div class="theme-name">${localName(theme)}</div>
+                <div class="theme-description">${i18n.currentLang === 'ko' ? theme.description : (theme.descriptionEn || theme.description)}</div>
                 ${!isUnlocked ? `<div class="theme-unlock">${theme.unlockCondition}</div>` : ''}
                 ${selectedText}
             `;
@@ -1642,6 +1652,9 @@
     hsValue.textContent = highScore;
     resizeCanvas();
     showScreen(menuScreen);
+
+    // Score pop animation cleanup
+    hudScore.addEventListener('animationend', () => hudScore.classList.remove('score-pop'));
 
     // === LANGUAGE SUPPORT ===
     async function initLanguageSelector() {

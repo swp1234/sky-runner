@@ -56,5 +56,28 @@
   },
   "themes": {
     "selected": "已选择"
+  },
+  "stats": {
+    "totalPlays": "总游戏次数",
+    "highScore": "最高分",
+    "avgScore": "平均分",
+    "totalScore": "累计分数",
+    "bestStreak": "最佳连续",
+    "tokens": "持有代币",
+    "unlockedSkins": "已解锁皮肤",
+    "rank": "称号",
+    "timesUnit": "次"
+  },
+  "skins": {
+    "scoreRequired": "需要达到{0}分",
+    "playRequired": "需要玩{0}次",
+    "watchAdUnlock": "观看广告解锁",
+    "inUse": "使用中",
+    "select": "选择"
+  },
+  "share": {
+    "points": "分！",
+    "challenge": "来挑战吧！",
+    "copied": "已复制！"
   }
 }

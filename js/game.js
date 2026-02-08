@@ -829,7 +829,7 @@
     }
 
     // === INTERSTITIAL AD ===
-    function showInterstitialAd() {
+    function showInterstitialAd(callback) {
         interstitialOverlay.classList.remove('hidden');
         const countdownEl = document.getElementById('ad-countdown');
         const closeBtn = document.getElementById('btn-close-ad');
@@ -841,7 +841,10 @@
             countdownEl.textContent = count;
             if (count <= 0) { clearInterval(interval); closeBtn.classList.remove('hidden'); }
         }, 1000);
-        closeBtn.onclick = () => interstitialOverlay.classList.add('hidden');
+        closeBtn.onclick = () => {
+            interstitialOverlay.classList.add('hidden');
+            if (callback) callback();
+        };
     }
 
     // === SKINS ===
@@ -926,8 +929,7 @@
         grid.querySelectorAll('.skin-unlock-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                showInterstitialAd();
-                setTimeout(() => unlockSkinByAd(btn.dataset.skin), 5500);
+                showInterstitialAd(() => unlockSkinByAd(btn.dataset.skin));
             });
         });
     }
@@ -954,7 +956,7 @@
     function shareResult() {
         const rank = getRank(score);
         const text = `🚀 Sky Runner ${score}점!\n${rank.icon} ${rank.title}\n도전해보세요!`;
-        const url = 'https://swp1234.github.io/sky-runner/';
+        const url = 'https://dopabrain.com/sky-runner/';
         if (navigator.share) { navigator.share({ title: 'Sky Runner', text, url }).catch(() => {}); }
         else { navigator.clipboard.writeText(text + '\n' + url).then(() => alert('복사되었습니다!')).catch(() => {}); }
     }
@@ -1099,8 +1101,7 @@
     document.getElementById('btn-themes-back').addEventListener('click', goToMenu);
     document.getElementById('btn-stats-back').addEventListener('click', goToMenu);
     document.getElementById('btn-revive').addEventListener('click', () => {
-        showInterstitialAd();
-        setTimeout(() => revivePlayer(), 5500);
+        showInterstitialAd(() => revivePlayer());
     });
 
     window.addEventListener('resize', () => { if (state !== 'playing') resizeCanvas(); });

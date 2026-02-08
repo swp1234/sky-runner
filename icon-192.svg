@@ -6,6 +6,6 @@
     </linearGradient>
   </defs>
   <rect width="192" height="192" rx="40" fill="url(#bg)"/>
-  <text x="96" y="105" text-anchor="middle" font-size="80">=€</text>
+  <text x="96" y="105" text-anchor="middle" font-size="80">=ï¿½</text>
   <text x="96" y="155" text-anchor="middle" font-size="16" fill="#00d2d3" font-weight="bold" font-family="sans-serif">SKY RUNNER</text>
 </svg>

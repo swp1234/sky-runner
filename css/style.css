@@ -788,3 +788,14 @@ body {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
+
+/* === RECOMMENDATIONS === */
+.recommendations-section { margin-top: 24px; padding: 0 4px; }
+.rec-title { font-size: 15px; font-weight: 700; color: var(--text-sec); margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
+.rec-grid { display: flex; flex-direction: column; gap: 10px; }
+.rec-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; text-decoration: none; color: var(--text); transition: all 0.3s ease; }
+.rec-card:hover, .rec-card:active { background: rgba(255,255,255,0.1); border-color: var(--primary); transform: translateY(-1px); }
+.rec-icon { font-size: 28px; flex-shrink: 0; width: 40px; text-align: center; }
+.rec-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.rec-name { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-desc { font-size: 12px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

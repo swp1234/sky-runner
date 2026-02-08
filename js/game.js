@@ -271,7 +271,7 @@
             updateStars(dt * 0.3);
         }
 
-        render();
+        try { render(); } catch(e) { console.error('Render error:', e); }
         animFrameId = requestAnimationFrame(gameLoop);
     }
 
@@ -1101,16 +1101,20 @@
 
     // Color utility helpers
     function lightenColor(hex, amount) {
-        if (hex === 'rainbow') return '#ffffff';
+        if (!hex || hex === 'rainbow') return '#ffffff';
+        if (!hex.startsWith('#')) return hex;
         const num = parseInt(hex.replace('#', ''), 16);
+        if (isNaN(num)) return '#ffffff';
         const r = Math.min(255, (num >> 16) + amount);
         const g = Math.min(255, ((num >> 8) & 0xff) + amount);
         const b = Math.min(255, (num & 0xff) + amount);
         return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
     function darkenColor(hex, amount) {
-        if (hex === 'rainbow') return '#333333';
+        if (!hex || hex === 'rainbow') return '#333333';
+        if (!hex.startsWith('#')) return hex;
         const num = parseInt(hex.replace('#', ''), 16);
+        if (isNaN(num)) return '#333333';
         const r = Math.max(0, (num >> 16) - amount);
         const g = Math.max(0, ((num >> 8) & 0xff) - amount);
         const b = Math.max(0, (num & 0xff) - amount);
@@ -1171,21 +1175,18 @@
             }
         }
 
-        // Particles (round, glowing)
+        // Particles (simple circles with alpha - performance optimized)
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
-            ctx.globalAlpha = p.life;
-            // Soft glow
             const pr = p.size * p.life;
-            const pGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, pr * 1.5);
-            pGrad.addColorStop(0, p.color);
-            pGrad.addColorStop(1, p.color + '00');
-            ctx.fillStyle = pGrad;
+            // Outer glow
+            ctx.globalAlpha = p.life * 0.3;
+            ctx.fillStyle = p.color;
             ctx.beginPath();
             ctx.arc(p.x, p.y, pr * 1.5, 0, Math.PI * 2);
             ctx.fill();
             // Bright center
-            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.life;
             ctx.beginPath();
             ctx.arc(p.x, p.y, pr * 0.5, 0, Math.PI * 2);
             ctx.fill();
@@ -1215,24 +1216,30 @@
             }
             ctx.globalAlpha = 1;
 
-            // Ship glow halo
-            ctx.save();
-            ctx.shadowBlur = 20;
-            ctx.shadowColor = skin.color === 'rainbow' ? '#ff7f00' : (skin.color || '#ffffff');
+            // Ship glow halo (lightweight radial gradient instead of shadowBlur)
+            const glowColor = skin.color === 'rainbow' ? '#ff7f00' : (skin.color || '#ffffff');
+            const gcx = player.x + player.size / 2;
+            const gcy = player.y + player.size / 2;
+            const glowR = player.size * 0.8;
+            ctx.globalAlpha = 0.25;
+            const shipGlow = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, glowR);
+            shipGlow.addColorStop(0, glowColor);
+            shipGlow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = shipGlow;
+            ctx.beginPath();
+            ctx.arc(gcx, gcy, glowR, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
 
             // Draw detailed spaceship
             drawSpaceship(
-                player.x + player.size / 2,
-                player.y + player.size / 2,
+                gcx,
+                gcy,
                 player.size,
                 skin.color,
                 player.rotation,
                 skin.id
             );
-
-            ctx.shadowBlur = 0;
-            ctx.shadowColor = 'transparent';
-            ctx.restore();
         }
     }
 

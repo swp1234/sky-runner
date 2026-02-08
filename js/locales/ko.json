@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - 우주 비행 아케이드 게임",
+    "description": "우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 강한 캐주얼 아케이드 게임."
+  },
+  "menu": {
+    "highScore": "최고 점수",
+    "startGame": "게임 시작",
+    "skins": "🚀 스킨 보관함",
+    "themes": "🎨 테마 선택",
+    "stats": "📊 통계",
+    "hint": "터치 또는 스페이스바로 조작"
+  },
+  "game": {
+    "tapToStart": "탭하여 시작!",
+    "pause": "일시정지"
+  },
+  "pause": {
+    "title": "일시정지",
+    "resume": "계속하기",
+    "quit": "메뉴로"
+  },
+  "gameover": {
+    "title": "게임 오버 💥",
+    "score": "점수",
+    "best": "최고",
+    "revive": "📺 광고 보고 부활하기",
+    "retry": "다시 하기",
+    "share": "📤 공유",
+    "menu": "🏠 메뉴",
+    "newRecord": "🎉 새 기록!"
+  },
+  "recommendations": {
+    "title": "이것도 해보세요"
+  },
+  "ad": {
+    "label": "광고",
+    "placeholder": "광고 영역 (전면)",
+    "countdown": "초 후 닫기"
+  },
+  "screens": {
+    "skins": "스킨 보관함",
+    "themes": "테마 선택",
+    "stats": "통계",
+    "back": "← 뒤로"
+  }
+}

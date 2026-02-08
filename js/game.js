@@ -71,7 +71,8 @@
     const player = {
         x: 70, y: 0, velocity: 0, size: PLAYER_SIZE, rotation: 0,
         reset() { this.y = canvas.height / 2 - this.size / 2; this.velocity = 0; this.rotation = 0; },
-        jump() { this.velocity = JUMP_POWER; }
+        jump() { this.velocity = JUMP_POWER; },
+        motionTrail: [] // Store last 4 y-positions for motion trail
     };
 
     // === OBJECT POOLS ===
@@ -213,9 +214,11 @@
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 1.5 + 0.5,
+                size: Math.random() * 2.5 + 0.5, // Vary sizes more (0.5-3px)
                 speed: Math.random() * 0.4 + 0.1,
-                alpha: Math.random() * 0.5 + 0.3
+                alpha: Math.random() * 0.5 + 0.3,
+                twinklePhase: Math.random() * Math.PI * 2, // For twinkling
+                isShootingStar: false
             });
         }
     }
@@ -224,7 +227,10 @@
     function resizeCanvas() {
         canvas.width = Math.min(window.innerWidth, 480);
         canvas.height = Math.min(window.innerHeight - 60, 700);
-        if (state === 'menu' || state === 'ready') player.reset();
+        if (state === 'menu' || state === 'ready') {
+            player.reset();
+            player.motionTrail = [];
+        }
         initStars();
     }
 
@@ -406,14 +412,25 @@
             const oldScore = score;
             score += Math.floor(scoreAccum);
             scoreAccum -= Math.floor(scoreAccum);
-            
+
             // 점수 증가 시 테마 언락 체크
             if (score > oldScore) {
                 checkThemeUnlock();
             }
         }
 
-        hudScore.textContent = score;
+        // Update motion trail (store last 4 y-positions)
+        player.motionTrail.push(player.y);
+        if (player.motionTrail.length > 4) {
+            player.motionTrail.shift();
+        }
+
+        // Score display update with pop effect
+        if (hudScore.textContent !== score.toString()) {
+            hudScore.textContent = score;
+            hudScore.classList.add('score-pop');
+            setTimeout(() => hudScore.classList.remove('score-pop'), 300);
+        }
     }
 
     function updateStars(dt) {
@@ -421,6 +438,20 @@
             const s = stars[i];
             s.x -= (s.speed + gameSpeed * 0.1) * dt;
             if (s.x < -2) { s.x = canvas.width + 2; s.y = Math.random() * canvas.height; }
+
+            // Twinkling effect - randomly change alpha
+            if (Math.random() < 0.05) {
+                s.twinklePhase = Math.random() * Math.PI * 2;
+            }
+            s.alpha = Math.abs(Math.sin(s.twinklePhase + dt * 2)) * 0.5 + 0.2;
+
+            // 1% chance per frame to create a shooting star
+            if (!s.isShootingStar && Math.random() < 0.01) {
+                s.isShootingStar = true;
+                s.shootingStartX = s.x;
+                s.shootingStartY = s.y;
+                s.shootingLife = 1.0;
+            }
         }
     }
 
@@ -600,7 +631,7 @@
         // 테마별 배경 렌더링
         renderBackground();
 
-        // Stars - simple rectangles instead of arcs
+        // Stars - varied sizes with twinkling and shooting star effects
         const theme = getCurrentThemeData();
         const starColor = theme.particles && theme.particles.color ? theme.particles.color : '#ffffff';
         ctx.fillStyle = starColor;
@@ -608,6 +639,23 @@
             const s = stars[i];
             ctx.globalAlpha = s.alpha;
             ctx.fillRect(s.x, s.y, s.size, s.size);
+
+            // Render shooting star effect
+            if (s.isShootingStar && s.shootingLife > 0) {
+                const endX = s.shootingStartX + 40;
+                const endY = s.shootingStartY + 30;
+                ctx.globalAlpha = s.shootingLife * 0.6;
+                ctx.strokeStyle = starColor;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(s.shootingStartX, s.shootingStartY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                s.shootingLife -= 0.03;
+                if (s.shootingLife <= 0) {
+                    s.isShootingStar = false;
+                }
+            }
         }
         ctx.globalAlpha = 1;
 
@@ -617,15 +665,45 @@
             ctx.save();
 
             if (obs.type === 'pipe' || !obs.type) {
-                // 파이프 장애물
-                ctx.fillStyle = obs.color + 'bb';
+                // 파이프 장애물 with gradient and effects
+                // Top pipe with vertical gradient
+                const topGradient = ctx.createLinearGradient(obs.x, 0, obs.x + obs.width, 0);
+                topGradient.addColorStop(0, obs.color + '44');
+                topGradient.addColorStop(0.5, obs.color + 'bb');
+                topGradient.addColorStop(1, obs.color + '44');
+                ctx.fillStyle = topGradient;
                 ctx.fillRect(obs.x, 0, obs.width, obs.gapY);
+
+                // Top pipe connector
                 ctx.fillStyle = obs.color;
                 ctx.fillRect(obs.x - 3, obs.gapY - 18, obs.width + 6, 18);
-                ctx.fillStyle = obs.color + 'bb';
+
+                // Bottom pipe with vertical gradient
+                const bottomGradient = ctx.createLinearGradient(obs.x, obs.gapY + obs.gap, obs.x + obs.width, obs.gapY + obs.gap + (canvas.height - obs.gapY - obs.gap));
+                bottomGradient.addColorStop(0, obs.color + '44');
+                bottomGradient.addColorStop(0.5, obs.color + 'bb');
+                bottomGradient.addColorStop(1, obs.color + '44');
+                ctx.fillStyle = bottomGradient;
                 ctx.fillRect(obs.x, obs.gapY + obs.gap, obs.width, canvas.height - obs.gapY - obs.gap);
+
+                // Bottom pipe connector
                 ctx.fillStyle = obs.color;
                 ctx.fillRect(obs.x - 3, obs.gapY + obs.gap, obs.width + 6, 18);
+
+                // Pipe borders (darker stroke)
+                ctx.strokeStyle = obs.color;
+                ctx.globalAlpha = 0.6;
+                ctx.lineWidth = 1;
+                ctx.strokeRect(obs.x, 0, obs.width, obs.gapY);
+                ctx.strokeRect(obs.x, obs.gapY + obs.gap, obs.width, canvas.height - obs.gapY - obs.gap);
+                ctx.globalAlpha = 1;
+
+                // Left edge highlight (white glow)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.fillRect(obs.x, 0, 1, obs.gapY);
+                ctx.fillRect(obs.x, obs.gapY + obs.gap, 1, canvas.height - obs.gapY - obs.gap);
+
+                // Gap lines
                 ctx.fillStyle = obs.color;
                 ctx.globalAlpha = 0.4;
                 ctx.fillRect(obs.x, obs.gapY - 2, obs.width, 2);
@@ -697,13 +775,37 @@
         }
         ctx.globalAlpha = 1;
 
-        // Player
+        // Player with glow and motion trail
         const skin = SKINS.find(s => s.id === selectedSkin) || SKINS[0];
         if (skin) {
+            // Draw motion trail (3-4 semi-transparent circles behind player)
+            ctx.globalAlpha = 0.15;
+            const trailCount = player.motionTrail.length;
+            for (let i = 0; i < trailCount; i++) {
+                const trailAlpha = (i + 1) / (trailCount + 1);
+                ctx.globalAlpha = 0.15 * trailAlpha;
+                ctx.fillStyle = skin.color === 'rainbow' ? '#ffffff' : skin.color;
+                ctx.beginPath();
+                ctx.arc(player.x + player.size / 2, player.motionTrail[i] + player.size / 2, player.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
             ctx.save();
             ctx.translate(player.x + player.size / 2, player.y + player.size / 2);
+
+            // Soft glow effect (15px blur)
+            ctx.shadowBlur = 15;
+            if (skin.color === 'rainbow') {
+                ctx.shadowColor = '#ff7f00'; // Rainbow orange-ish glow
+            } else if (typeof skin.color === 'string' && skin.color !== 'rainbow') {
+                ctx.shadowColor = skin.color;
+            } else {
+                ctx.shadowColor = '#ffffff';
+            }
+
             ctx.rotate(player.rotation * Math.PI / 180);
-            
+
             // Rainbow 스킨 처리
             if (skin.color === 'rainbow') {
                 const gradient = ctx.createLinearGradient(-player.size/2, -player.size/2, player.size/2, player.size/2);
@@ -718,11 +820,16 @@
             } else {
                 ctx.fillStyle = skin.color;
             }
-            
+
             ctx.font = `${player.size}px serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(skin.emoji, 0, 0);
+
+            // Reset shadow
+            ctx.shadowBlur = 0;
+            ctx.shadowColor = 'transparent';
+
             ctx.restore();
         }
     }
@@ -1113,4 +1220,44 @@
     hsValue.textContent = highScore;
     resizeCanvas();
     showScreen(menuScreen);
+
+    // === LANGUAGE SUPPORT ===
+    async function initLanguageSelector() {
+        await i18n.loadTranslations(i18n.currentLang);
+        i18n.updateUI();
+
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
+
+        if (!langBtn || !langMenu) return;
+
+        // Populate language options
+        langMenu.innerHTML = '';
+        i18n.supportedLanguages.forEach(lang => {
+            const btn = document.createElement('button');
+            btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
+            btn.textContent = i18n.getLanguageName(lang);
+            btn.addEventListener('click', async () => {
+                await i18n.setLanguage(lang);
+                document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                langMenu.classList.add('hidden');
+            });
+            langMenu.appendChild(btn);
+        });
+
+        // Toggle menu
+        langBtn.addEventListener('click', () => {
+            langMenu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-selector')) {
+                langMenu.classList.add('hidden');
+            }
+        });
+    }
+
+    initLanguageSelector();
 })();

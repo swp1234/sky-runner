@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - 太空街机游戏",
+    "description": "驾驶飞船躲避障碍物！一个令人上瘾的单点击休闲街机游戏。"
+  },
+  "menu": {
+    "highScore": "最高分数",
+    "startGame": "开始游戏",
+    "skins": "🚀 皮肤库",
+    "themes": "🎨 主题选择",
+    "stats": "📊 统计",
+    "hint": "点击或按空格键玩游戏"
+  },
+  "game": {
+    "tapToStart": "点击开始！",
+    "pause": "暂停"
+  },
+  "pause": {
+    "title": "已暂停",
+    "resume": "继续",
+    "quit": "菜单"
+  },
+  "gameover": {
+    "title": "游戏结束 💥",
+    "score": "分数",
+    "best": "最高分",
+    "revive": "📺 看广告并复活",
+    "retry": "重试",
+    "share": "📤 分享",
+    "menu": "🏠 菜单",
+    "newRecord": "🎉 新记录！"
+  },
+  "recommendations": {
+    "title": "也试试这些"
+  },
+  "ad": {
+    "label": "广告",
+    "placeholder": "广告区域（全屏）",
+    "countdown": "秒后关闭"
+  },
+  "screens": {
+    "skins": "皮肤库",
+    "themes": "主题选择",
+    "stats": "统计",
+    "back": "← 返回"
+  }
+}

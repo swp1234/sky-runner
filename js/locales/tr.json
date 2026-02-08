@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - Uzay Arcade Oyunu",
+    "description": "Uzay gemini pilot et ve engelleri aş! Bağımlayıcı tek-dokunuş casual arcade oyunu."
+  },
+  "menu": {
+    "highScore": "En Yüksek Puan",
+    "startGame": "Oyunu Başlat",
+    "skins": "🚀 Kozmetik",
+    "themes": "🎨 Temalar",
+    "stats": "📊 İstatistikler",
+    "hint": "Tap veya Space tuşu ile oyna"
+  },
+  "game": {
+    "tapToStart": "Başlamak için tap et!",
+    "pause": "Duraklat"
+  },
+  "pause": {
+    "title": "Duraklat",
+    "resume": "Devam Et",
+    "quit": "Menü"
+  },
+  "gameover": {
+    "title": "Oyun Bitti 💥",
+    "score": "Puan",
+    "best": "En İyi",
+    "revive": "📺 Reklam İzle & Dirilt",
+    "retry": "Tekrar Dene",
+    "share": "📤 Paylaş",
+    "menu": "🏠 Menü",
+    "newRecord": "🎉 Yeni Rekor!"
+  },
+  "recommendations": {
+    "title": "Bunları da Dene"
+  },
+  "ad": {
+    "label": "Reklam",
+    "placeholder": "Reklam Alanı (Tam Ekran)",
+    "countdown": "kapatılmaya saniye"
+  },
+  "screens": {
+    "skins": "Kozmetik",
+    "themes": "Temalar",
+    "stats": "İstatistikler",
+    "back": "← Geri"
+  }
+}

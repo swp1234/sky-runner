@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - Weltraum Arcade Spiel",
+    "description": "Pilotiere dein Raumschiff und weiche Hindernissen aus! Ein süchtig machendes Ein-Tap-Casual-Arcade-Spiel."
+  },
+  "menu": {
+    "highScore": "Höchste Punktzahl",
+    "startGame": "Spiel starten",
+    "skins": "🚀 Designs",
+    "themes": "🎨 Designs",
+    "stats": "📊 Statistik",
+    "hint": "Tippe oder drücke Leertaste zum Spielen"
+  },
+  "game": {
+    "tapToStart": "Tippe zum Starten!",
+    "pause": "Pause"
+  },
+  "pause": {
+    "title": "Pausiert",
+    "resume": "Fortsetzen",
+    "quit": "Menü"
+  },
+  "gameover": {
+    "title": "Spiel vorbei 💥",
+    "score": "Punktzahl",
+    "best": "Beste",
+    "revive": "📺 Anzeige ansehen & Wiederbelebung",
+    "retry": "Nochmal versuchen",
+    "share": "📤 Teilen",
+    "menu": "🏠 Menü",
+    "newRecord": "🎉 Neuer Rekord!"
+  },
+  "recommendations": {
+    "title": "Probiere auch diese"
+  },
+  "ad": {
+    "label": "Anzeige",
+    "placeholder": "Anzeigenbereich (Zwischenanzeige)",
+    "countdown": "Sekunden bis Schließen"
+  },
+  "screens": {
+    "skins": "Designs",
+    "themes": "Designs",
+    "stats": "Statistik",
+    "back": "← Zurück"
+  }
+}

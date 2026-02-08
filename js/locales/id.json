@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - Permainan Arcade Luar Angkasa",
+    "description": "Terbang pesawat ruang angkasa Anda dan hindari rintangan! Permainan arcade kasual satu ketukan yang adiktif."
+  },
+  "menu": {
+    "highScore": "Skor Tertinggi",
+    "startGame": "Mulai Game",
+    "skins": "🚀 Kulit",
+    "themes": "🎨 Tema",
+    "stats": "📊 Statistik",
+    "hint": "Ketuk atau tekan Space untuk bermain"
+  },
+  "game": {
+    "tapToStart": "Ketuk untuk memulai!",
+    "pause": "Jeda"
+  },
+  "pause": {
+    "title": "Dijeda",
+    "resume": "Lanjutkan",
+    "quit": "Menu"
+  },
+  "gameover": {
+    "title": "Game Over 💥",
+    "score": "Skor",
+    "best": "Terbaik",
+    "revive": "📺 Tonton Iklan & Hidup Kembali",
+    "retry": "Coba Lagi",
+    "share": "📤 Bagikan",
+    "menu": "🏠 Menu",
+    "newRecord": "🎉 Rekor Baru!"
+  },
+  "recommendations": {
+    "title": "Coba Juga"
+  },
+  "ad": {
+    "label": "Iklan",
+    "placeholder": "Area Iklan (Interstitial)",
+    "countdown": "s hingga ditutup"
+  },
+  "screens": {
+    "skins": "Kulit",
+    "themes": "Tema",
+    "stats": "Statistik",
+    "back": "← Kembali"
+  }
+}

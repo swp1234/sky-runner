@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "Sky Runner - Juego de Arcade Espacial",
+    "description": "¡Pilota tu nave espacial y esquiva obstáculos! Un juego de arcade casual adictivo de un toque."
+  },
+  "menu": {
+    "highScore": "Puntuación Más Alta",
+    "startGame": "Iniciar Juego",
+    "skins": "🚀 Apariencias",
+    "themes": "🎨 Temas",
+    "stats": "📊 Estadísticas",
+    "hint": "Toca o presiona Espacio para jugar"
+  },
+  "game": {
+    "tapToStart": "¡Toca para comenzar!",
+    "pause": "Pausa"
+  },
+  "pause": {
+    "title": "Pausa",
+    "resume": "Reanudar",
+    "quit": "Menú"
+  },
+  "gameover": {
+    "title": "Game Over 💥",
+    "score": "Puntuación",
+    "best": "Mejor",
+    "revive": "📺 Ver Anuncio y Revivir",
+    "retry": "Intentar de Nuevo",
+    "share": "📤 Compartir",
+    "menu": "🏠 Menú",
+    "newRecord": "🎉 ¡Nuevo Récord!"
+  },
+  "recommendations": {
+    "title": "Prueba Estos También"
+  },
+  "ad": {
+    "label": "Anuncio",
+    "placeholder": "Área de Anuncio (Intersticial)",
+    "countdown": "s hasta cerrar"
+  },
+  "screens": {
+    "skins": "Apariencias",
+    "themes": "Temas",
+    "stats": "Estadísticas",
+    "back": "← Atrás"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "app": {
+    "title": "スカイランナー - スペースアーケードゲーム",
+    "description": "宇宙船を操縦して障害物を回避！中毒性のあるワンタップカジュアルアーケードゲーム。"
+  },
+  "menu": {
+    "highScore": "ハイスコア",
+    "startGame": "ゲーム開始",
+    "skins": "🚀 スキン",
+    "themes": "🎨 テーマ",
+    "stats": "📊 統計",
+    "hint": "タップまたはスペースキーでプレイ"
+  },
+  "game": {
+    "tapToStart": "タップで開始！",
+    "pause": "一時停止"
+  },
+  "pause": {
+    "title": "一時停止中",
+    "resume": "再開",
+    "quit": "メニュー"
+  },
+  "gameover": {
+    "title": "ゲームオーバー 💥",
+    "score": "スコア",
+    "best": "ベスト",
+    "revive": "📺 広告を見て復活",
+    "retry": "もう一度試す",
+    "share": "📤 シェアする",
+    "menu": "🏠 メニュー",
+    "newRecord": "🎉 新記録！"
+  },
+  "recommendations": {
+    "title": "こちらも試してみてください"
+  },
+  "ad": {
+    "label": "広告",
+    "placeholder": "広告エリア（インタースティシャル）",
+    "countdown": "秒で閉じる"
+  },
+  "screens": {
+    "skins": "スキン",
+    "themes": "テーマ",
+    "stats": "統計",
+    "back": "← 戻る"
+  }
+}

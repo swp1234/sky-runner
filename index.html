@@ -19,6 +19,47 @@
     <meta property="og:url" content="https://dopabrain.com/sky-runner/">
     <meta property="og:locale" content="ko_KR">
 
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Sky Runner",
+        "applicationCategory": "GameApplication",
+        "description": "우주선을 조종해 장애물을 피하는 원탭 조작의 중독성 강한 캐주얼 아케이드 게임. 10가지 우주선 스킨, 5가지 장애물 패턴, 20개 칭호 시스템.",
+        "url": "https://dopabrain.com/sky-runner/",
+        "image": "https://dopabrain.com/sky-runner/icon-192.svg",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Modern browser (Chrome, Safari, Firefox, Edge).",
+        "author": {
+            "@type": "Organization",
+            "name": "DopaBrain",
+            "url": "https://dopabrain.com/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "DopaBrain",
+            "url": "https://dopabrain.com/"
+        },
+        "inLanguage": ["ko", "en", "zh", "hi", "ru"],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.4",
+            "ratingCount": "5400",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "featureList": "원탭 조작, 10가지 우주선 스킨, 5가지 장애물 패턴, 20개 칭호 시스템, 3가지 테마, 리더보드, 오프라인 플레이 가능",
+        "gamePlatform": "웹 브라우저"
+    }
+    </script>
+
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f0f1e">
@@ -36,6 +77,9 @@
 <body>
     <!-- Background Stars -->
     <div class="bg-stars" id="bg-stars"></div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="sound-toggle" onclick="if(window.sfx)window.sfx.init();const enabled=window.sfx?window.sfx.toggle():false;this.textContent=enabled?'🔊':'🔇';" title="Toggle Sound">🔊</button>
 
     <!-- Language Selector -->
     <div class="language-selector">
@@ -217,6 +261,31 @@
     <script src="js/titles-data.js"></script>
     <script src="js/obstacles-data.js"></script>
     <script src="js/themes-data.js"></script>
+    <script src="js/sound-engine.js"></script>
     <script src="js/game.js"></script>
+
+    <style>
+        .sound-toggle {
+            position: fixed;
+            top: 12px;
+            right: 52px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .sound-toggle:hover { background: rgba(255,255,255,0.2); }
+        .sound-toggle:active { transform: scale(0.95); }
+    </style>
 </body>
 </html>

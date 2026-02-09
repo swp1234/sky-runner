@@ -79,5 +79,19 @@
     "points": " puan!",
     "challenge": "Sen de dene!",
     "copied": "Kopyalandı!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 Günlük Görev",
+    "target": "Hedef",
+    "points": "puan",
+    "completed": "✓ Tamamlandı!",
+    "claimReward": "Ödülü İste",
+    "nextChallenge": "Yarın Yeni Görev",
+    "newRecord": "Yeni rekor!"
+  },
+  "records": {
+    "title": "Yeni Rekor",
+    "improvement": "+{diff}puan iyileşme!",
+    "previousBest": "Önceki en iyi"
   }
 }

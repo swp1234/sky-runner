@@ -79,5 +79,19 @@
     "points": " अंक!",
     "challenge": "इसे आज़माएं!",
     "copied": "कॉपी हो गया!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 दैनिक चुनौती",
+    "target": "लक्ष्य",
+    "points": "अंक",
+    "completed": "✓ पूर्ण किया गया!",
+    "claimReward": "पुरस्कार प्राप्त करें",
+    "nextChallenge": "कल नई चुनौती",
+    "newRecord": "नया रिकॉर्ड!"
+  },
+  "records": {
+    "title": "नया रिकॉर्ड",
+    "improvement": "+{diff}अंक सुधार!",
+    "previousBest": "पिछला सर्वश्रेष्ठ"
   }
 }

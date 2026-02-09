@@ -79,5 +79,19 @@
     "points": " poin!",
     "challenge": "Coba juga!",
     "copied": "Disalin!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 Tantangan Harian",
+    "target": "Target",
+    "points": "poin",
+    "completed": "✓ Selesai!",
+    "claimReward": "Klaim Hadiah",
+    "nextChallenge": "Tantangan baru besok",
+    "newRecord": "Rekor baru!"
+  },
+  "records": {
+    "title": "Rekor Baru",
+    "improvement": "+{diff}poin peningkatan!",
+    "previousBest": "Sebelumnya terbaik"
   }
 }

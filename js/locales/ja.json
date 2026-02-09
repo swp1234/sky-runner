@@ -79,5 +79,19 @@
     "points": "点！",
     "challenge": "挑戦してみてください！",
     "copied": "コピーしました！"
+  },
+  "dailyChallenge": {
+    "title": "🏆 デイリーチャレンジ",
+    "target": "目標",
+    "points": "点",
+    "completed": "✓ 完了！",
+    "claimReward": "報酬を受け取る",
+    "nextChallenge": "明日新しいチャレンジ",
+    "newRecord": "新記録！"
+  },
+  "records": {
+    "title": "新記録",
+    "improvement": "+{diff}点改善！",
+    "previousBest": "以前のベスト"
   }
 }

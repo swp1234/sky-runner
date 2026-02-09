@@ -79,5 +79,19 @@
     "points": " очков!",
     "challenge": "Попробуйте!",
     "copied": "Скопировано!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 Ежедневное испытание",
+    "target": "Цель",
+    "points": "очков",
+    "completed": "✓ Выполнено!",
+    "claimReward": "Получить награду",
+    "nextChallenge": "Новое испытание завтра",
+    "newRecord": "Новый рекорд!"
+  },
+  "records": {
+    "title": "Новый рекорд",
+    "improvement": "+{diff}очков улучшение!",
+    "previousBest": "Предыдущий лучший"
   }
 }

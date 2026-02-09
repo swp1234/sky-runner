@@ -79,5 +79,19 @@
     "points": "分！",
     "challenge": "来挑战吧！",
     "copied": "已复制！"
+  },
+  "dailyChallenge": {
+    "title": "🏆 每日挑战",
+    "target": "目标",
+    "points": "分",
+    "completed": "✓ 已完成！",
+    "claimReward": "领取奖励",
+    "nextChallenge": "明天新的挑战",
+    "newRecord": "新记录！"
+  },
+  "records": {
+    "title": "新记录",
+    "improvement": "+{diff}分进度！",
+    "previousBest": "之前最佳"
   }
 }

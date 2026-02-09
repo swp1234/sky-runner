@@ -79,5 +79,19 @@
     "points": " Punkte!",
     "challenge": "Versuch es auch!",
     "copied": "Kopiert!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 Tägliche Herausforderung",
+    "target": "Ziel",
+    "points": "Punkte",
+    "completed": "✓ Abgeschlossen!",
+    "claimReward": "Belohnung Abholen",
+    "nextChallenge": "Morgen neue Herausforderung",
+    "newRecord": "Neuer Rekord!"
+  },
+  "records": {
+    "title": "Neuer Rekord",
+    "improvement": "+{diff}Punkte Verbesserung!",
+    "previousBest": "Vorheriges Bestes"
   }
 }

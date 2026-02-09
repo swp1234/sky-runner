@@ -1447,25 +1447,35 @@
         checkThemeUnlock();
         cancelAnimationFrame(animFrameId);
 
-        // Dopamine effects on game over
-        triggerScreenShake(500, 1.5);
-        triggerScreenFlash('flash-danger', 300);
-
-        if (sfx) sfx.gameOver();
-        spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
-        currentCombo = 0; // Reset combo on game over
-
         playCount++;
         totalScore += score;
         const isNewRecord = score > highScore;
+        const previousHighScore = highScore;
         if (isNewRecord) highScore = score;
         skinTokens += Math.floor(score / 10);
         saveData();
 
-        setTimeout(() => showGameOver(isNewRecord), 300);
+        // Dopamine effects on game over
+        if (isNewRecord) {
+            // Confetti and stronger effect for new record
+            triggerScreenShake(700, 2);
+            triggerScreenFlash('flash-success', 400);
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => spawnConfetti(Math.random() * canvas.width, -20, 1), i * 20);
+            }
+            if (sfx) sfx.coin();
+        } else {
+            triggerScreenShake(500, 1.5);
+            triggerScreenFlash('flash-danger', 300);
+            if (sfx) sfx.gameOver();
+        }
+        spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
+        currentCombo = 0; // Reset combo on game over
+
+        setTimeout(() => showGameOver(isNewRecord, previousHighScore), 300);
     }
 
-    function showGameOver(isNewRecord) {
+    function showGameOver(isNewRecord, previousHighScore) {
         showScreen(gameoverScreen);
         goScore.textContent = score;
         goBest.textContent = highScore;
@@ -1473,6 +1483,12 @@
         goRank.innerHTML = `<span class="rank-icon">${rank.emoji}</span><span class="rank-title">${localName(rank)}</span>`;
         if (isNewRecord) {
             goNewRecord.textContent = i18n.t('gameover.newRecord');
+            // Show improvement
+            const improvement = score - previousHighScore;
+            const improveEl = document.createElement('div');
+            improveEl.style.cssText = 'text-align:center;color:#2ed573;font-weight:700;margin-top:8px;font-size:14px;';
+            improveEl.textContent = i18n.t('records.improvement', { diff: improvement });
+            goNewRecord.parentElement.insertBefore(improveEl, goNewRecord.nextSibling);
         }
         goNewRecord.classList.toggle('hidden', !isNewRecord);
         document.getElementById('btn-revive').classList.toggle('hidden', hasRevived);

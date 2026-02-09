@@ -79,5 +79,19 @@
     "points": "점!",
     "challenge": "도전해보세요!",
     "copied": "복사되었습니다!"
+  },
+  "dailyChallenge": {
+    "title": "🏆 일일 도전",
+    "target": "목표",
+    "points": "점",
+    "completed": "✓ 완료됨!",
+    "claimReward": "보상 수령",
+    "nextChallenge": "내일 새로운 도전",
+    "newRecord": "최고 기록 갱신!"
+  },
+  "records": {
+    "title": "기록 갱신",
+    "improvement": "+{diff}점 향상!",
+    "previousBest": "이전 최고"
   }
 }

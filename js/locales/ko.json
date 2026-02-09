@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "방향 전환 아케이드 게임!",
     "emojiMerge": "이모지 머지",
-    "emojiMergeDesc": "이모지 합쳐 진화시키기!"
+    "emojiMergeDesc": "이모지 합쳐 진화시키기!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "광고",

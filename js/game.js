@@ -85,6 +85,11 @@
     let particles = [];
     let stars = [];
 
+    // === DOPAMINE ENHANCEMENT STATE ===
+    let currentCombo = 0;
+    let comboDisplayActive = false;
+    let shakeActive = false;
+
     const OBSTACLE_COLORS = ['#2ed573', '#00d2d3', '#5f27cd', '#ff6348', '#ffa502'];
 
     function createObstacle() {
@@ -378,10 +383,33 @@
                 if (passed) {
                     obs.passed = true;
                     passedCount++;
-                    score += obs.scoreReward || 10;
-                    currentStreak++;
+                    const baseReward = obs.scoreReward || 10;
+                    score += baseReward;
+                    currentCombo++;
+
                     if (sfx) sfx.coin();
                     if (currentStreak > bestStreak) bestStreak = currentStreak;
+
+                    // Score popup on player
+                    spawnScorePopup(player.x, player.y - 40, `+${baseReward}`);
+
+                    // Combo bonus every 5 obstacles passed
+                    if (currentCombo >= 5 && currentCombo % 5 === 0) {
+                        const comboBonus = currentCombo;
+                        score += comboBonus;
+                        triggerScreenShake(250);
+                        spawnConfetti(canvas.width / 2, canvas.height / 2, 15);
+                        spawnComboIndicator(canvas.width / 2, canvas.height / 2, currentCombo);
+                        spawnScorePopup(player.x, player.y - 80, `+${comboBonus} COMBO!`, true);
+                    }
+
+                    // Milestone every 50 points
+                    if (Math.floor(score / 50) > Math.floor((score - baseReward - (currentCombo >= 5 && currentCombo % 5 === 0 ? currentCombo : 0)) / 50)) {
+                        const milestone = Math.floor(score / 50) * 50;
+                        showMilestoneBanner(milestone);
+                        triggerScreenFlash('flash-success', 150);
+                    }
+
                     if (currentStreak >= 3 && currentStreak % 3 === 0) {
                         score += 5;
                         spawnParticles(player.x + player.size, player.y + player.size / 2, '#ffa502', 6);
@@ -1106,6 +1134,78 @@
         ctx.fillRect(x + 2, btmY, 3, btmH);
     }
 
+    // === DOPAMINE EFFECT FUNCTIONS ===
+
+    function triggerScreenShake(duration = 300, intensity = 1) {
+        if (shakeActive) return;
+        shakeActive = true;
+        gameScreen.classList.add('shake');
+        setTimeout(() => {
+            gameScreen.classList.remove('shake');
+            shakeActive = false;
+        }, duration);
+    }
+
+    function triggerScreenFlash(color = 'flash', duration = 200) {
+        gameScreen.classList.add(color);
+        setTimeout(() => gameScreen.classList.remove(color), duration);
+    }
+
+    function spawnScorePopup(x, y, text, isBig = false) {
+        const popup = document.createElement('div');
+        popup.className = `score-popup ${isBig ? 'bonus' : 'normal'}`;
+        popup.textContent = text;
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        gameScreen.appendChild(popup);
+        setTimeout(() => popup.remove(), 800);
+    }
+
+    function spawnComboIndicator(x, y, comboCount) {
+        const indicator = document.createElement('div');
+        indicator.className = 'combo-indicator';
+        indicator.style.left = x + 'px';
+        indicator.style.top = y + 'px';
+
+        const text = document.createElement('div');
+        text.className = 'combo-text';
+        text.textContent = `COMBO x${comboCount}!`;
+
+        indicator.appendChild(text);
+        gameScreen.appendChild(indicator);
+
+        setTimeout(() => indicator.remove(), 600);
+    }
+
+    function spawnConfetti(x, y, count = 12) {
+        for (let i = 0; i < count; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = `confetti type-${(i % 5) + 1}`;
+            confetti.style.left = x + 'px';
+            confetti.style.top = y + 'px';
+            confetti.style.transform = `translate(${(Math.random() - 0.5) * 200}px, 0) rotateZ(${Math.random() * 360}deg)`;
+
+            gameScreen.appendChild(confetti);
+
+            // Animate confetti fall
+            const duration = 800 + Math.random() * 400;
+            confetti.style.animation = `confetti-fall ${duration}ms linear forwards`;
+
+            setTimeout(() => confetti.remove(), duration);
+        }
+    }
+
+    function showMilestoneBanner(milestone) {
+        const banner = document.createElement('div');
+        banner.className = 'milestone-banner';
+        banner.innerHTML = `
+            <span class="icon">🎉</span>
+            <div>${milestone} 점 달성!</div>
+        `;
+        gameScreen.appendChild(banner);
+        setTimeout(() => banner.remove(), 2000);
+    }
+
     // Color utility helpers
     function lightenColor(hex, amount) {
         if (!hex || hex === 'rainbow') return '#ffffff';
@@ -1268,6 +1368,7 @@
         gameSpeed = BASE_SPEED; spawnTimer = 0;
         obstacles = []; particles = [];
         hasRevived = false; prevTimestamp = 0;
+        currentCombo = 0; // Reset combo at game start
         player.reset();
         hudScore.textContent = '0';
         tapHint.classList.remove('hidden');
@@ -1293,8 +1394,13 @@
         checkThemeUnlock();
         cancelAnimationFrame(animFrameId);
 
+        // Dopamine effects on game over
+        triggerScreenShake(500, 1.5);
+        triggerScreenFlash('flash-danger', 300);
+
         if (sfx) sfx.gameOver();
         spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
+        currentCombo = 0; // Reset combo on game over
 
         playCount++;
         totalScore += score;

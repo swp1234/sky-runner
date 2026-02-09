@@ -902,3 +902,178 @@ body {
 .back-link:hover, .home-link:hover {
     color: rgba(255,255,255,0.7);
 }
+
+/* === DOPAMINE ENHANCEMENT EFFECTS === */
+
+/* Screen Shake */
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, -2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, 2px); }
+    80% { transform: translate(2px, 2px); }
+}
+
+.screen.shake {
+    animation: screenShake 0.3s ease-in-out;
+}
+
+/* Screen Flash */
+@keyframes screenFlash {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(255, 255, 255, 0.15); }
+}
+
+.screen.flash {
+    animation: screenFlash 0.2s ease-in-out;
+}
+
+.screen.flash-success {
+    animation: screenFlash 0.2s ease-in-out;
+    --flash-color: rgba(46, 213, 115, 0.2);
+}
+
+.screen.flash-danger {
+    animation: screenFlash 0.2s ease-in-out;
+    --flash-color: rgba(255, 99, 72, 0.2);
+}
+
+/* Floating Score Popup */
+@keyframes scoreFloating {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(1.2);
+    }
+}
+
+.score-popup {
+    position: fixed;
+    font-weight: 900;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 100;
+    animation: scoreFloating 0.8s ease-out forwards;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.score-popup.normal {
+    color: var(--accent);
+}
+
+.score-popup.bonus {
+    color: var(--secondary);
+    font-size: 32px;
+}
+
+.score-popup.milestone {
+    color: #ffa502;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+/* Combo Indicator */
+.combo-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+    text-align: center;
+}
+
+.combo-text {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(255, 165, 2, 0.8);
+    animation: comboPulse 0.6s ease-out forwards;
+}
+
+@keyframes comboPulse {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotateZ(0deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2) rotateZ(360deg);
+    }
+}
+
+/* Confetti Particles */
+@keyframes confetti-fall {
+    to { transform: translateY(100vh) rotateZ(720deg); }
+}
+
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.confetti.type-1 { background: linear-gradient(135deg, #ff6348, #ff4757); }
+.confetti.type-2 { background: linear-gradient(135deg, #00d2d3, #0984e3); }
+.confetti.type-3 { background: linear-gradient(135deg, #5f27cd, #6c5ce7); }
+.confetti.type-4 { background: linear-gradient(135deg, #ffa502, #fdcb6e); }
+.confetti.type-5 { background: linear-gradient(135deg, #2ed573, #00b894); }
+
+/* Milestone Banner */
+@keyframes milestoneIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes milestoneOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.8);
+    }
+}
+
+.milestone-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8c42 100%);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 150;
+    box-shadow: 0 10px 40px rgba(255, 165, 2, 0.5);
+    animation: milestoneIn 0.5s ease-out, milestoneOut 0.5s ease-in 1.5s forwards;
+}
+
+.milestone-banner .icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 8px;
+}

@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "Yön değiştirme arcade oyunu!",
     "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Emojileri birleştirerek evrim ver!"
+    "emojiMergeDesc": "Emojileri birleştirerek evrim ver!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "Reklam",

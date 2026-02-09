@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "दिशा बदलने वाली आर्केड गेम!",
     "emojiMerge": "इमोजी मर्ज",
-    "emojiMergeDesc": "इमोजी को विकसित करने के लिए मर्ज करें!"
+    "emojiMergeDesc": "इमोजी को विकसित करने के लिए मर्ज करें!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "विज्ञापन",

@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "Jeu d'arcade avec changement de direction!",
     "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Fusionne les emojis pour les faire évoluer!"
+    "emojiMergeDesc": "Fusionne les emojis pour les faire évoluer!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "Annonce",

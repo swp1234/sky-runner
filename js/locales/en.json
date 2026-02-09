@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "Direction-changing arcade game!",
     "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Merge emojis to evolve!"
+    "emojiMergeDesc": "Merge emojis to evolve!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "Ad",

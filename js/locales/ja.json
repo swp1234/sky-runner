@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "方向変更アーケードゲーム!",
     "emojiMerge": "絵文字マージ",
-    "emojiMergeDesc": "絵文字をマージして進化させましょう!"
+    "emojiMergeDesc": "絵文字をマージして進化させましょう!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "広告",

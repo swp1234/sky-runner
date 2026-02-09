@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "Permainan arcade perubahan arah!",
     "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Gabungkan emoji untuk berkembang!"
+    "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "Iklan",

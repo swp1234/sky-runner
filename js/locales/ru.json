@@ -39,7 +39,9 @@
     "zigzagRunner": "Zigzag Runner",
     "zigzagRunnerDesc": "Аркадная игра со сменой направления!",
     "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Объединяйте эмодзи для эволюции!"
+    "emojiMergeDesc": "Объединяйте эмодзи для эволюции!",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "ad": {
     "label": "Объявление",

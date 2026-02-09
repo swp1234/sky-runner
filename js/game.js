@@ -72,6 +72,12 @@
     let currentTheme = 'space';
     let unlockedThemes = ['space'];
 
+    // === LEADERBOARD SYSTEM ===
+    let leaderboard = null;
+    if (typeof LeaderboardManager !== 'undefined') {
+        leaderboard = new LeaderboardManager('sky-runner', 10);
+    }
+
     // === PLAYER ===
     const player = {
         x: 70, y: 0, velocity: 0, size: PLAYER_SIZE, rotation: 0,
@@ -1476,6 +1482,15 @@
     }
 
     function showGameOver(isNewRecord, previousHighScore) {
+        // Add score to leaderboard
+        let leaderboardResult = null;
+        if (leaderboard) {
+            leaderboardResult = leaderboard.addScore(score, {
+                stage: currentStage,
+                combo: currentCombo
+            });
+        }
+
         showScreen(gameoverScreen);
         goScore.textContent = score;
         goBest.textContent = highScore;
@@ -1492,7 +1507,46 @@
         }
         goNewRecord.classList.toggle('hidden', !isNewRecord);
         document.getElementById('btn-revive').classList.toggle('hidden', hasRevived);
+
+        // Display leaderboard
+        if (leaderboardResult) {
+            displaySkyRunnerLeaderboard(leaderboardResult);
+        }
+
         if (playCount >= 3 && playCount % 3 === 0) showInterstitialAd();
+    }
+
+    function displaySkyRunnerLeaderboard(leaderboardResult) {
+        if (!leaderboard) return;
+
+        const topScores = leaderboard.getTopScores(5);
+        let html = '<div class="leaderboard-title">🏆 Top 5 Scores</div>';
+        html += '<div class="leaderboard-list">';
+
+        topScores.forEach((entry, index) => {
+            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+            const isCurrentScore = entry.score === score && leaderboardResult.isNewRecord;
+            const classes = isCurrentScore ? 'leaderboard-item highlight' : 'leaderboard-item';
+
+            html += `
+                <div class="${classes}">
+                    <span class="medal">${medals[index] || (index + 1) + '.'}</span>
+                    <span class="score-value">${entry.score}</span>
+                    <span class="score-date">${entry.date}</span>
+                </div>
+            `;
+        });
+
+        html += '</div>';
+
+        let leaderboardContainer = gameoverScreen.querySelector('.leaderboard-section');
+        if (!leaderboardContainer) {
+            leaderboardContainer = document.createElement('div');
+            leaderboardContainer.className = 'leaderboard-section';
+            gameoverScreen.appendChild(leaderboardContainer);
+        }
+
+        leaderboardContainer.innerHTML = html;
     }
 
     function getRank(s) {

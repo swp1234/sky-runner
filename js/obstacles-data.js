@@ -27,7 +27,7 @@ const OBSTACLES_DATA = {
                 normal: 10
             }
         },
-        scoreReward: 10
+        scoreReward: 20
     },
     meteor: {
         type: "meteor",
@@ -59,7 +59,7 @@ const OBSTACLES_DATA = {
             type: "circle",
             radius: 25
         },
-        scoreReward: 15
+        scoreReward: 30
     },
     enemy: {
         type: "enemy",
@@ -83,7 +83,7 @@ const OBSTACLES_DATA = {
             spawnChance: 0.2,
             minInterval: 3000
         },
-        scoreReward: 20
+        scoreReward: 35
     },
     laser: {
         type: "laser",
@@ -115,7 +115,7 @@ const OBSTACLES_DATA = {
             type: "rectangle",
             adjustedWidth: 8
         },
-        scoreReward: 25
+        scoreReward: 50
     },
     blackhole: {
         type: "blackhole",
@@ -144,7 +144,7 @@ const OBSTACLES_DATA = {
             affectPlayer: true,
             pullStrength: 0.3
         },
-        scoreReward: 50
+        scoreReward: 75
     }
 };
 

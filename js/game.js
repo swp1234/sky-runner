@@ -15,7 +15,7 @@
     const BASE_GAP = 155;
     const MIN_GAP = 100;
     const BASE_SPEED = 2.5;
-    const MAX_SPEED = 6;
+    const MAX_SPEED = 8;
     const SPAWN_BASE_INTERVAL = 2000;
     const STAR_COUNT = 50;
     const MAX_PARTICLES = 40;
@@ -89,8 +89,28 @@
     let currentCombo = 0;
     let comboDisplayActive = false;
     let shakeActive = false;
+    let currentStage = 1;
+    let stageDisplayActive = false;
 
     const OBSTACLE_COLORS = ['#2ed573', '#00d2d3', '#5f27cd', '#ff6348', '#ffa502'];
+
+    // Stage 계산
+    function calculateStage(passed) {
+        if (passed < 10) return 1;
+        if (passed < 25) return 2;
+        if (passed < 50) return 3;
+        return 4;
+    }
+
+    // Stage 전환 체크
+    function checkStageTransition(prevPassed, newPassed) {
+        const prevStage = calculateStage(prevPassed);
+        const newStage = calculateStage(newPassed);
+        if (prevStage !== newStage) {
+            currentStage = newStage;
+            showStageBanner(newStage);
+        }
+    }
 
     function createObstacle() {
         // 점수에 따라 장애물 타입 선택
@@ -295,12 +315,12 @@
         if (player.y < 0) { player.y = 0; player.velocity = 0; }
         if (player.y + player.size > canvas.height) { triggerGameOver(); return; }
 
-        // Game speed
-        gameSpeed = Math.min(BASE_SPEED + passedCount * 0.07, MAX_SPEED);
+        // Game speed (난이도 곡선 개선: 속도 증가율 향상)
+        gameSpeed = Math.min(BASE_SPEED + passedCount * 0.08, MAX_SPEED);
 
-        // Spawn
+        // Spawn (장애물 간격 최소값 감소: 1000ms → 800ms)
         spawnTimer += deltaMs;
-        const interval = Math.max(SPAWN_BASE_INTERVAL - passedCount * 20, 1000);
+        const interval = Math.max(SPAWN_BASE_INTERVAL - passedCount * 20, 800);
         if (spawnTimer >= interval) {
             // 점수에 따라 장애물 타입 선택 및 확률 체크
             const obstacleType = getObstacleTypeByScore(score);
@@ -379,33 +399,52 @@
                 } else {
                     passed = obs.x + (obs.size || obs.width || 0) < player.x;
                 }
-                
+
                 if (passed) {
                     obs.passed = true;
+                    const prevPassed = passedCount;
                     passedCount++;
-                    const baseReward = obs.scoreReward || 10;
+                    const baseReward = obs.scoreReward || 20;
                     score += baseReward;
                     currentCombo++;
 
                     if (sfx) sfx.coin();
                     if (currentStreak > bestStreak) bestStreak = currentStreak;
 
-                    // Score popup on player
-                    spawnScorePopup(player.x, player.y - 40, `+${baseReward}`);
+                    // Stage 전환 체크
+                    checkStageTransition(prevPassed, passedCount);
 
-                    // Combo bonus every 5 obstacles passed
-                    if (currentCombo >= 5 && currentCombo % 5 === 0) {
-                        const comboBonus = currentCombo;
+                    // 점수 팝업 차등화 (색상과 이펙트)
+                    const popupType = baseReward < 30 ? 'small' : (baseReward < 50 ? 'medium' : 'large');
+                    spawnScorePopup(player.x, player.y - 40, `+${baseReward}`, popupType);
+
+                    // Combo bonus: 5연속 +50, 10연속 +150
+                    if (currentCombo === 5) {
+                        const comboBonus = 50;
                         score += comboBonus;
                         triggerScreenShake(250);
                         spawnConfetti(canvas.width / 2, canvas.height / 2, 15);
-                        spawnComboIndicator(canvas.width / 2, canvas.height / 2, currentCombo);
-                        spawnScorePopup(player.x, player.y - 80, `+${comboBonus} COMBO!`, true);
+                        spawnComboIndicator(canvas.width / 2, canvas.height / 2, 5, 'gold');
+                        spawnScorePopup(player.x, player.y - 100, `+${comboBonus} COMBO x5!`, 'combo5');
+                    } else if (currentCombo === 10) {
+                        const comboBonus = 150;
+                        score += comboBonus;
+                        triggerScreenShake(400, 1.5);
+                        spawnConfetti(canvas.width / 2, canvas.height / 2, 25);
+                        spawnComboIndicator(canvas.width / 2, canvas.height / 2, 10, 'gold');
+                        spawnScorePopup(player.x, player.y - 100, `+${comboBonus} COMBO x10!`, 'combo10');
+                    } else if (currentCombo > 10 && currentCombo % 5 === 0) {
+                        const comboBonus = currentCombo * 15;
+                        score += comboBonus;
+                        triggerScreenShake(300, 1.2);
+                        spawnConfetti(canvas.width / 2, canvas.height / 2, 20);
+                        spawnComboIndicator(canvas.width / 2, canvas.height / 2, currentCombo, 'gold');
+                        spawnScorePopup(player.x, player.y - 100, `+${comboBonus} COMBO x${currentCombo}!`, 'combo10');
                     }
 
-                    // Milestone every 50 points
-                    if (Math.floor(score / 50) > Math.floor((score - baseReward - (currentCombo >= 5 && currentCombo % 5 === 0 ? currentCombo : 0)) / 50)) {
-                        const milestone = Math.floor(score / 50) * 50;
+                    // Milestone every 100 points (조정)
+                    if (Math.floor(score / 100) > Math.floor((score - baseReward) / 100)) {
+                        const milestone = Math.floor(score / 100) * 100;
                         showMilestoneBanner(milestone);
                         triggerScreenFlash('flash-success', 150);
                     }
@@ -441,8 +480,8 @@
         // Collision
         checkCollisions();
 
-        // Continuous score
-        scoreAccum += dt * 0.4;
+        // Continuous score (비중 축소: 0.4 → 0.1, 장애물 회피 중심)
+        scoreAccum += dt * 0.1;
         if (scoreAccum >= 1) {
             const oldScore = score;
             score += Math.floor(scoreAccum);
@@ -1151,30 +1190,33 @@
         setTimeout(() => gameScreen.classList.remove(color), duration);
     }
 
-    function spawnScorePopup(x, y, text, isBig = false) {
+    function spawnScorePopup(x, y, text, type = 'normal') {
         const popup = document.createElement('div');
-        popup.className = `score-popup ${isBig ? 'bonus' : 'normal'}`;
+        popup.className = `score-popup ${type}`;
         popup.textContent = text;
         popup.style.left = x + 'px';
         popup.style.top = y + 'px';
         gameScreen.appendChild(popup);
-        setTimeout(() => popup.remove(), 800);
+
+        // 타입별 애니메이션 시간
+        const duration = (type === 'combo10' || type === 'combo5') ? 1200 : 800;
+        setTimeout(() => popup.remove(), duration);
     }
 
-    function spawnComboIndicator(x, y, comboCount) {
+    function spawnComboIndicator(x, y, comboCount, color = 'gold') {
         const indicator = document.createElement('div');
-        indicator.className = 'combo-indicator';
+        indicator.className = `combo-indicator combo-${color}`;
         indicator.style.left = x + 'px';
         indicator.style.top = y + 'px';
 
         const text = document.createElement('div');
-        text.className = 'combo-text';
+        text.className = `combo-text combo-${color}`;
         text.textContent = `COMBO x${comboCount}!`;
 
         indicator.appendChild(text);
         gameScreen.appendChild(indicator);
 
-        setTimeout(() => indicator.remove(), 600);
+        setTimeout(() => indicator.remove(), 800);
     }
 
     function spawnConfetti(x, y, count = 12) {
@@ -1204,6 +1246,17 @@
         `;
         gameScreen.appendChild(banner);
         setTimeout(() => banner.remove(), 2000);
+    }
+
+    function showStageBanner(stage) {
+        const banner = document.createElement('div');
+        banner.className = 'stage-banner';
+        const stageText = ['Stage 1: 초급자', 'Stage 2: 도전자', 'Stage 3: 마스터', 'Stage 4: 전설'][stage - 1];
+        banner.innerHTML = `
+            <div class="stage-text">${stageText}</div>
+        `;
+        gameScreen.appendChild(banner);
+        setTimeout(() => banner.remove(), 1500);
     }
 
     // Color utility helpers

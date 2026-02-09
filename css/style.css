@@ -964,15 +964,74 @@ body {
     color: var(--accent);
 }
 
+.score-popup.small {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.score-popup.medium {
+    color: #ffdd57;
+    font-size: 28px;
+    animation: scoreFloating 0.8s ease-out forwards, scoreShake 0.3s ease-in-out;
+}
+
+.score-popup.large {
+    color: #ffd700;
+    font-size: 32px;
+    font-weight: 900;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    animation: scoreFloating 0.8s ease-out forwards, scoreShakeBig 0.4s ease-in-out;
+}
+
 .score-popup.bonus {
     color: var(--secondary);
     font-size: 32px;
+}
+
+.score-popup.combo5 {
+    color: #ffd700;
+    font-size: 36px;
+    font-weight: 900;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+    animation: scoreFloating 1.2s ease-out forwards, scorePulseBig 0.6s ease-in-out;
+}
+
+.score-popup.combo10 {
+    color: #ff6b9d;
+    font-size: 40px;
+    font-weight: 900;
+    text-shadow: 0 0 25px rgba(255, 107, 157, 1);
+    animation: scoreFloating 1.2s ease-out forwards, scorePulseBigger 0.6s ease-in-out;
 }
 
 .score-popup.milestone {
     color: #ffa502;
     font-size: 28px;
     font-weight: 900;
+}
+
+@keyframes scoreShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+@keyframes scoreShakeBig {
+    0%, 100% { transform: translateX(0) scale(1); }
+    25% { transform: translateX(-3px) scale(1.05); }
+    75% { transform: translateX(3px) scale(1.05); }
+}
+
+@keyframes scorePulseBig {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes scorePulseBigger {
+    0% { transform: scale(0.7) rotate(-10deg); }
+    50% { transform: scale(1.15) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 /* Combo Indicator */
@@ -994,6 +1053,12 @@ body {
     animation: comboPulse 0.6s ease-out forwards;
 }
 
+.combo-text.combo-gold {
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 165, 0, 0.6);
+    animation: comboPulseGold 0.8s ease-out forwards;
+}
+
 @keyframes comboPulse {
     0% {
         opacity: 0;
@@ -1005,6 +1070,21 @@ body {
     100% {
         opacity: 0;
         transform: scale(2) rotateZ(360deg);
+    }
+}
+
+@keyframes comboPulseGold {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotateZ(-30deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15) rotateZ(10deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2.5) rotateZ(360deg);
     }
 }
 
@@ -1026,6 +1106,44 @@ body {
 .confetti.type-3 { background: linear-gradient(135deg, #5f27cd, #6c5ce7); }
 .confetti.type-4 { background: linear-gradient(135deg, #ffa502, #fdcb6e); }
 .confetti.type-5 { background: linear-gradient(135deg, #2ed573, #00b894); }
+
+/* Stage Banner */
+.stage-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 110;
+    text-align: center;
+}
+
+.stage-text {
+    font-size: 56px;
+    font-weight: 900;
+    color: #00d2d3;
+    text-shadow: 0 0 40px rgba(0, 210, 211, 1), 0 0 60px rgba(0, 165, 255, 0.6);
+    animation: stageBannerPulse 1.5s ease-in-out forwards;
+}
+
+@keyframes stageBannerPulse {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotateZ(-45deg);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1.1) rotateZ(0deg);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1) rotateZ(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) rotateZ(10deg);
+    }
+}
 
 /* Milestone Banner */
 @keyframes milestoneIn {

@@ -29,7 +29,8 @@
 
     // Helper: get localized name from data objects (uses nameEn for non-Korean)
     function localName(obj) {
-        return (i18n.currentLang === 'ko' ? obj.name : (obj.nameEn || obj.name));
+        const lang = (typeof i18n !== 'undefined' && i18n.currentLang) ? i18n.currentLang : 'en';
+        return (lang === 'ko' ? obj.name : (obj.nameEn || obj.name));
     }
 
     // === DOM ===
@@ -1887,40 +1888,41 @@
 
     // === LANGUAGE SUPPORT ===
     async function initLanguageSelector() {
-        await i18n.loadTranslations(i18n.currentLang);
-        i18n.updateUI();
+        try {
+            await i18n.loadTranslations(i18n.currentLang);
+            i18n.updateUI();
 
-        const langBtn = document.getElementById('langBtn');
-        const langMenu = document.getElementById('langMenu');
+            const langBtn = document.getElementById('langBtn');
+            const langMenu = document.getElementById('langMenu');
 
-        if (!langBtn || !langMenu) return;
+            if (!langBtn || !langMenu) return;
 
-        // Populate language options
-        langMenu.innerHTML = '';
-        i18n.supportedLanguages.forEach(lang => {
-            const btn = document.createElement('button');
-            btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
-            btn.textContent = i18n.getLanguageName(lang);
-            btn.addEventListener('click', async () => {
-                await i18n.setLanguage(lang);
-                document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                langMenu.classList.add('hidden');
+            langMenu.innerHTML = '';
+            i18n.supportedLanguages.forEach(lang => {
+                const btn = document.createElement('button');
+                btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
+                btn.textContent = i18n.getLanguageName(lang);
+                btn.addEventListener('click', async () => {
+                    await i18n.setLanguage(lang);
+                    document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    langMenu.classList.add('hidden');
+                });
+                langMenu.appendChild(btn);
             });
-            langMenu.appendChild(btn);
-        });
 
-        // Toggle menu
-        langBtn.addEventListener('click', () => {
-            langMenu.classList.toggle('hidden');
-        });
+            langBtn.addEventListener('click', () => {
+                langMenu.classList.toggle('hidden');
+            });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) {
-                langMenu.classList.add('hidden');
-            }
-        });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.language-selector')) {
+                    langMenu.classList.add('hidden');
+                }
+            });
+        } catch (e) {
+            console.warn('i18n init failed:', e);
+        }
     }
 
     initLanguageSelector();

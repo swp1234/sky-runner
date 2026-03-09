@@ -413,6 +413,7 @@
                     passedCount++;
                     const baseReward = obs.scoreReward || 20;
                     score += baseReward;
+                    if (typeof Haptic !== 'undefined') Haptic.light();
                     currentCombo++;
 
                     if (sfx) sfx.coin();
@@ -1480,6 +1481,7 @@
             if (sfx) sfx.gameOver();
         }
         spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
+        if (typeof Haptic !== 'undefined') Haptic.heavy();
         currentCombo = 0; // Reset combo on game over
 
         setTimeout(() => showGameOver(isNewRecord, previousHighScore), 300);

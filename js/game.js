@@ -1888,7 +1888,14 @@
     document.getElementById('btn-themes-back').addEventListener('click', goToMenu);
     document.getElementById('btn-stats-back').addEventListener('click', goToMenu);
     document.getElementById('btn-revive').addEventListener('click', () => {
-        showInterstitialAd(() => revivePlayer());
+        if (typeof GameAds !== 'undefined') {
+            GameAds.showRewarded({
+                onReward: () => revivePlayer(),
+                onSkip: () => {} // user declined
+            });
+        } else {
+            showInterstitialAd(() => revivePlayer());
+        }
     });
 
     window.addEventListener('resize', () => { if (state !== 'playing') resizeCanvas(); });

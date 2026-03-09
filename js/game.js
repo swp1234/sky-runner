@@ -1466,6 +1466,12 @@
         // Daily streak reporting
         if (typeof DailyStreak !== 'undefined') DailyStreak.report(score);
 
+        GameAchievements.report({
+          highScore: highScore,
+          playCount: playCount,
+          bestStreak: bestStreak
+        });
+
         // Dopamine effects on game over
         if (isNewRecord) {
             // Confetti and stronger effect for new record
@@ -1910,6 +1916,19 @@
     if (typeof DailyStreak !== 'undefined') {
         DailyStreak.init({ gameId: 'sky-runner', bestScoreKey: 'skyrunner_best', minTarget: 5 });
     }
+
+    GameAchievements.init({
+      gameId: 'sky-runner',
+      defs: [
+        { id: 'score_20', stat: 'highScore', target: 20, icon: '\u2601\uFE0F', name: 'Cloud Jumper' },
+        { id: 'score_50', stat: 'highScore', target: 50, icon: '\u2601\uFE0F', name: 'Sky Walker' },
+        { id: 'score_100', stat: 'highScore', target: 100, icon: '\u2601\uFE0F', name: 'Sky Legend' },
+        { id: 'plays_10', stat: 'playCount', target: 10, icon: '\uD83C\uDFAE', name: 'Regular' },
+        { id: 'plays_50', stat: 'playCount', target: 50, icon: '\uD83C\uDFAE', name: 'Dedicated' },
+        { id: 'streak_5', stat: 'bestStreak', target: 5, icon: '\uD83D\uDD25', name: 'Streak Starter' },
+        { id: 'streak_15', stat: 'bestStreak', target: 15, icon: '\uD83D\uDD25', name: 'On Fire' },
+      ]
+    });
 
     // Score pop animation cleanup
     hudScore.addEventListener('animationend', () => hudScore.classList.remove('score-pop'));

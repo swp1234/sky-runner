@@ -1462,6 +1462,9 @@
         skinTokens += Math.floor(score / 10);
         saveData();
 
+        // Daily streak reporting
+        if (typeof DailyStreak !== 'undefined') DailyStreak.report(score);
+
         // Dopamine effects on game over
         if (isNewRecord) {
             // Confetti and stronger effect for new record
@@ -1726,12 +1729,13 @@
 
     // === STORAGE ===
     function saveData() {
-        try { 
-            localStorage.setItem('skyrunner_data', JSON.stringify({ 
-                highScore, playCount, totalScore, bestStreak, 
+        try {
+            localStorage.setItem('skyrunner_data', JSON.stringify({
+                highScore, playCount, totalScore, bestStreak,
                 selectedSkin, unlockedSkins, skinTokens,
                 currentTheme, unlockedThemes
-            })); 
+            }));
+            localStorage.setItem('skyrunner_best', String(highScore));
         } catch (e) {}
     }
     function loadData() {
@@ -1894,9 +1898,16 @@
 
     // === INIT ===
     loadData();
+    // Save dedicated bestScore key for daily-streak system
+    try { localStorage.setItem('skyrunner_best', String(highScore)); } catch(e) {}
     hsValue.textContent = highScore;
     resizeCanvas();
     showScreen(menuScreen);
+
+    // Daily streak init
+    if (typeof DailyStreak !== 'undefined') {
+        DailyStreak.init({ gameId: 'sky-runner', bestScoreKey: 'skyrunner_best', minTarget: 5 });
+    }
 
     // Score pop animation cleanup
     hudScore.addEventListener('animationend', () => hudScore.classList.remove('score-pop'));

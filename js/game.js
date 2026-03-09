@@ -1490,7 +1490,13 @@
         if (typeof Haptic !== 'undefined') Haptic.heavy();
         currentCombo = 0; // Reset combo on game over
 
-        setTimeout(() => showGameOver(isNewRecord, previousHighScore), 300);
+        setTimeout(() => {
+            if (typeof GameAds !== 'undefined') {
+                GameAds.showInterstitial({ onComplete: () => showGameOver(isNewRecord, previousHighScore) });
+            } else {
+                showGameOver(isNewRecord, previousHighScore);
+            }
+        }, 300);
     }
 
     function showGameOver(isNewRecord, previousHighScore) {
@@ -1916,6 +1922,8 @@
     if (typeof DailyStreak !== 'undefined') {
         DailyStreak.init({ gameId: 'sky-runner', bestScoreKey: 'skyrunner_best', minTarget: 5 });
     }
+
+    if (typeof GameAds !== 'undefined') GameAds.init();
 
     GameAchievements.init({
       gameId: 'sky-runner',

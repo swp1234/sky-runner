@@ -11,7 +11,8 @@
     "themes": "🎨 테마 선택",
     "stats": "📊 통계",
     "hint": "터치 또는 스페이스바로 조작",
-    "home": "DopaBrain 홈"
+    "home": "DopaBrain 홈",
+    "objective": "장애물을 피하고 우주를 날아가세요!"
   },
   "game": {
     "tapToStart": "탭하여 시작!",

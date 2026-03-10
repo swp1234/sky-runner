@@ -11,7 +11,8 @@
     "themes": "🎨 Themes",
     "stats": "📊 Stats",
     "hint": "Tap or press Space to play",
-    "home": "DopaBrain Home"
+    "home": "DopaBrain Home",
+    "objective": "Dodge obstacles and fly through space!"
   },
   "game": {
     "tapToStart": "Tap to start!",

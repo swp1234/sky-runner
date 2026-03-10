@@ -11,7 +11,8 @@
     "themes": "🎨 テーマ",
     "stats": "📊 統計",
     "hint": "タップまたはスペースキーでプレイ",
-    "home": "DopaBrain ホーム"
+    "home": "DopaBrain ホーム",
+    "objective": "障害物を避けて宇宙を飛び抜けよう！"
   },
   "game": {
     "tapToStart": "タップで開始！",

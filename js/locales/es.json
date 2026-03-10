@@ -11,7 +11,8 @@
     "themes": "🎨 Temas",
     "stats": "📊 Estadísticas",
     "hint": "Toca o presiona Espacio para jugar",
-    "home": "DopaBrain Inicio"
+    "home": "DopaBrain Inicio",
+    "objective": "¡Esquiva obstáculos y vuela por el espacio!"
   },
   "game": {
     "tapToStart": "¡Toca para comenzar!",

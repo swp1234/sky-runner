@@ -20,6 +20,18 @@
     const STAR_COUNT = 50;
     const MAX_PARTICLES = 40;
 
+    // === IMAGE ASSETS ===
+    let bgScrollX = 0;
+    const shipImg = new Image();
+    let shipImgLoaded = false;
+    shipImg.onload = function () { shipImgLoaded = true; };
+    shipImg.src = 'assets/ship-opt.png';
+
+    const spaceBgImg = new Image();
+    let spaceBgImgLoaded = false;
+    spaceBgImg.onload = function () { spaceBgImgLoaded = true; };
+    spaceBgImg.src = 'assets/space-bg-opt.jpg';
+
     // === TITLES (from titles-data.js) ===
     // TITLES_DATA is loaded from titles-data.js
 
@@ -659,7 +671,19 @@
         const theme = getCurrentThemeData();
         const bg = theme.background;
 
-        if (bg.type === 'gradient') {
+        // Space theme with loaded background image: tile horizontally with parallax
+        if (spaceBgImgLoaded && currentTheme === 'space') {
+            bgScrollX -= 0.3;
+            const imgW = spaceBgImg.width;
+            const imgH = spaceBgImg.height;
+            // Scale to fill canvas height, tile horizontally
+            const scale = canvas.height / imgH;
+            const drawW = imgW * scale;
+            const offset = ((bgScrollX % drawW) + drawW) % drawW;
+            for (let x = -offset; x < canvas.width; x += drawW) {
+                ctx.drawImage(spaceBgImg, x, 0, drawW, canvas.height);
+            }
+        } else if (bg.type === 'gradient') {
             const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
             bg.colors.forEach((color, index) => {
                 gradient.addColorStop(index / (bg.colors.length - 1), color);
@@ -671,8 +695,8 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Nebula clouds (space theme only, subtle)
-        if (!bg.grid && !bg.scanlines) {
+        // Nebula clouds (non-space themes or fallback when image not loaded)
+        if (!bg.grid && !bg.scanlines && !(spaceBgImgLoaded && currentTheme === 'space')) {
             if (nebulaClouds.length === 0) initNebulae();
             for (let i = 0; i < nebulaClouds.length; i++) {
                 const n = nebulaClouds[i];
@@ -746,6 +770,17 @@
     // === RENDER HELPERS ===
     // Draw detailed spaceship body (used for player)
     function drawSpaceship(cx, cy, size, color, rotation, skinId) {
+        // Use ship sprite for classic skin when image is loaded
+        if (shipImgLoaded && skinId === 'classic') {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(rotation * Math.PI / 180);
+            const drawSize = size * 1.4; // slightly larger to match procedural feel
+            ctx.drawImage(shipImg, -drawSize / 2, -drawSize / 2, drawSize, drawSize);
+            ctx.restore();
+            return;
+        }
+
         ctx.save();
         ctx.translate(cx, cy);
         ctx.rotate(rotation * Math.PI / 180);

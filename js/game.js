@@ -1466,7 +1466,7 @@
         // Daily streak reporting
         if (typeof DailyStreak !== 'undefined') DailyStreak.report(score);
 
-        GameAchievements.report({
+        if (typeof GameAchievements !== 'undefined') GameAchievements.report({
           highScore: highScore,
           playCount: playCount,
           bestStreak: bestStreak
@@ -1932,7 +1932,7 @@
 
     if (typeof GameAds !== 'undefined') GameAds.init();
 
-    GameAchievements.init({
+    if (typeof GameAchievements !== 'undefined') GameAchievements.init({
       gameId: 'sky-runner',
       defs: [
         { id: 'score_20', stat: 'highScore', target: 20, icon: '\u2601\uFE0F', name: 'Cloud Jumper' },

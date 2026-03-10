@@ -1,8 +1,10 @@
-const CACHE_NAME = 'sky-runner-v2';
+const CACHE_NAME = 'sky-runner-v3';
 const ASSETS = [
     '/',
     '/index.html',
     '/css/style.css',
+    '/assets/ship-opt.png',
+    '/assets/space-bg-opt.jpg',
     '/js/game.js',
     '/js/i18n.js',
     '/js/sound-engine.js',

@@ -103,6 +103,12 @@
     let obstacles = [];
     let particles = [];
     let stars = [];
+    let powerUps = [];
+
+    // === POWER-UP STATE ===
+    let activeShield = false;
+    let slowMoTimer = 0;
+    let slowMoActive = false;
 
     // === DOPAMINE ENHANCEMENT STATE ===
     let currentCombo = 0;
@@ -337,6 +343,14 @@
         // Game speed (난이도 곡선 개선: 속도 증가율 향상)
         gameSpeed = Math.min(BASE_SPEED + passedCount * 0.08, MAX_SPEED);
 
+        // Slow-Mo power-up: reduce speed to 60%
+        slowMoActive = slowMoTimer > 0;
+        if (slowMoActive) {
+            gameSpeed *= 0.6;
+            slowMoTimer -= deltaMs / 1000;
+            if (slowMoTimer <= 0) { slowMoTimer = 0; slowMoActive = false; }
+        }
+
         // Spawn (장애물 간격 최소값 감소: 1000ms → 800ms)
         spawnTimer += deltaMs;
         const interval = Math.max(SPAWN_BASE_INTERVAL - passedCount * 20, 800);
@@ -475,6 +489,19 @@
                     }
                     const centerY = obs.gapY ? obs.gapY + obs.gap / 2 : obs.y;
                     spawnParticles(obs.x + (obs.width || obs.size || 0), centerY, obs.color, 4);
+
+                    // 15% chance to spawn a power-up after passing an obstacle
+                    if (Math.random() < 0.15) {
+                        const puType = (powerUps.length % 2 === 0) ? 'shield' : 'slowmo';
+                        powerUps.push({
+                            type: puType,
+                            x: canvas.width + 60,
+                            y: 50 + Math.random() * (canvas.height - 100),
+                            size: 25,
+                            collected: false,
+                            pulsePhase: 0
+                        });
+                    }
                 }
             }
 
@@ -492,6 +519,33 @@
             p.y += p.vy * dt;
             p.life -= p.decay * dt;
             if (p.life <= 0) particles.splice(i, 1);
+        }
+
+        // Power-ups: move, pulse, collect
+        for (let i = powerUps.length - 1; i >= 0; i--) {
+            const pu = powerUps[i];
+            pu.x -= gameSpeed * dt;
+            pu.pulsePhase += 0.08 * dt;
+
+            // Off-screen removal
+            if (pu.x < -50) { powerUps.splice(i, 1); continue; }
+
+            // Circle collision with player
+            const dx = (player.x + player.size / 2) - pu.x;
+            const dy = (player.y + player.size / 2) - pu.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < pu.size + player.size * 0.35) {
+                if (pu.type === 'shield') {
+                    activeShield = true;
+                    spawnParticles(pu.x, pu.y, '#4fc3f7', 8);
+                } else {
+                    slowMoTimer = 5;
+                    spawnParticles(pu.x, pu.y, '#66bb6a', 8);
+                }
+                if (sfx) sfx.coin();
+                if (typeof Haptic !== 'undefined') Haptic.light();
+                powerUps.splice(i, 1);
+            }
         }
 
         // Stars
@@ -619,6 +673,17 @@
             }
 
             if (collision) {
+                if (activeShield) {
+                    // Shield absorbs the hit
+                    activeShield = false;
+                    spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#4fc3f7', 10);
+                    triggerScreenShake(200);
+                    if (sfx) sfx.coin();
+                    if (typeof Haptic !== 'undefined') Haptic.medium();
+                    // Remove the obstacle that was hit
+                    obstacles.splice(i, 1);
+                    return;
+                }
                 triggerGameOver();
                 return;
             }
@@ -1378,6 +1443,53 @@
             }
         }
 
+        // Power-ups (pulsing orbs with glow)
+        for (let i = 0; i < powerUps.length; i++) {
+            const pu = powerUps[i];
+            const pulse = 1 + Math.sin(pu.pulsePhase) * 0.2;
+            const r = pu.size * pulse;
+            const color = pu.type === 'shield' ? '#4fc3f7' : '#66bb6a';
+            const glowColor = pu.type === 'shield' ? 'rgba(79,195,247,' : 'rgba(102,187,106,';
+
+            // Outer glow
+            ctx.globalAlpha = 0.25;
+            const orbGlow = ctx.createRadialGradient(pu.x, pu.y, 0, pu.x, pu.y, r * 2);
+            orbGlow.addColorStop(0, glowColor + '0.5)');
+            orbGlow.addColorStop(1, glowColor + '0)');
+            ctx.fillStyle = orbGlow;
+            ctx.beginPath();
+            ctx.arc(pu.x, pu.y, r * 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Main orb
+            ctx.globalAlpha = 0.9;
+            const orbGrad = ctx.createRadialGradient(pu.x - r * 0.2, pu.y - r * 0.2, 0, pu.x, pu.y, r);
+            orbGrad.addColorStop(0, '#ffffff');
+            orbGrad.addColorStop(0.4, color);
+            orbGrad.addColorStop(1, glowColor + '0.6)');
+            ctx.fillStyle = orbGrad;
+            ctx.beginPath();
+            ctx.arc(pu.x, pu.y, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Icon text
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${Math.round(r * 0.9)}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(pu.type === 'shield' ? '\u{1F6E1}' : '\u{23F3}', pu.x, pu.y);
+        }
+        ctx.globalAlpha = 1;
+
+        // Slow-Mo screen tint
+        if (slowMoActive) {
+            ctx.globalAlpha = 0.08;
+            ctx.fillStyle = '#66bb6a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.globalAlpha = 1;
+        }
+
         // Particles (simple circles with alpha - performance optimized)
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
@@ -1443,6 +1555,43 @@
                 player.rotation,
                 skin.id
             );
+
+            // Shield indicator (blue ring around ship)
+            if (activeShield) {
+                const shieldPulse = 1 + Math.sin(Date.now() * 0.006) * 0.08;
+                const shieldR = player.size * 0.65 * shieldPulse;
+                ctx.globalAlpha = 0.35;
+                const shieldGrad = ctx.createRadialGradient(gcx, gcy, shieldR * 0.7, gcx, gcy, shieldR);
+                shieldGrad.addColorStop(0, 'rgba(79,195,247,0)');
+                shieldGrad.addColorStop(0.7, 'rgba(79,195,247,0.2)');
+                shieldGrad.addColorStop(1, 'rgba(79,195,247,0.5)');
+                ctx.fillStyle = shieldGrad;
+                ctx.beginPath();
+                ctx.arc(gcx, gcy, shieldR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 0.6;
+                ctx.strokeStyle = '#4fc3f7';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(gcx, gcy, shieldR, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
+
+            // Slow-Mo timer bar
+            if (slowMoTimer > 0) {
+                const barW = 50;
+                const barH = 5;
+                const barX = gcx - barW / 2;
+                const barY = gcy - player.size * 0.6 - 10;
+                const fill = slowMoTimer / 5;
+                ctx.globalAlpha = 0.7;
+                ctx.fillStyle = '#333';
+                ctx.fillRect(barX, barY, barW, barH);
+                ctx.fillStyle = '#66bb6a';
+                ctx.fillRect(barX, barY, barW * fill, barH);
+                ctx.globalAlpha = 1;
+            }
         }
     }
 
@@ -1462,7 +1611,8 @@
         state = 'ready';
         score = 0; passedCount = 0; currentStreak = 0; scoreAccum = 0;
         gameSpeed = BASE_SPEED; spawnTimer = 0;
-        obstacles = []; particles = [];
+        obstacles = []; particles = []; powerUps = [];
+        activeShield = false; slowMoTimer = 0; slowMoActive = false;
         hasRevived = false; prevTimestamp = 0;
         currentCombo = 0; // Reset combo at game start
         player.reset();
@@ -1526,6 +1676,7 @@
         spawnParticles(player.x + player.size / 2, player.y + player.size / 2, '#ff6348', 12);
         if (typeof Haptic !== 'undefined') Haptic.heavy();
         currentCombo = 0; // Reset combo on game over
+        powerUps = []; activeShield = false; slowMoTimer = 0; slowMoActive = false;
 
         setTimeout(() => {
             if (typeof GameAds !== 'undefined') {

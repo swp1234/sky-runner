@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "Başlamak için tap et!",
-    "pause": "Duraklat"
+    "pause": "Duraklat",
+    "combo": "KOMBO",
+    "milestone": "{score} puan!",
+    "stage1": "Stage 1: Başlangıç",
+    "stage2": "Stage 2: Meydan Okuyan",
+    "stage3": "Stage 3: Usta",
+    "stage4": "Stage 4: Efsane",
+    "newBest": "🚀 YENİ REKOR!",
+    "leaderboardTitle": "🏆 En İyi 5"
   },
   "pause": {
     "title": "Duraklat",

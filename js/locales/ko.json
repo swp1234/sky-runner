@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "탭하여 시작!",
-    "pause": "일시정지"
+    "pause": "일시정지",
+    "combo": "콤보",
+    "milestone": "{score}점 달성!",
+    "stage1": "Stage 1: 초급자",
+    "stage2": "Stage 2: 도전자",
+    "stage3": "Stage 3: 마스터",
+    "stage4": "Stage 4: 전설",
+    "newBest": "🚀 최고 기록!",
+    "leaderboardTitle": "🏆 상위 5개 점수"
   },
   "pause": {
     "title": "일시정지",

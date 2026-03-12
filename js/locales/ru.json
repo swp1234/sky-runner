@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "Нажмите для начала!",
-    "pause": "Пауза"
+    "pause": "Пауза",
+    "combo": "КОМБО",
+    "milestone": "{score} очков!",
+    "stage1": "Stage 1: Новичок",
+    "stage2": "Stage 2: Претендент",
+    "stage3": "Stage 3: Мастер",
+    "stage4": "Stage 4: Легенда",
+    "newBest": "🚀 НОВЫЙ РЕКОРД!",
+    "leaderboardTitle": "🏆 Топ 5"
   },
   "pause": {
     "title": "Пауза",

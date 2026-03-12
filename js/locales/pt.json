@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "Toque para começar!",
-    "pause": "Pausa"
+    "pause": "Pausa",
+    "combo": "COMBO",
+    "milestone": "{score} pontos!",
+    "stage1": "Stage 1: Iniciante",
+    "stage2": "Stage 2: Desafiante",
+    "stage3": "Stage 3: Mestre",
+    "stage4": "Stage 4: Lenda",
+    "newBest": "🚀 NOVO RECORDE!",
+    "leaderboardTitle": "🏆 Top 5"
   },
   "pause": {
     "title": "Pausado",

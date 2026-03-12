@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "点击开始！",
-    "pause": "暂停"
+    "pause": "暂停",
+    "combo": "连击",
+    "milestone": "{score}分达成！",
+    "stage1": "Stage 1: 入门",
+    "stage2": "Stage 2: 挑战者",
+    "stage3": "Stage 3: 大师",
+    "stage4": "Stage 4: 传说",
+    "newBest": "🚀 新纪录！",
+    "leaderboardTitle": "🏆 前5名"
   },
   "pause": {
     "title": "已暂停",

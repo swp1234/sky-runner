@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "शुरू करने के लिए टैप करें!",
-    "pause": "रोकें"
+    "pause": "रोकें",
+    "combo": "कॉम्बो",
+    "milestone": "{score} अंक हासिल!",
+    "stage1": "Stage 1: शुरुआती",
+    "stage2": "Stage 2: चुनौती",
+    "stage3": "Stage 3: मास्टर",
+    "stage4": "Stage 4: लीजेंड",
+    "newBest": "🚀 नया रिकॉर्ड!",
+    "leaderboardTitle": "🏆 शीर्ष 5 स्कोर"
   },
   "pause": {
     "title": "रोका गया",

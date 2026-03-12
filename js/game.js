@@ -1319,7 +1319,7 @@
 
         const text = document.createElement('div');
         text.className = `combo-text combo-${color}`;
-        text.textContent = `COMBO x${comboCount}!`;
+        text.textContent = (window.i18n?.t('game.combo') || 'COMBO') + ' x' + comboCount + '!';
 
         indicator.appendChild(text);
         gameScreen.appendChild(indicator);
@@ -1350,7 +1350,7 @@
         banner.className = 'milestone-banner';
         banner.innerHTML = `
             <span class="icon">🎉</span>
-            <div>${milestone} 점 달성!</div>
+            <div>${(window.i18n?.t('game.milestone') || '{score} points reached!').replace('{score}', milestone)}</div>
         `;
         gameScreen.appendChild(banner);
         setTimeout(() => banner.remove(), 2000);
@@ -1359,7 +1359,7 @@
     function showStageBanner(stage) {
         const banner = document.createElement('div');
         banner.className = 'stage-banner';
-        const stageText = ['Stage 1: 초급자', 'Stage 2: 도전자', 'Stage 3: 마스터', 'Stage 4: 전설'][stage - 1];
+        const stageText = window.i18n?.t('game.stage' + stage) || ['Stage 1: Beginner', 'Stage 2: Challenger', 'Stage 3: Master', 'Stage 4: Legend'][stage - 1];
         banner.innerHTML = `
             <div class="stage-text">${stageText}</div>
         `;
@@ -1695,7 +1695,7 @@
             el.style.cssText = 'position:fixed;top:20%;left:50%;transform:translate(-50%,-50%) scale(0);font-size:32px;font-weight:800;color:#fbbf24;text-shadow:0 0 30px rgba(251,191,36,0.6);pointer-events:none;z-index:200;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),opacity 0.4s;opacity:0;white-space:nowrap;';
             document.body.appendChild(el);
         }
-        el.textContent = '\uD83D\uDE80 NEW BEST!';
+        el.textContent = window.i18n?.t('game.newBest') || '\uD83D\uDE80 NEW BEST!';
         el.style.transform = 'translate(-50%,-50%) scale(1.2)';
         el.style.opacity = '1';
         setTimeout(() => {
@@ -1743,7 +1743,7 @@
         if (!leaderboard) return;
 
         const topScores = leaderboard.getTopScores(5);
-        let html = '<div class="leaderboard-title">🏆 Top 5 Scores</div>';
+        let html = '<div class="leaderboard-title">' + (window.i18n?.t('game.leaderboardTitle') || '🏆 Top 5 Scores') + '</div>';
         html += '<div class="leaderboard-list">';
 
         topScores.forEach((entry, index) => {

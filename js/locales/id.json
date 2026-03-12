@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "Ketuk untuk memulai!",
-    "pause": "Jeda"
+    "pause": "Jeda",
+    "combo": "KOMBO",
+    "milestone": "{score} poin tercapai!",
+    "stage1": "Stage 1: Pemula",
+    "stage2": "Stage 2: Penantang",
+    "stage3": "Stage 3: Master",
+    "stage4": "Stage 4: Legenda",
+    "newBest": "🚀 REKOR BARU!",
+    "leaderboardTitle": "🏆 5 Teratas"
   },
   "pause": {
     "title": "Dijeda",

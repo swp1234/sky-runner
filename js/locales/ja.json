@@ -16,7 +16,15 @@
   },
   "game": {
     "tapToStart": "タップで開始！",
-    "pause": "一時停止"
+    "pause": "一時停止",
+    "combo": "コンボ",
+    "milestone": "{score}点達成！",
+    "stage1": "Stage 1: 初心者",
+    "stage2": "Stage 2: 挑戦者",
+    "stage3": "Stage 3: マスター",
+    "stage4": "Stage 4: 伝説",
+    "newBest": "🚀 最高記録！",
+    "leaderboardTitle": "🏆 トップ5スコア"
   },
   "pause": {
     "title": "一時停止中",

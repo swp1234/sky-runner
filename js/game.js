@@ -104,6 +104,7 @@
     let particles = [];
     let stars = [];
     let powerUps = [];
+    let speedLines = [];
 
     // === POWER-UP STATE ===
     let activeShield = false;
@@ -349,6 +350,22 @@
             gameSpeed *= 0.6;
             slowMoTimer -= deltaMs / 1000;
             if (slowMoTimer <= 0) { slowMoTimer = 0; slowMoActive = false; }
+        }
+
+        // Speed lines (appear at higher speeds for visual intensity)
+        const speedRatio = (gameSpeed - BASE_SPEED) / (MAX_SPEED - BASE_SPEED);
+        if (speedRatio > 0.3 && Math.random() < speedRatio * 0.4 && speedLines.length < 15) {
+            speedLines.push({
+                x: canvas.width + 10,
+                y: Math.random() * canvas.height,
+                len: 30 + Math.random() * 60 * speedRatio,
+                alpha: 0.1 + speedRatio * 0.2,
+                speed: gameSpeed * (1.5 + Math.random())
+            });
+        }
+        for (let i = speedLines.length - 1; i >= 0; i--) {
+            speedLines[i].x -= speedLines[i].speed * dt;
+            if (speedLines[i].x + speedLines[i].len < 0) speedLines.splice(i, 1);
         }
 
         // Spawn (장애물 간격 최소값 감소: 1000ms → 800ms)
@@ -1426,6 +1443,19 @@
         }
         ctx.globalAlpha = 1;
 
+        // Speed lines
+        for (let i = 0; i < speedLines.length; i++) {
+            const sl = speedLines[i];
+            ctx.globalAlpha = sl.alpha;
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(sl.x, sl.y);
+            ctx.lineTo(sl.x + sl.len, sl.y);
+            ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+
         // Obstacles
         for (let i = 0; i < obstacles.length; i++) {
             const obs = obstacles[i];
@@ -1611,7 +1641,7 @@
         state = 'ready';
         score = 0; passedCount = 0; currentStreak = 0; scoreAccum = 0;
         gameSpeed = BASE_SPEED; spawnTimer = 0;
-        obstacles = []; particles = []; powerUps = [];
+        obstacles = []; particles = []; powerUps = []; speedLines = [];
         activeShield = false; slowMoTimer = 0; slowMoActive = false;
         hasRevived = false; prevTimestamp = 0;
         currentCombo = 0; // Reset combo at game start

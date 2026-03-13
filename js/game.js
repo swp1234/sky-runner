@@ -581,6 +581,16 @@
             // 점수 증가 시 테마 언락 체크
             if (score > oldScore) {
                 checkThemeUnlock();
+                // Score milestones
+                const milestones = [500, 1000, 2000, 5000, 10000];
+                for (const m of milestones) {
+                    if (oldScore < m && score >= m) {
+                        spawnConfetti(canvas.width / 2, canvas.height / 3, 30);
+                        triggerScreenShake(400, 1.5);
+                        spawnScorePopup(canvas.width / 2, canvas.height / 3, `🎉 ${m}!`, 'combo10');
+                        if (typeof Haptic !== 'undefined') Haptic.heavy();
+                    }
+                }
             }
         }
 

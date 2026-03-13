@@ -104,5 +104,12 @@
     "title": "기록 갱신",
     "improvement": "+{diff}점 향상!",
     "previousBest": "이전 최고"
+  },
+  "related": {
+    "title": "더 많은 게임",
+    "roadShooter": "로드 슈터",
+    "flappyBird": "플래피 버드",
+    "zigzagRunner": "지그재그 러너",
+    "snakeGame": "스네이크 게임"
   }
 }

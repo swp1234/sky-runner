@@ -104,5 +104,12 @@
     "title": "新記録",
     "improvement": "+{diff}点改善！",
     "previousBest": "以前のベスト"
+  },
+  "related": {
+    "title": "もっと探索",
+    "roadShooter": "ロードシューター",
+    "flappyBird": "フラッピーバード",
+    "zigzagRunner": "ジグザグランナー",
+    "snakeGame": "スネークゲーム"
   }
 }

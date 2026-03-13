@@ -104,5 +104,12 @@
     "title": "Nouveau Record",
     "improvement": "+{diff}pts amélioration!",
     "previousBest": "Meilleur précédent"
+  },
+  "related": {
+    "title": "À découvrir",
+    "roadShooter": "Road Shooter",
+    "flappyBird": "Flappy Bird",
+    "zigzagRunner": "Zigzag Runner",
+    "snakeGame": "Jeu du Serpent"
   }
 }

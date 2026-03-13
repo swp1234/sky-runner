@@ -104,5 +104,12 @@
     "title": "新记录",
     "improvement": "+{diff}分进度！",
     "previousBest": "之前最佳"
+  },
+  "related": {
+    "title": "更多探索",
+    "roadShooter": "公路射手",
+    "flappyBird": "飞翔的鸟",
+    "zigzagRunner": "之字跑者",
+    "snakeGame": "贪吃蛇"
   }
 }

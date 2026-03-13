@@ -104,5 +104,12 @@
     "title": "Новый рекорд",
     "improvement": "+{diff}очков улучшение!",
     "previousBest": "Предыдущий лучший"
+  },
+  "related": {
+    "title": "Ещё игры",
+    "roadShooter": "Роуд Шутер",
+    "flappyBird": "Флэппи Бёрд",
+    "zigzagRunner": "Зигзаг Раннер",
+    "snakeGame": "Змейка"
   }
 }

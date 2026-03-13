@@ -104,5 +104,12 @@
     "title": "Yeni Rekor",
     "improvement": "+{diff}puan iyileşme!",
     "previousBest": "Önceki en iyi"
+  },
+  "related": {
+    "title": "Daha fazla keşfet",
+    "roadShooter": "Road Shooter",
+    "flappyBird": "Flappy Bird",
+    "zigzagRunner": "Zigzag Koşucu",
+    "snakeGame": "Yılan Oyunu"
   }
 }

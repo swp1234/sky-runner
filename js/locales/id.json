@@ -104,5 +104,12 @@
     "title": "Rekor Baru",
     "improvement": "+{diff}poin peningkatan!",
     "previousBest": "Sebelumnya terbaik"
+  },
+  "related": {
+    "title": "Jelajahi lainnya",
+    "roadShooter": "Road Shooter",
+    "flappyBird": "Flappy Bird",
+    "zigzagRunner": "Zigzag Runner",
+    "snakeGame": "Game Ular"
   }
 }

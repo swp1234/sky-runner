@@ -104,5 +104,12 @@
     "title": "Record Set",
     "improvement": "+{diff}pts improvement!",
     "previousBest": "Previous best"
+  },
+  "related": {
+    "title": "More to Explore",
+    "roadShooter": "Road Shooter",
+    "flappyBird": "Flappy Bird",
+    "zigzagRunner": "Zigzag Runner",
+    "snakeGame": "Snake Game"
   }
 }

@@ -319,15 +319,17 @@
 
         const dt = deltaMs / 16.67; // normalized to 60fps
 
-        if (state === 'playing') {
-            update(dt, deltaMs);
-        } else if (state === 'ready') {
-            // Floating animation for ready state
-            player.y = canvas.height / 2 - player.size / 2 + Math.sin(timestamp / 300) * 8;
-            updateStars(dt * 0.3);
-        }
+        try {
+            if (state === 'playing') {
+                update(dt, deltaMs);
+            } else if (state === 'ready') {
+                // Floating animation for ready state
+                player.y = canvas.height / 2 - player.size / 2 + Math.sin(timestamp / 300) * 8;
+                updateStars(dt * 0.3);
+            }
 
-        try { render(); } catch(e) { console.error('Render error:', e); }
+            render();
+        } catch(e) { console.error('Game loop error:', e); }
         animFrameId = requestAnimationFrame(gameLoop);
     }
 

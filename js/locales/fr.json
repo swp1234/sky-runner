@@ -35,7 +35,6 @@
     "title": "Fin de Partie 💥",
     "score": "Score",
     "best": "Meilleur",
-    "revive": "📺 Regarde une Annonce & Revivifie",
     "retry": "Réessayer",
     "share": "📤 Partager",
     "menu": "🏠 Menu",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "Fusionne les emojis pour les faire évoluer!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Annonce",
-    "placeholder": "Zone d'Annonce",
-    "placeholder_interstitial": "Zone d'Annonce (Plein Écran)",
-    "countdown": "s jusqu'à fermeture",
-    "close": "✕ Fermer"
   },
   "screens": {
     "skins": "Skins",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "{0} points requis",
     "playRequired": "{0} parties requises",
-    "watchAdUnlock": "Regarder une annonce pour débloquer",
     "inUse": "En cours d'utilisation",
     "select": "Sélectionner"
   },

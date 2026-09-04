@@ -35,7 +35,6 @@
     "title": "Oyun Bitti 💥",
     "score": "Puan",
     "best": "En İyi",
-    "revive": "📺 Reklam İzle & Dirilt",
     "retry": "Tekrar Dene",
     "share": "📤 Paylaş",
     "menu": "🏠 Menü",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "Emojileri birleştirerek evrim ver!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Reklam",
-    "placeholder": "Reklam Alanı",
-    "placeholder_interstitial": "Reklam Alanı (Tam Ekran)",
-    "countdown": "kapatılmaya saniye",
-    "close": "✕ Kapat"
   },
   "screens": {
     "skins": "Kozmetik",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "{0} puan gerekli",
     "playRequired": "{0} kez oynamanız gerekli",
-    "watchAdUnlock": "Reklam izleyerek aç",
     "inUse": "Kullanımda",
     "select": "Seç"
   },

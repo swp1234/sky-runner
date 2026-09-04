@@ -55,7 +55,6 @@
     const themesScreen = document.getElementById('themes-screen');
     const statsScreen = document.getElementById('stats-screen');
     const pauseOverlay = document.getElementById('pause-overlay');
-    const interstitialOverlay = document.getElementById('interstitial-overlay');
     const hudScore = document.getElementById('hud-score');
     const tapHint = document.getElementById('tap-hint');
     const hsValue = document.getElementById('hs-value');
@@ -77,13 +76,24 @@
     let spawnTimer = 0;
     let animFrameId = null;
     let prevTimestamp = 0;
-    let hasRevived = false;
     let selectedSkin = 'classic';
     let unlockedSkins = ['classic'];
     let skinTokens = 0;
     let scoreAccum = 0;
     let currentTheme = 'space';
     let unlockedThemes = ['space'];
+    const sentStages = new Set();
+
+    function trackStage(eventName, targetSlug = '') {
+        if (sentStages.has(eventName) || typeof window.gtag !== 'function') return;
+        const params = { event_category: 'sky_runner' };
+        const allowedTargets = ['road-shooter', 'flappy-bird', 'zigzag-runner', 'snake-game'];
+        if (eventName === 'sky_runner_related_click' && allowedTargets.includes(targetSlug)) {
+            params.target_slug = targetSlug;
+        }
+        window.gtag('event', eventName, params);
+        sentStages.add(eventName);
+    }
 
     // === LEADERBOARD SYSTEM ===
     let leaderboard = null;
@@ -1649,13 +1659,14 @@
     }
 
     function startGame() {
+        trackStage('sky_runner_start');
         showScreen(gameScreen);
         state = 'ready';
         score = 0; passedCount = 0; currentStreak = 0; scoreAccum = 0;
         gameSpeed = BASE_SPEED; spawnTimer = 0;
         obstacles = []; particles = []; powerUps = []; speedLines = [];
         activeShield = false; slowMoTimer = 0; slowMoActive = false;
-        hasRevived = false; prevTimestamp = 0;
+        prevTimestamp = 0;
         currentCombo = 0; // Reset combo at game start
         player.reset();
         hudScore.textContent = '0';
@@ -1678,6 +1689,7 @@
     function triggerGameOver() {
         if (state !== 'playing') return;
         state = 'gameover';
+        trackStage('sky_runner_complete');
         // 게임 오버 시 테마 언락 체크
         checkThemeUnlock();
         cancelAnimationFrame(animFrameId);
@@ -1720,13 +1732,7 @@
         currentCombo = 0; // Reset combo on game over
         powerUps = []; activeShield = false; slowMoTimer = 0; slowMoActive = false;
 
-        setTimeout(() => {
-            if (typeof GameAds !== 'undefined') {
-                GameAds.showInterstitial({ onComplete: () => showGameOver(isNewRecord, previousHighScore) });
-            } else {
-                showGameOver(isNewRecord, previousHighScore);
-            }
-        }, 300);
+        setTimeout(() => showGameOver(isNewRecord, previousHighScore), 300);
     }
 
     function showNewBest() {
@@ -1771,14 +1777,11 @@
             goNewRecord.parentElement.insertBefore(improveEl, goNewRecord.nextSibling);
         }
         goNewRecord.classList.toggle('hidden', !isNewRecord);
-        document.getElementById('btn-revive').classList.toggle('hidden', hasRevived);
-
         // Display leaderboard
         if (leaderboardResult) {
             displaySkyRunnerLeaderboard(leaderboardResult);
         }
 
-        if (playCount >= 3 && playCount % 3 === 0) showInterstitialAd();
     }
 
     function displaySkyRunnerLeaderboard(leaderboardResult) {
@@ -1818,16 +1821,6 @@
         return getTitleByScore(s);
     }
 
-    function revivePlayer() {
-        hasRevived = true;
-        showScreen(gameScreen);
-        state = 'playing';
-        player.y = canvas.height / 2; player.velocity = 0;
-        obstacles = obstacles.filter(obs => obs.x > player.x + 150 || obs.x + obs.width < player.x - 50);
-        prevTimestamp = 0;
-        animFrameId = requestAnimationFrame(gameLoop);
-    }
-
     function pauseGame() {
         if (state !== 'playing') return;
         state = 'paused';
@@ -1851,28 +1844,6 @@
         hsValue.textContent = highScore;
     }
 
-    // === INTERSTITIAL AD ===
-    let adInterval = null;
-    function showInterstitialAd(callback) {
-        interstitialOverlay.classList.remove('hidden');
-        const countdownEl = document.getElementById('ad-countdown');
-        const closeBtn = document.getElementById('btn-close-ad');
-        let count = 5;
-        closeBtn.classList.add('hidden');
-        countdownEl.textContent = count;
-        if (adInterval) clearInterval(adInterval);
-        adInterval = setInterval(() => {
-            count--;
-            countdownEl.textContent = count;
-            if (count <= 0) { clearInterval(adInterval); adInterval = null; closeBtn.classList.remove('hidden'); }
-        }, 1000);
-        closeBtn.onclick = () => {
-            if (adInterval) { clearInterval(adInterval); adInterval = null; }
-            interstitialOverlay.classList.add('hidden');
-            if (callback) callback();
-        };
-    }
-
     // === SKINS ===
     function checkSkinUnlock(skin) {
         if (skin.unlockType === 'default') return true;
@@ -1884,19 +1855,7 @@
         if (skin.unlockType === 'play_count') {
             return playCount >= skin.unlockValue;
         }
-        if (skin.unlockType === 'rewarded_ad') {
-            return false; // 광고 시청은 별도 처리
-        }
         return false;
-    }
-
-    function unlockSkinByAd(skinId) {
-        if (!unlockedSkins.includes(skinId)) {
-            unlockedSkins.push(skinId);
-            selectedSkin = skinId;
-            saveData();
-            renderSkins();
-        }
     }
 
     function showSkins() { 
@@ -1925,8 +1884,6 @@
                     unlockText = `<div class="skin-unlock">${i18n.t('skins.scoreRequired').replace('{0}', skin.unlockValue)}</div>`;
                 } else if (skin.unlockType === 'play_count') {
                     unlockText = `<div class="skin-unlock">${i18n.t('skins.playRequired').replace('{0}', skin.unlockValue)}</div>`;
-                } else if (skin.unlockType === 'rewarded_ad') {
-                    unlockText = `<button class="skin-unlock-btn" data-skin="${skin.id}">${i18n.t('skins.watchAdUnlock')}</button>`;
                 }
             }
 
@@ -1952,12 +1909,6 @@
             });
         });
         
-        grid.querySelectorAll('.skin-unlock-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showInterstitialAd(() => unlockSkinByAd(btn.dataset.skin));
-            });
-        });
     }
 
     // === STATS ===
@@ -1980,12 +1931,18 @@
     }
 
     // === SHARE ===
-    function shareResult() {
+    async function shareResult() {
         const rank = getRank(score);
         const text = `🚀 Sky Runner ${score}${i18n.t('share.points')}\n${rank.emoji} ${localName(rank)}\n${i18n.t('share.challenge')}`;
         const url = 'https://dopabrain.com/sky-runner/';
-        if (navigator.share) { navigator.share({ title: 'Sky Runner', text, url }).catch(() => {}); }
-        else { navigator.clipboard.writeText(text + '\n' + url).then(() => alert(i18n.t('share.copied'))).catch(() => {}); }
+        try {
+            if (navigator.share) await navigator.share({ title: 'Sky Runner', text, url });
+            else {
+                await navigator.clipboard.writeText(text + '\n' + url);
+                alert(i18n.t('share.copied'));
+            }
+            trackStage('sky_runner_share');
+        } catch (e) {}
     }
 
     // === STORAGE ===
@@ -2134,15 +2091,9 @@
     document.getElementById('btn-skins-back').addEventListener('click', goToMenu);
     document.getElementById('btn-themes-back').addEventListener('click', goToMenu);
     document.getElementById('btn-stats-back').addEventListener('click', goToMenu);
-    document.getElementById('btn-revive').addEventListener('click', () => {
-        if (typeof GameAds !== 'undefined') {
-            GameAds.showRewarded({
-                onReward: () => revivePlayer(),
-                onSkip: () => {} // user declined
-            });
-        } else {
-            showInterstitialAd(() => revivePlayer());
-        }
+    document.addEventListener('click', event => {
+        const link = event.target.closest('[data-sky-related]');
+        if (link) trackStage('sky_runner_related_click', link.dataset.targetSlug);
     });
 
     window.addEventListener('resize', () => { if (state !== 'playing') resizeCanvas(); });
@@ -2171,13 +2122,12 @@
     hsValue.textContent = highScore;
     resizeCanvas();
     showScreen(menuScreen);
+    trackStage('sky_runner_view');
 
     // Daily streak init
     if (typeof DailyStreak !== 'undefined') {
         DailyStreak.init({ gameId: 'sky-runner', bestScoreKey: 'skyrunner_best', minTarget: 5 });
     }
-
-    if (typeof GameAds !== 'undefined') GameAds.init();
 
     if (typeof GameAchievements !== 'undefined') GameAchievements.init({
       gameId: 'sky-runner',

@@ -35,7 +35,6 @@
     "title": "ゲームオーバー 💥",
     "score": "スコア",
     "best": "ベスト",
-    "revive": "📺 広告を見て復活",
     "retry": "もう一度試す",
     "share": "📤 シェアする",
     "menu": "🏠 メニュー",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "絵文字をマージして進化させましょう!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "広告",
-    "placeholder": "広告エリア",
-    "placeholder_interstitial": "広告エリア（インタースティシャル）",
-    "countdown": "秒で閉じる",
-    "close": "✕ 閉じる"
   },
   "screens": {
     "skins": "スキン",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "スコア{0}点が必要",
     "playRequired": "{0}回プレイが必要",
-    "watchAdUnlock": "広告を見てアンロック",
     "inUse": "使用中",
     "select": "選択"
   },

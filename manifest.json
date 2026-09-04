@@ -3,6 +3,7 @@
   "short_name": "Sky Runner",
   "description": "우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 아케이드 게임",
   "start_url": ".",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f0f1e",

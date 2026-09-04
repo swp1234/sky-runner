@@ -35,7 +35,6 @@
     "title": "Game Over 💥",
     "score": "Puntuación",
     "best": "Mejor",
-    "revive": "📺 Ver Anuncio y Revivir",
     "retry": "Intentar de Nuevo",
     "share": "📤 Compartir",
     "menu": "🏠 Menú",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "¡Fusiona emojis para evolucionar!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Anuncio",
-    "placeholder": "Área de Anuncio",
-    "placeholder_interstitial": "Área de Anuncio (Intersticial)",
-    "countdown": "s hasta cerrar",
-    "close": "✕ Cerrar"
   },
   "screens": {
     "skins": "Apariencias",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "Se requieren {0} puntos",
     "playRequired": "Se requieren {0} partidas",
-    "watchAdUnlock": "Ver anuncio para desbloquear",
     "inUse": "En uso",
     "select": "Seleccionar"
   },

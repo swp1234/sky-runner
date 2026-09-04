@@ -35,7 +35,6 @@
     "title": "游戏结束 💥",
     "score": "分数",
     "best": "最高分",
-    "revive": "📺 看广告并复活",
     "retry": "重试",
     "share": "📤 分享",
     "menu": "🏠 菜单",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "合并表情符号进化!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "广告",
-    "placeholder": "广告区域",
-    "placeholder_interstitial": "广告区域（全屏）",
-    "countdown": "秒后关闭",
-    "close": "✕ 关闭"
   },
   "screens": {
     "skins": "皮肤库",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "需要达到{0}分",
     "playRequired": "需要玩{0}次",
-    "watchAdUnlock": "观看广告解锁",
     "inUse": "使用中",
     "select": "选择"
   },

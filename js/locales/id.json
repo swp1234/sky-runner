@@ -35,7 +35,6 @@
     "title": "Game Over 💥",
     "score": "Skor",
     "best": "Terbaik",
-    "revive": "📺 Tonton Iklan & Hidup Kembali",
     "retry": "Coba Lagi",
     "share": "📤 Bagikan",
     "menu": "🏠 Menu",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Iklan",
-    "placeholder": "Area Iklan",
-    "placeholder_interstitial": "Area Iklan (Interstitial)",
-    "countdown": "s hingga ditutup",
-    "close": "✕ Tutup"
   },
   "screens": {
     "skins": "Kulit",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "Diperlukan skor {0}",
     "playRequired": "Diperlukan {0} kali bermain",
-    "watchAdUnlock": "Tonton iklan untuk membuka",
     "inUse": "Digunakan",
     "select": "Pilih"
   },

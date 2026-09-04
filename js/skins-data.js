@@ -34,9 +34,9 @@ const SKINS_DATA = [
         rarity: "epic",
         color: "#ffa502",
         emoji: "🔥",
-        unlockCondition: "광고 시청",
-        unlockType: "rewarded_ad",
-        unlockValue: 0
+        unlockCondition: "점수 2,000점 달성",
+        unlockType: "score",
+        unlockValue: 2000
     },
     {
         id: "comet",
@@ -70,9 +70,9 @@ const SKINS_DATA = [
         rarity: "epic",
         color: "#2d3436",
         emoji: "🛸",
-        unlockCondition: "광고 시청",
-        unlockType: "rewarded_ad",
-        unlockValue: 0
+        unlockCondition: "25회 플레이",
+        unlockType: "play_count",
+        unlockValue: 25
     },
     {
         id: "rainbow",

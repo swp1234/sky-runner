@@ -2,20 +2,19 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="max-image-preview:large">
 
     <!-- SEO -->
     <title>Sky Runner - Free Online Space Arcade Game | DopaBrain</title>
-    <meta name="description" content="Fly your spaceship through obstacles with one-tap controls. 30 skins, leaderboard, and addictive arcade gameplay. Play free online!">
-    <meta name="dateModified" content="2026-07-07">
+    <meta name="description" content="Fly your spaceship through obstacles with one-tap controls. Unlock 10 skins through play, track local records, and play free online.">
+    <meta name="dateModified" content="2026-09-05">
     <meta name="keywords" content="게임, 아케이드, 우주 게임, 캐주얼 게임, 무료 게임, 플래피 버드 스타일, 반응속도 게임, 스피드 게임">
     <link rel="canonical" href="https://dopabrain.com/sky-runner/">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Sky Runner - Free Online Space Arcade Game | DopaBrain">
-    <meta property="og:description" content="Fly your spaceship through obstacles with one-tap controls. 30 skins and leaderboard. Play free online!">
+    <meta property="og:description" content="Fly your spaceship through obstacles with one-tap controls. Unlock 10 skins through play and track local records.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dopabrain.com/sky-runner/">
     <meta property="og:image" content="https://dopabrain.com/portal/img/og/sky-runner.png">
@@ -56,7 +55,7 @@
         "@type": "SoftwareApplication",
         "name": "Sky Runner",
         "applicationCategory": "GameApplication",
-        "description": "Fly your spaceship through obstacles with one-tap controls. Addictive casual arcade game with 30 skins, 5 obstacle patterns, and 20 title achievements.",
+        "description": "Fly your spaceship through obstacles with one-tap controls. Unlock 10 skins through play, navigate 5 obstacle patterns, and track local achievements.",
         "url": "https://dopabrain.com/sky-runner/",
         "image": "https://dopabrain.com/sky-runner/icon-192.svg",
         "operatingSystem": "All",
@@ -78,14 +77,7 @@
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock"
         },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.4",
-            "ratingCount": "5400",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "featureList": "One-tap controls, 30 spaceship skins, 5 obstacle patterns, 20 title achievements, 3 themes, leaderboard, offline play",
+        "featureList": "One-tap controls, 10 spaceship skins, 5 obstacle patterns, local achievements, 3 themes, local records, offline play",
         "gamePlatform": "Web Browser"
     }
     </script>
@@ -115,7 +107,7 @@
                 "name": "How many skins does Sky Runner have?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Sky Runner features 30 unlockable spaceship skins. Earn points as you play to unlock new ships, each with a unique design."
+                    "text": "Sky Runner features 10 spaceship skins. Reach score or play-count milestones to unlock new ships, each with a unique design."
                 }
             },
             {
@@ -160,10 +152,9 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
-<script>setTimeout(function(){if(typeof gtag!=='undefined')gtag('event','page_engage',{event_category:'sky_runner',engagement_time_msec:5000})},5000);</script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV',{'anonymize_ip':true,'allow_google_signals':false});</script>
 </head>
-<body>
+<body data-ad-serving="suspended-invalid-traffic-2026-09-03">
     <div class="app-loader" id="app-loader">
         <div class="loader-content">
             <div class="loader-emoji">☁️</div>
@@ -192,10 +183,6 @@
     <main id="main-content" class="game-wrapper">
         <!-- === MENU SCREEN === -->
         <div class="screen menu-screen active" id="menu-screen">
-            <div class="ad-banner ad-top">
-                <span class="ad-placeholder" data-i18n="ad.placeholder">광고 영역</span>
-            </div>
-
             <div class="menu-content">
                 <div class="game-logo">
                     <span class="logo-rocket">🚀</span>
@@ -279,10 +266,6 @@
                 <div class="go-new-record hidden" id="go-new-record" data-i18n="gameover.newRecord">🎉 새 기록!</div>
 
                 <div class="go-buttons">
-                    <button class="btn-revive" id="btn-revive">
-                        <span class="revive-icon">📺</span>
-                        <span data-i18n="gameover.revive">광고 보고 부활하기</span>
-                    </button>
                     <button class="btn-primary btn-retry" id="btn-retry">
                         <span data-i18n="gameover.retry">다시 하기</span>
                     </button>
@@ -295,9 +278,6 @@
 
             </div>
 
-            <div class="ad-banner ad-bottom-go">
-                <span class="ad-placeholder" data-i18n="ad.placeholder">광고 영역</span>
-            </div>
         </div>
 
         <!-- === SKINS SCREEN === -->
@@ -327,17 +307,6 @@
             <div class="stats-content" id="stats-content"></div>
         </div>
 
-        <!-- === INTERSTITIAL AD OVERLAY === -->
-        <div class="overlay interstitial-overlay hidden" id="interstitial-overlay">
-            <div class="interstitial-card">
-                <p class="interstitial-label" data-i18n="ad.label">광고</p>
-                <div class="interstitial-placeholder" data-i18n="ad.placeholder_interstitial">광고 영역 (전면)</div>
-                <div class="interstitial-timer">
-                    <span id="ad-countdown">5</span><span data-i18n="ad.countdown">초 후 닫기</span>
-                </div>
-                <button class="btn-close-ad hidden" id="btn-close-ad" data-i18n="ad.close">✕ 닫기</button>
-            </div>
-        </div>
     </main>
 
     <!-- Cross Promotion Recommendations -->
@@ -362,19 +331,7 @@
     <script src="/portal/js/haptic.js"></script>
     <script src="/portal/js/daily-streak.js"></script>
     <script src="/portal/js/achievements.js"></script>
-    <script src="/portal/js/game-ads.js"></script>
     <script src="js/game.js"></script>
-
-    <!-- Service Worker 등록 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => console.log('Service Worker registered'))
-                    .catch(error => console.log('Service Worker registration failed:', error));
-            });
-        }
-    </script>
 
     <style>
         .sound-toggle {
@@ -402,10 +359,10 @@
     <div style="max-width:420px;margin:20px auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);">
       <h3 data-i18n="related.title" style="font-size:16px;color:#a0a0b8;margin-bottom:12px;text-align:center;">More to Explore</h3>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <a href="/road-shooter/" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🚗</span><span data-i18n="related.roadShooter" style="font-size:12px;font-weight:600;color:#a0a0b8;">Road Shooter</span></a>
-        <a href="/flappy-bird/" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🐦</span><span data-i18n="related.flappyBird" style="font-size:12px;font-weight:600;color:#a0a0b8;">Flappy Bird</span></a>
-        <a href="/zigzag-runner/" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🏃</span><span data-i18n="related.zigzagRunner" style="font-size:12px;font-weight:600;color:#a0a0b8;">Zigzag Runner</span></a>
-        <a href="/snake-game/" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🐍</span><span data-i18n="related.snakeGame" style="font-size:12px;font-weight:600;color:#a0a0b8;">Snake Game</span></a>
+        <a href="/road-shooter/" data-sky-related data-target-slug="road-shooter" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🚗</span><span data-i18n="related.roadShooter" style="font-size:12px;font-weight:600;color:#a0a0b8;">Road Shooter</span></a>
+        <a href="/flappy-bird/" data-sky-related data-target-slug="flappy-bird" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🐦</span><span data-i18n="related.flappyBird" style="font-size:12px;font-weight:600;color:#a0a0b8;">Flappy Bird</span></a>
+        <a href="/zigzag-runner/" data-sky-related data-target-slug="zigzag-runner" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🏃</span><span data-i18n="related.zigzagRunner" style="font-size:12px;font-weight:600;color:#a0a0b8;">Zigzag Runner</span></a>
+        <a href="/snake-game/" data-sky-related data-target-slug="snake-game" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#fff;"><span style="font-size:28px;">🐍</span><span data-i18n="related.snakeGame" style="font-size:12px;font-weight:600;color:#a0a0b8;">Snake Game</span></a>
       </div>
     </div>
     <script src="/portal/js/cross-promo.js" defer></script>

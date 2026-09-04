@@ -35,7 +35,6 @@
     "title": "Spiel vorbei 💥",
     "score": "Punktzahl",
     "best": "Beste",
-    "revive": "📺 Anzeige ansehen & Wiederbelebung",
     "retry": "Nochmal versuchen",
     "share": "📤 Teilen",
     "menu": "🏠 Menü",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "Verschmelze Emojis und lass sie sich weiterentwickeln!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Anzeige",
-    "placeholder": "Anzeigenbereich",
-    "placeholder_interstitial": "Anzeigenbereich (Zwischenanzeige)",
-    "countdown": "Sekunden bis Schließen",
-    "close": "✕ Schließen"
   },
   "screens": {
     "skins": "Skins",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "{0} Punkte benötigt",
     "playRequired": "{0} Mal spielen benötigt",
-    "watchAdUnlock": "Anzeige ansehen zum Freischalten",
     "inUse": "In Verwendung",
     "select": "Auswählen"
   },

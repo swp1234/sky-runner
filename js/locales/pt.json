@@ -35,7 +35,6 @@
     "title": "Fim de Jogo 💥",
     "score": "Pontuação",
     "best": "Melhor",
-    "revive": "📺 Assistir Anúncio e Reviver",
     "retry": "Tentar Novamente",
     "share": "📤 Compartilhar",
     "menu": "🏠 Menu",
@@ -51,13 +50,6 @@
     "emojiMergeDesc": "Funda emojis para evoluir!",
     "colorMemory": "색상 기억력",
     "colorMemoryDesc": "기억력 도전 게임"
-  },
-  "ad": {
-    "label": "Anúncio",
-    "placeholder": "Área de Anúncio",
-    "placeholder_interstitial": "Área de Anúncio (Intersticial)",
-    "countdown": "s até fechar",
-    "close": "✕ Fechar"
   },
   "screens": {
     "skins": "Skins",
@@ -82,7 +74,6 @@
   "skins": {
     "scoreRequired": "Necessário {0} pontos",
     "playRequired": "Necessário {0} partidas",
-    "watchAdUnlock": "Assistir anúncio para desbloquear",
     "inUse": "Em uso",
     "select": "Selecionar"
   },

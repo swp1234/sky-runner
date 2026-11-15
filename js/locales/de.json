@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - Weltraum Arcade Spiel",
-    "description": "Pilotiere dein Raumschiff und weiche Hindernissen aus! Ein süchtig machendes Ein-Tap-Casual-Arcade-Spiel."
+    "description": "Pilotiere dein Raumschiff und weiche Hindernissen aus! Ein süchtig machendes Ein-Tap-Casual-Arcade-Spiel.",
+    "skipLink": "Zum Inhalt",
+    "loading": "Wird geladen..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: Meister",
     "stage4": "Stage 4: Legende",
     "newBest": "🚀 NEUER REKORD!",
-    "leaderboardTitle": "🏆 Top 5"
+    "leaderboardTitle": "🏆 Top 5",
+    "back": "DopaBrain Startseite"
   },
   "pause": {
     "title": "Pausiert",

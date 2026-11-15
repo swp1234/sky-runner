@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - स्पेस आर्केड गेम",
-    "description": "अपने अंतरिक्ष यान को चलाएं और बाधाओं से बचें! एक व्यसनी वन-टैप कैजुअल आर्केड गेम।"
+    "description": "अपने अंतरिक्ष यान को चलाएं और बाधाओं से बचें! एक व्यसनी वन-टैप कैजुअल आर्केड गेम।",
+    "skipLink": "सामग्री पर जाएं",
+    "loading": "लोड हो रहा है..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: मास्टर",
     "stage4": "Stage 4: लीजेंड",
     "newBest": "🚀 नया रिकॉर्ड!",
-    "leaderboardTitle": "🏆 शीर्ष 5 स्कोर"
+    "leaderboardTitle": "🏆 शीर्ष 5 स्कोर",
+    "back": "DopaBrain होम"
   },
   "pause": {
     "title": "रोका गया",

@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - Permainan Arcade Luar Angkasa",
-    "description": "Terbang pesawat ruang angkasa Anda dan hindari rintangan! Permainan arcade kasual satu ketukan yang adiktif."
+    "description": "Terbang pesawat ruang angkasa Anda dan hindari rintangan! Permainan arcade kasual satu ketukan yang adiktif.",
+    "skipLink": "Lewati ke konten",
+    "loading": "Memuat..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: Master",
     "stage4": "Stage 4: Legenda",
     "newBest": "🚀 REKOR BARU!",
-    "leaderboardTitle": "🏆 5 Teratas"
+    "leaderboardTitle": "🏆 5 Teratas",
+    "back": "Beranda DopaBrain"
   },
   "pause": {
     "title": "Dijeda",

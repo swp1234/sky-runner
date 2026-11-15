@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - Space Arcade Game",
-    "description": "Pilot your spaceship and dodge obstacles! An addictive one-tap casual arcade game."
+    "description": "Pilot your spaceship and dodge obstacles! An addictive one-tap casual arcade game.",
+    "skipLink": "Skip to content",
+    "loading": "Loading..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: Master",
     "stage4": "Stage 4: Legend",
     "newBest": "🚀 NEW BEST!",
-    "leaderboardTitle": "🏆 Top 5 Scores"
+    "leaderboardTitle": "🏆 Top 5 Scores",
+    "back": "DopaBrain Home"
   },
   "pause": {
     "title": "Paused",

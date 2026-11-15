@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - 太空街机游戏",
-    "description": "驾驶飞船躲避障碍物！一个令人上瘾的单点击休闲街机游戏。"
+    "description": "驾驶飞船躲避障碍物！一个令人上瘾的单点击休闲街机游戏。",
+    "skipLink": "跳到内容",
+    "loading": "加载中..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: 大师",
     "stage4": "Stage 4: 传说",
     "newBest": "🚀 新纪录！",
-    "leaderboardTitle": "🏆 前5名"
+    "leaderboardTitle": "🏆 前5名",
+    "back": "DopaBrain 主页"
   },
   "pause": {
     "title": "已暂停",

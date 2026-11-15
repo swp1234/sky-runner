@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - Uzay Arcade Oyunu",
-    "description": "Uzay gemini pilot et ve engelleri aş! Bağımlayıcı tek-dokunuş casual arcade oyunu."
+    "description": "Uzay gemini pilot et ve engelleri aş! Bağımlayıcı tek-dokunuş casual arcade oyunu.",
+    "skipLink": "İçeriğe geç",
+    "loading": "Yükleniyor..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: Usta",
     "stage4": "Stage 4: Efsane",
     "newBest": "🚀 YENİ REKOR!",
-    "leaderboardTitle": "🏆 En İyi 5"
+    "leaderboardTitle": "🏆 En İyi 5",
+    "back": "DopaBrain Ana Sayfa"
   },
   "pause": {
     "title": "Duraklat",

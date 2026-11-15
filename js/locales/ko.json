@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - 우주 비행 아케이드 게임",
-    "description": "우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 강한 캐주얼 아케이드 게임."
+    "description": "우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 강한 캐주얼 아케이드 게임.",
+    "skipLink": "본문으로 이동",
+    "loading": "로딩 중..."
   },
   "menu": {
     "subtitle": "하늘 달리기",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: 마스터",
     "stage4": "Stage 4: 전설",
     "newBest": "🚀 최고 기록!",
-    "leaderboardTitle": "🏆 상위 5개 점수"
+    "leaderboardTitle": "🏆 상위 5개 점수",
+    "back": "DopaBrain 홈"
   },
   "pause": {
     "title": "일시정지",

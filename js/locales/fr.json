@@ -1,7 +1,9 @@
 {
   "app": {
     "title": "Sky Runner - Jeu d'Arcade Spatial",
-    "description": "Pilote ton vaisseau spatial et évite les obstacles! Un jeu d'arcade casual addictif à un seul geste."
+    "description": "Pilote ton vaisseau spatial et évite les obstacles! Un jeu d'arcade casual addictif à un seul geste.",
+    "skipLink": "Aller au contenu",
+    "loading": "Chargement..."
   },
   "menu": {
     "subtitle": "Sky Runner",
@@ -24,7 +26,8 @@
     "stage3": "Stage 3: Maître",
     "stage4": "Stage 4: Légende",
     "newBest": "🚀 NOUVEAU RECORD !",
-    "leaderboardTitle": "🏆 Top 5"
+    "leaderboardTitle": "🏆 Top 5",
+    "back": "Accueil DopaBrain"
   },
   "pause": {
     "title": "Pause",

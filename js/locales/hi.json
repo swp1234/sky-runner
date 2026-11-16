@@ -51,8 +51,8 @@
     "zigzagRunnerDesc": "दिशा बदलने वाली आर्केड गेम!",
     "emojiMerge": "इमोजी मर्ज",
     "emojiMergeDesc": "इमोजी को विकसित करने के लिए मर्ज करें!",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
+    "colorMemory": "कलर मेमोरी",
+    "colorMemoryDesc": "मेमोरी चैलेंज गेम"
   },
   "screens": {
     "skins": "स्किन्स",
@@ -104,6 +104,8 @@
     "roadShooter": "रोड शूटर",
     "flappyBird": "फ्लैपी बर्ड",
     "zigzagRunner": "ज़िगज़ैग रनर",
-    "snakeGame": "स्नेक गेम"
+    "snakeGame": "स्नेक गेम",
+    "colorMemory": "कलर मेमोरी",
+    "colorMemoryDesc": "मेमोरी चैलेंज गेम"
   }
 }

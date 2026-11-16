@@ -51,8 +51,8 @@
     "zigzagRunnerDesc": "方向変更アーケードゲーム!",
     "emojiMerge": "絵文字マージ",
     "emojiMergeDesc": "絵文字をマージして進化させましょう!",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
+    "colorMemory": "カラーメモリー",
+    "colorMemoryDesc": "記憶力チャレンジゲーム"
   },
   "screens": {
     "skins": "スキン",
@@ -104,6 +104,8 @@
     "roadShooter": "ロードシューター",
     "flappyBird": "フラッピーバード",
     "zigzagRunner": "ジグザグランナー",
-    "snakeGame": "スネークゲーム"
+    "snakeGame": "スネークゲーム",
+    "colorMemory": "カラーメモリー",
+    "colorMemoryDesc": "記憶力チャレンジゲーム"
   }
 }

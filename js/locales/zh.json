@@ -51,8 +51,8 @@
     "zigzagRunnerDesc": "方向变换街机游戏!",
     "emojiMerge": "表情符号合并",
     "emojiMergeDesc": "合并表情符号进化!",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
+    "colorMemory": "色彩记忆",
+    "colorMemoryDesc": "记忆力挑战游戏"
   },
   "screens": {
     "skins": "皮肤库",
@@ -104,6 +104,8 @@
     "roadShooter": "公路射手",
     "flappyBird": "飞翔的鸟",
     "zigzagRunner": "之字跑者",
-    "snakeGame": "贪吃蛇"
+    "snakeGame": "贪吃蛇",
+    "colorMemory": "色彩记忆",
+    "colorMemoryDesc": "记忆力挑战游戏"
   }
 }

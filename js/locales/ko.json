@@ -104,6 +104,8 @@
     "roadShooter": "로드 슈터",
     "flappyBird": "플래피 버드",
     "zigzagRunner": "지그재그 러너",
-    "snakeGame": "스네이크 게임"
+    "snakeGame": "스네이크 게임",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   }
 }

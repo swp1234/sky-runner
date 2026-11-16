@@ -51,8 +51,8 @@
     "zigzagRunnerDesc": "Permainan arcade perubahan arah!",
     "emojiMerge": "Emoji Merge",
     "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
+    "colorMemory": "Memori Warna",
+    "colorMemoryDesc": "Game tantangan memori"
   },
   "screens": {
     "skins": "Kulit",
@@ -104,6 +104,8 @@
     "roadShooter": "Road Shooter",
     "flappyBird": "Flappy Bird",
     "zigzagRunner": "Zigzag Runner",
-    "snakeGame": "Game Ular"
+    "snakeGame": "Game Ular",
+    "colorMemory": "Memori Warna",
+    "colorMemoryDesc": "Game tantangan memori"
   }
 }

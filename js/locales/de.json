@@ -51,8 +51,8 @@
     "zigzagRunnerDesc": "Richtungswechsel-Arcade-Spiel!",
     "emojiMerge": "Emoji Merge",
     "emojiMergeDesc": "Verschmelze Emojis und lass sie sich weiterentwickeln!",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
+    "colorMemory": "Farbgedächtnis",
+    "colorMemoryDesc": "Gedächtnis-Herausforderung"
   },
   "screens": {
     "skins": "Skins",
@@ -104,6 +104,8 @@
     "roadShooter": "Road Shooter",
     "flappyBird": "Flappy Bird",
     "zigzagRunner": "Zigzag Runner",
-    "snakeGame": "Snake-Spiel"
+    "snakeGame": "Snake-Spiel",
+    "colorMemory": "Farbgedächtnis",
+    "colorMemoryDesc": "Gedächtnis-Herausforderung"
   }
 }
